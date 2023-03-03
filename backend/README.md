@@ -1692,8 +1692,8 @@ Returns the attendees of an event specified by its id.
     ```
 
 ### Request to Attend an Event based on the Event's id
-
-Request attendance for an event specified by id.
+Request attendance for an eve
+nt specified by id.
 
 * Require Authentication: true
 * Require Authorization: Current User must be a member of the group
@@ -2071,3 +2071,7 @@ Return events filtered by query parameters.
       }
     }
     ```
+
+### Proposed Database Schema
+
+
