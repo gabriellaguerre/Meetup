@@ -2070,8 +2070,7 @@ Return events filtered by query parameters.
         "startDate": "Start date must be a valid datetime",
       }
     }
-    ```
 
-### Proposed Database Schema
+  ### Proposed Database Schema
 
-
+![Meetup Project](https://user-images.githubusercontent.com/51093596/222610968-bad22156-5803-451b-b2fb-f6d70215a255.png)
