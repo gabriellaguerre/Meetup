@@ -2,7 +2,8 @@
 
 ### Proposed Database Schema
 
-![Meetup Project](https://user-images.githubusercontent.com/51093596/222784975-e3766d94-8a6b-477b-8356-3715afc5c4fb.png)
+![Meetup Project](https://user-images.githubusercontent.com/51093596/222930726-2a1e33a6-c099-485c-8605-f5a35b63d7f9.png)
+
 
 ## API Documentation
 
