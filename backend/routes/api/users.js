@@ -15,6 +15,7 @@ router.post('/', async (req, res) => {
       let token = await setTokenCookie(res, userOne);
       userOne.token = token
 
+      user.id = userOne.id
       user.firstName = userOne.firstName;
       user.lastName = userOne.lastName;
       user.email = userOne.email;
