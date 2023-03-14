@@ -98,9 +98,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       loginUser: {
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        }
+        attributes: {}
       }
     }
   });
