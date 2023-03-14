@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     return await User.scope('currentUser').findByPk(user.id);
   }
     static associate(models) {
-      // define association here
+      User.belongsToMany(models.Group, {through: models.Membership})
     }
   }
   User.init({
@@ -98,9 +98,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       loginUser: {
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
-        }
+        attributes: {}
       }
     }
   });
