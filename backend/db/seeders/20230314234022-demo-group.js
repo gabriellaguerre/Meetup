@@ -11,7 +11,6 @@ module.exports = {
     options.tableName = 'Groups';
     return queryInterface.bulkInsert(options, [
       {
-      organizerId: 1,
       name: "Evening Tennis on the Water",
       about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
       type: "In person",
@@ -20,7 +19,6 @@ module.exports = {
       state: "NY"
    },
    {
-      organizerId: 1,
       name: "Swimming across Lake Cool-Waters",
       about: "Come join us in swimming across this fantastic lake. Singles or doubles.",
       type: "In person",
@@ -29,7 +27,6 @@ module.exports = {
       state: "NY"
    },
    {
-      organizerId: 2,
       name: "Chess mini championship",
       about: "Enjoy rounds of chess with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
       type: "In person",
@@ -47,4 +44,3 @@ module.exports = {
     }, {});
   }
 };
-
