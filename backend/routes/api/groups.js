@@ -1,9 +1,10 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group } = require('../../db/models');
+const { User, Group, Membership } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize')
 
 const router = express.Router();
 
@@ -45,12 +46,14 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/current', requireAuth, async (req, res) => {
-   const userId = req.user.id
+   const id = req.user.id
+   const organizerId = id
 
-   const groups = await Group.findAll({
-      where: userId
+   const organizedGroups = await Group.findAll({
+      where: organizerId
    })
-   res.json(groups)
+
+   res.json(organizedGroups)
 })
 
 
