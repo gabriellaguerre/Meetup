@@ -62,8 +62,12 @@ app.use((err, _req, _res, next) => {
     for (let error of err.errors) {
       errors[error.path] = error.message;
     }
+
     err.title = 'Validation error';
     err.errors = errors;
+    err.status = 400;
+
+
   }
   next(err);
 });
@@ -72,6 +76,7 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   res.json({
     title: err.title || 'Server Error',
+    statusCode: err.status,
     message: err.message,
     errors: err.errors,
     stack: isProduction ? null : err.stack
