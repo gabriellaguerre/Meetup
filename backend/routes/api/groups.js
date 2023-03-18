@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, Membership } = require('../../db/models');
+const { User, Group, GroupImage, Venue, Membership } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize')
@@ -54,6 +54,95 @@ router.get('/current', requireAuth, async (req, res) => {
    })
 
    res.json(organizedGroups)
+})
+
+router.get('/:groupId', async (req, res) => {
+   const groupId = req.params.groupId
+
+   const group = await Group.findOne({
+      where: groupId,
+      include: [
+         {model: GroupImage},
+         {model: User, as: 'Organizer'},
+         {model: Venue}
+      ]
+   })
+   res.json(group)
+})
+
+router.post('/:groupId/images', requireAuth, async (req, res) => {
+   const groupId = req.params.groupId;
+
+   const group = await Group.findByPk(groupId)
+
+   let data = {};
+
+   if(group) {
+      const {url, preview} = req.body
+      const addImage = await GroupImage.create({
+         id,
+         groupId,
+         url,
+         preview
+      })
+      data.id = addImage.id,
+      data.url = addImage.url
+      data.preview = addImage.preview
+      res.json(data)
+   } else {
+      res.json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+})
+
+router.put('/:groupId', requireAuth, async (req, res) => {
+   const groupId = req.params.id
+
+   const {name, about, type, private, city, state} = req.body
+
+   const group = await Group.findOne({
+      where: groupId
+   })
+
+   if(group) {
+      const update = await group.Update({
+         name,
+         about,
+         type,
+         private,
+         city,
+         state
+      })
+      update.save()
+      res.json(group)
+   } else{
+      res.json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+})
+
+router.delete('/:groupId', requireAuth, async (req, res) => {
+   const groupId = req.params.groupId
+
+   const group = await Group.findByPk(groupId)
+
+   if(group) {
+      group.destroy();
+      res.json({
+         message: "Successfully deleted",
+         statusCode: 200
+   })
+   } else {
+      res.json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+
 })
 
 
