@@ -145,6 +145,7 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
 
 })
 
+/***********************VENUES***************************/
 router.get('/:groupId/venues', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -187,8 +188,59 @@ router.post('/:groupId/venues', requireAuth, handleValidationErrors, async (req,
          statusCode: 404
       })
    }
+})
 
+/********************EVENTS*********************/
 
+router.get('/:groupId/events', async (req, res) => {
+   const groupId = req.params.groupId
+
+   const events = await Event.findAll({
+      where: groupId,
+      include: [
+         {
+            model: Group
+         },
+         {  model: Venue
+
+         }]
+   })
+   if(events) {
+      res.status(200).json(events)
+   } else {
+      res.status(404).json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+})
+
+router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req, res) => {
+   const groupId = req.params.groupId
+
+   const {venueId, name, type, capacity, price, description, startDate, endDate} = req.body
+
+   const group = await Group.findByPk(groupId)
+
+   if(group) {
+      const createEvent = await Event.create({
+         groupId,
+         venueId,
+         name,
+         type,
+         capacity,
+         price,
+         description,
+         startDate,
+         endDate
+      })
+      res.status(200).json(createEvent)
+   } else {
+      res.status(404).json({
+         message: "Group couldn't be found",
+         statusCode: 404
+   })
+   }
 })
 
 
