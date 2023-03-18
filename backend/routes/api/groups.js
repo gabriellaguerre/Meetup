@@ -145,6 +145,52 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
 
 })
 
+router.get('/:groupId/venues', requireAuth, async (req, res) => {
+   const groupId = req.params.groupId
+
+   const venues = await Venue.findAll({
+      where: groupId
+   })
+   if(venues) {
+      res.json(venues)
+   } else {
+      res.statusCode(404).json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+
+})
+
+router.post('/:groupId/venues', requireAuth, handleValidationErrors, async (req, res) => {
+   const groupId = req.params.groupId
+
+   const {address, city, state, lat, lng} = req.body
+
+   const group = await Group.findOne({
+      where: groupId
+   })
+
+   if(group) {
+      const venue = await Venue.create({
+         groupId,
+         address,
+         city,
+         state,
+         lat,
+         lng
+      })
+      res.status(200).json(venue)
+   } else {
+      res.status(404).json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+
+
+})
+
 
 
 
