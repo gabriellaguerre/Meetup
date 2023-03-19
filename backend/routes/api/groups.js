@@ -389,7 +389,57 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
 })
 
 router.delete('/:groupId/membership', requireAuth, async (req, res) => {
-   
+   const groupId = req.params.groupId
+
+   const group = await Group.findByPk(groupId)
+
+   const user = req.user.id
+
+   const { memberId } = req.body
+
+   const members = await Membership.findAll({
+      where: groupId
+   })
+
+   const member = await members.findOne({
+      where: {
+         userId: user
+      }
+   })
+   if(!member) {
+      res.json({
+         message: "Membership does not exist for this User",
+         statusCode: 404
+      })
+   }
+
+   if (group) {
+      if (member) {
+         if (member.userId === group.organizerId || member.status === "co-host" || member.userId === memberId) {
+            await member.destroy()
+            res.status(200).json({ message: "Successfully deleted membership from group" })
+         }
+      } else {
+         const err = new ValidationError("Validatio Error")
+         err.statusCode = 400
+         return res.json({
+            message: "Validation Error",
+            statusCode: 400,
+            errors: {
+              memberId: "User couldn't be found"
+            }
+
+         })
+      }
+   } else {
+      res.status(404).json({
+         message: "Group couldn't be found",
+         statusCode: 404
+      })
+   }
+
+
+
 })
 
 
