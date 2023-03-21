@@ -8,7 +8,7 @@ const { Op } = require('sequelize')
 
 const router = express.Router();
 
-
+//************Create a Group*****************/
 router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
    const userId = req.user.id
    const organizerId = userId
@@ -25,7 +25,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
    })
    let data = {};
 
-   data.id = userId,
+   data.id = newGroup.id,
       data.organizerId = organizerId,
       data.name = newGroup.name,
       data.about = newGroup.about,
@@ -39,37 +39,78 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
    res.json(data)
 })
 
-
+/*************Get All Groups*******************/
 router.get('/', async (req, res) => {
    const group = await Group.findAll();
    res.json(group)
 })
 
+/********Get All Groups By Current User***********/
 router.get('/current', requireAuth, async (req, res) => {
    const id = req.user.id
-   const organizerId = id
+   const group = []
 
-   const organizedGroups = await Group.findAll({
-      where: organizerId
+   const member = await Membership.findAll({
+      where: {
+         userId: id
+      }
    })
 
-   res.json(organizedGroups)
+   const organizedGroups = await Group.findAll({
+      where: {
+         organizerId: id
+      }
+   })
+   group.push(member)
+   group.push(organizedGroups)
+
+   res.json({ Groups: group })
 })
 
+
+/******Get Details of a Group By Id****************/
 router.get('/:groupId', async (req, res) => {
    const groupId = req.params.groupId
 
-   const group = await Group.findOne({
-      where: groupId,
+   const group = await Group.findAll({
+      where: {
+         id: groupId
+      },
+      attributes: ['id', 'organizerId', 'name', 'about', 'type', 'private', 'city', 'state', 'createdAt', 'updatedAt'],
       include: [
-         { model: GroupImage },
-         { model: User, as: 'Organizer' },
-         { model: Venue }
-      ]
+         {
+            model: GroupImage,
+            attributes: ['id', 'url', 'preview']
+         },
+         {
+            model: User, as: 'Organizer',
+            attributes: ['id', 'firstName', 'lastName']
+         },
+         { model: Venue },
+      ],
    })
-   res.json(group)
+
+   const countMembers = await Membership.findAll({
+      where: { groupId }
+   })
+
+   if (group) {
+      res.json({ Groups: group })
+   } else {
+      const err = new Error("Group couldn't be found")
+      err.status = 404
+      res.json({
+         message: err.message,
+         statusCode: err.status
+      })
+   }
+   //group.numMembers = countMembers
+
+   console.log(countMembers)
+   res.json({ Groups: group })
 })
 
+/*******Add an Image to a Group*********************/
 router.post('/:groupId/images', requireAuth, async (req, res) => {
    const groupId = req.params.groupId;
 
@@ -80,7 +121,6 @@ router.post('/:groupId/images', requireAuth, async (req, res) => {
    if (group) {
       const { url, preview } = req.body
       const addImage = await GroupImage.create({
-         id,
          groupId,
          url,
          preview
@@ -97,34 +137,59 @@ router.post('/:groupId/images', requireAuth, async (req, res) => {
    }
 })
 
+/***********Edit a Group*******************/
 router.put('/:groupId', requireAuth, async (req, res) => {
-   const groupId = req.params.id
+   const groupId = req.params.groupId
+
+   const user = req.user.id
 
    const { name, about, type, private, city, state } = req.body
 
    const group = await Group.findOne({
-      where: groupId
+      where: { id: groupId }
    })
 
+
+   // if(!group) {
+   //    const err = new Error("Group couldn't be found")
+   //    err.status = 404
+   //    res.json({
+   //       message: err.message,
+   //       statusCode: err.status
+   //    })
+   //}
    if (group) {
-      const update = await group.Update({
-         name,
-         about,
-         type,
-         private,
-         city,
-         state
-      })
-      update.save()
-      res.json(group)
+      if (group.organizerId === user) {
+         const update = await group.update({
+            name,
+            about,
+            type,
+            private,
+            city,
+            state
+         })
+         update.save()
+         res.json(group)
+      } else {
+         const err = new Error("You are not the organizer of this group")
+         err.status = 400
+         res.json({
+            message: err.message,
+            statusCode: err.status
+         })
+      }
+
    } else {
+      const err = new Error("Group couldn't be found")
+      err.status = 404
       res.json({
-         message: "Group couldn't be found",
-         statusCode: 404
+         message: err.message,
+         statusCode: err.status
       })
    }
 })
 
+/*************Delete a Group*****************/
 router.delete('/:groupId', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -146,52 +211,90 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
 })
 
 /***********************VENUES***************************/
+
+/**********Get All Venues for a Group******************/
 router.get('/:groupId/venues', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
    const venues = await Venue.findAll({
-      where: groupId
+      where: { groupId },
+      attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng']
    })
    if (venues) {
-      res.json(venues)
+      res.json({ Venues: venues })
    } else {
-      res.statusCode(404).json({
-         message: "Group couldn't be found",
-         statusCode: 404
+      const err = new Error("Venue counldn't be found")
+      err.status = 404
+      res.json({
+         message: err.message,
+         statusCode: err.status
       })
    }
 
 })
 
+/********Create a Venue for a Group***************/
 router.post('/:groupId/venues', requireAuth, handleValidationErrors, async (req, res) => {
    const groupId = req.params.groupId
+   const user = req.user.id
+
+
+   const member = await Membership.findOne({
+      where: {
+         userId: user,
+         groupId
+      }
+   })
 
    const { address, city, state, lat, lng } = req.body
 
    const group = await Group.findOne({
-      where: groupId
+      where: {
+         id: groupId
+      }
    })
 
    if (group) {
-      const venue = await Venue.create({
-         groupId,
-         address,
-         city,
-         state,
-         lat,
-         lng
-      })
-      res.status(200).json(venue)
+      if (user === group.organizerId || member.status === "co-host") {
+         const venue = await Venue.create({
+            groupId,
+            address,
+            city,
+            state,
+            lat,
+            lng
+         })
+         const newVenue = {}
+         newVenue.address = venue.address
+         newVenue.city = venue.city
+         newVenue.state = venue.state
+         newVenue.lat = venue.lat
+         newVenue.lng = venue.lng
+         console.log(venue)
+         res.status(200).json(newVenue)
+      } else {
+         const err = new Error("You are not authorized to create a venue for this group")
+         err.status = 400
+         res.json({
+            message: err.message,
+            statusCode: err.status
+         })
+      }
+
    } else {
-      res.status(404).json({
-         message: "Group couldn't be found",
-         statusCode: 404
+      const err = new Error("Group couldn't be found")
+      err.status = 404
+      res.json({
+         message: err.message,
+         statusCode: err.status
       })
    }
 })
 
 /********************EVENTS*********************/
 
+
+/************Get All Events by Group ID***********/
 router.get('/:groupId/events', async (req, res) => {
    const groupId = req.params.groupId
 
@@ -216,6 +319,7 @@ router.get('/:groupId/events', async (req, res) => {
    }
 })
 
+/*************Create an Event by Group ID***********/
 router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -246,6 +350,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
 
 /*********************MEMBERSHIPS***************************/
 
+/**************Get Members of Group by ID************/
 router.get('/:groupId/members', async (req, res) => {
 
    const groupId = req.params.groupId
@@ -286,6 +391,8 @@ router.get('/:groupId/members', async (req, res) => {
    }
 })
 
+
+/**************Request Membership to a Group*********/
 router.post('/:groupId/membership', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -333,6 +440,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
    }
 })
 
+/*********Change Membership Status*************/
 router.put('/:groupId/membership', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -388,6 +496,7 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
    }
 })
 
+/**********Delete a Membership************/
 router.delete('/:groupId/membership', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
 
@@ -406,7 +515,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
          userId: user
       }
    })
-   if(!member) {
+   if (!member) {
       res.json({
          message: "Membership does not exist for this User",
          statusCode: 404
@@ -426,7 +535,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
             message: "Validation Error",
             statusCode: 400,
             errors: {
-              memberId: "User couldn't be found"
+               memberId: "User couldn't be found"
             }
 
          })
@@ -437,9 +546,6 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
          statusCode: 404
       })
    }
-
-
-
 })
 
 

@@ -47,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'groupId' })
 
       User.hasMany(models.Group, {
-        foreignKey: 'organizerId'
+        foreignKey: 'organizerId',
+        as: 'Organizer'
       })
       User.belongsToMany(models.Event, {
         through: models.Attendee,
@@ -110,7 +111,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       loginUser: {
-        attributes: {}
+        attributes: {
+          include: ['id', 'firstName', 'lastName', 'email', 'username']
+        }
       }
     }
   });

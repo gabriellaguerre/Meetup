@@ -8,8 +8,27 @@ const { Op } = require('sequelize')
 
 const router = express.Router();
 
+/*****************Edit a Venue********************/
 router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) => {
     const venueId = req.params.venueId
+//console.log(venueId,'ppppppppppppppp')
+    const user = req.user.id
+
+    const group = await Group.findAll({
+        where: {
+            organizerId: user
+        }
+    })
+   // console.log(group.toJSON(),'ppppppppppppppppppppp')
+
+    const member = await Membership.findAll({
+        where: {
+            userId: user,
+            //groupId
+        }
+    })
+    console.log(member)
+    // console.log(venueId,'VENUES ROUTE')
 
     const {address, city, state, lat, lng} = req.body
 
@@ -17,6 +36,8 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
 
     if(venue) {
         const updateVenue = venue.update({
+            id,
+            groupId: group.id,
             address,
             city,
             state,
