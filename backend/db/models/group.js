@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       Group.belongsTo(models.User, {
-        foreignKey: 'organizerId'
+        foreignKey: 'organizerId',
+        as: 'Organizer'
       })
       Group.hasMany(models.Event, {
         foreignKey: 'groupId'
@@ -96,7 +97,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    venueId: DataTypes.INTEGER
 
   }, {
     sequelize,

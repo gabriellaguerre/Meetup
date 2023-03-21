@@ -36,9 +36,7 @@ module.exports = {
       state: {
         type: Sequelize.STRING,
       },
-      venueId: {
-        type: Sequelize.INTEGER
-      },
+   
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
