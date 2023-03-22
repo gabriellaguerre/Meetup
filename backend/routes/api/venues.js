@@ -10,76 +10,65 @@ const router = express.Router();
 
 /*****************Edit a Venue********************/
 router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) => {
-    const venueId = req.params.venueId
-//console.log(venueId,'ppppppppppppppp')
+    const id = req.params.venueId
+    console.log(id,'ppppppppppppppp')
     const user = req.user.id
 
-    const group = await Group.findAll({
+    const { address, city, state, lat, lng } = req.body
+
+    const venue = await Venue.findByPk(id)
+    console.log(venue)
+
+    const groupId = venue.groupId
+
+    const group = await Group.findOne({
         where: {
-            organizerId: user
+            id: groupId
         }
     })
-   // console.log(group.toJSON(),'ppppppppppppppppppppp')
 
-    const member = await Membership.findAll({
+    const member = await Membership.findOne({
         where: {
             userId: user,
-            //groupId
+            groupId: group.id
         }
     })
-    console.log(member)
+    // console.log(member)
     // console.log(venueId,'VENUES ROUTE')
 
-    const {address, city, state, lat, lng} = req.body
 
-    const venue = await Venue.findByPk(venueId)
 
-    if(venue) {
-        const updateVenue = venue.update({
-            id,
-            groupId: group.id,
-            address,
-            city,
-            state,
-            lat,
-            lng
-        })
-        updateVenue.save();
+    if (venue) {
+        if (user === group.organizerId || member.status === 'co-host') {
+            await venue.update({
+                groupId: group.id,
+                address,
+                city,
+                state,
+                lat,
+                lng
+            })
+            venue.save();
 
-        res.status(200).json(updateVenue)
+            res.status(200).json(venue)
+        } else {
+            const err = new Error("You are not authorized to make updates to this Venue")
+            err.status = 400
+            res.json({
+                message: err.message,
+                statusCode: err.status
+            })
+        }
+
     } else {
-        res.status(404).json({
-            message: "Venue couldn't be found",
-            statusCode: 404
+        const err = new Error("Venue couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
 })
-
-router.put('/:venueId', requireAuth, async (req, res) => {
-    const venueId = req.params.venueId;
-
-    const {address, city, state, lat, lng} = req.body
-
-    const venue = await Venue.findByPk(venueId)
-
-    if(venue){
-        await venue.update({
-            address,
-            city,
-            state,
-            lat,
-            lng
-        })
-        venue.save()
-        res.status(200).json(venue)
-    } else {
-        res.status(404).json({
-            message: "Venue couldn't be found",
-            statusCode: 404
-        })
-    }
-})
-
 
 
 
