@@ -155,15 +155,6 @@ router.put('/:groupId', requireAuth, async (req, res) => {
       where: { id: groupId }
    })
 
-
-   // if(!group) {
-   //    const err = new Error("Group couldn't be found")
-   //    err.status = 404
-   //    res.json({
-   //       message: err.message,
-   //       statusCode: err.status
-   //    })
-   //}
    if (group) {
       if (group.organizerId === user) {
          const update = await group.update({
@@ -278,7 +269,7 @@ router.post('/:groupId/venues', requireAuth, handleValidationErrors, async (req,
          newVenue.state = venue.state
          newVenue.lat = venue.lat
          newVenue.lng = venue.lng
-         
+
          res.status(200).json(newVenue)
       } else {
          const err = new Error("You are not authorized to create a venue for this group")
@@ -442,12 +433,6 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
       }
    })
 
-   // const member = await members.findOne({
-   //    where: {
-   //       userId: user
-   //    }
-   // })
-
    if (group) {
       if (!members) {
          await Membership.create({
@@ -501,12 +486,6 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
          groupId}
    })
 
-   // const member = await members.findOne({
-   //    where: {
-   //       userId: user
-   //    }
-   // })
-
    if (members) {
       if (group && members) {
          if (members.status === 'member' && status === 'pending') {
@@ -551,47 +530,58 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
 
    const user = req.user.id
 
-   const { memberId } = req.body
-
-   const members = await Membership.findAll({
-      where: groupId
-   })
-
-   const member = await members.findOne({
+   const host = await Membership.findOne({
       where: {
-         userId: user
+         userId: user,
+         groupId
       }
    })
-   if (!member) {
+
+   const { memberId } = req.body
+
+   const members = await Membership.findOne({
+      where: {
+         userId: memberId,
+         groupId
+      }
+   })
+   if(!group) {
+      const err = new Error("Group couldn't be found")
+      err.status = 404
       res.json({
-         message: "Membership does not exist for this User",
-         statusCode: 404
+         message: err.message,
+         statusCode: err.status
+      })
+
+   }
+
+   if (!members) {
+      const err = new Error("Membership does not exist for this User")
+      err.status = 404
+      res.json({
+         message: err.message,
+         statusCode: err.status
       })
    }
 
    if (group) {
-      if (member) {
-         if (member.userId === group.organizerId || member.status === "co-host" || member.userId === memberId) {
-            await member.destroy()
+      if (members) {
+         if (user === memberId || host.status === 'host') {
+            await members.destroy()
             res.status(200).json({ message: "Successfully deleted membership from group" })
          }
       } else {
-         const err = new ValidationError("Validatio Error")
-         err.statusCode = 400
-         return res.json({
-            message: "Validation Error",
-            statusCode: 400,
+         const err = new ValidationError("Validation Error")
+         err.status = 400
+         res.json({
+            message: err.message,
+            statusCode: err.status,
             errors: {
                memberId: "User couldn't be found"
             }
 
          })
       }
-   } else {
-      res.status(404).json({
-         message: "Group couldn't be found",
-         statusCode: 404
-      })
    }
 })
 
