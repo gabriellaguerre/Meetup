@@ -112,19 +112,39 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
     }
 })
 
+/**************Delete an Event**********************/
 router.delete('/:eventId', requireAuth, async (req, res) => {
 
     const id = req.params.eventId
 
+    const user = req.user.id
+
     const event = await Event.findByPk(id)
 
+    const groupId = event.groupId
+
+    const group = await Group.findOne({
+        where: { id: groupId }
+    })
+    const member = await Membership.findOne({
+        where: {
+            userId: user,
+            groupId
+        }
+    })
+
     if (event) {
-        await event.destroy()
-        res.status(200).json({ message: "Successfully deleted" })
+        if (user === group.organzierId || member.status === 'co-host') {
+            await event.destroy()
+            res.status(200).json({ message: "Successfully deleted" })
+        }
+
     } else {
-        res.status(404).json({
-            message: "Event couldn't be found",
-            statusCode: 404
+        const err = new Error("Event couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
 })
