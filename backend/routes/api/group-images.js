@@ -8,6 +8,7 @@ const { Op } = require('sequelize')
 
 const router = express.Router();
 
+/********Delete a Group Image****************/
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const imageId = req.params.imageId
 
@@ -19,29 +20,28 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
 
     const group = await Group.findByPk(groupId)
 
-    const members = await Membership.findAll({
-        where: groupId
-    })
-
-    const member = await members.findOne({
+    const members = await Membership.findOne({
         where: {
-            userId: user
+            userId: user,
+            groupId
         }
     })
 
     if(groupImage) {
-        if(group.organizerId === user || member.status === 'co-host') {
+        if(group.organizerId === user || members.status === 'co-host') {
             await groupImage.destroy()
-            res.status(200).json({
+            res.json({
                 message: "Successfully deleted",
                 statusCode: 200
             })
         }
 
     } else {
-        res.status(404).json({
-            message: "Group Image couldn't be found",
-            statusCode: 404
+        const err = new Error("Group Image couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
 })

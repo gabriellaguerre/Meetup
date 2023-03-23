@@ -135,7 +135,9 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 router.get('/:eventId/attendees', async (req, res) => {
     const eventId = req.params.eventId
 
-    const event = await Event.findByPk(eventId)
+    const event = await Event.findOne({
+        where: { id: eventId }
+    })
 
     if (!event) {
         const err = new Error("Event couldn't be found")
@@ -150,45 +152,35 @@ router.get('/:eventId/attendees', async (req, res) => {
 
     const groupId = event.groupId
 
-    const group = await Group.findAll({
+    const group = await Group.findOne({
         where: {
             id: groupId
         }
     })
 
-    const members = await Membership.findAll({
+    const members = await Membership.findOne({
         where: {
             userId: user,
             groupId
         }
     })
 
-    // const member = await members.findAll({
-    //     where: {
-    //         userId: user
-    //     }
-    // })
-    if (event) {
-        if (members) {
-            if (group.organizerId === user || members.status === 'co-host') {
-                const attendees = await Attendee.findAll()
-                res.json(attendees)
-            } else {
-                const attendees = await Attendee.findAll({
-                    where: {
-                        status: { [Op.notLike]: '%pending%' }
-                    }
-                })
-                res.json(attendees)
-            }
+    if (members) {
+        if (group.organizerId === user || members.status === 'co-host') {
+            const attendees = await Attendee.findAll({
+                where: { eventId }
+            })
+            res.json({ Attendees: attendees })
+        } else {
+            const attendees = await Attendee.findAll({
+                where: {
+                    status: { [Op.notLike]: '%pending%' }
+                }
+            })
+            res.json({ Attendees: attendees })
         }
-
-        // } else {
-        //     res.status(404).json({
-        //         message: "Event couldn't be found",
-        //         statusCode: 404
-        //     })
     }
+
 })
 
 /*************Request Attendance to an Event***********/
@@ -214,7 +206,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
             }
         })
 
-        if(!members && !attendance) {
+        if (!members && !attendance) {
             const err = new Error("User is not a member of this group")
             err.status = 404
             res.json({
@@ -239,8 +231,8 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
                     status: "pending"
                 })
                 res.json(attend)
-                    // userId: user,
-                    // status: attend.status
+                // userId: user,
+                // status: attend.status
                 // })
             }
         } else if (members && attendance) {
@@ -275,6 +267,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 /****************Change Attendance Status***********/
 router.put('/:eventId/attendance', requireAuth, async (req, res) => {
     const eventId = req.params.eventId
+
     const { userId, status } = req.body
 
     const user = req.user.id
@@ -305,7 +298,7 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
         }
     })
 
-    const attendance = await Attendee.findAll({
+    const attendance = await Attendee.findOne({
         where: {
             eventId,
             userId
@@ -335,25 +328,20 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                         statusCode: 404
                     })
                 } else {
-                    await Attendee.update({
+                    const attendance = await Attendee.update({
                         eventId,
                         userId,
                         status
                     })
-
+                    attendance.save()
                     res.status(200).json(attendance)
                 }
             }
-
-            // } else {
-            //     res.status(404).json({
-            //         message: "Event couldn't be found",
-            //         statusCode: 404
-            //     })
         }
     }
 })
 
+/*******************Delete an Attendance************/
 router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
     const eventId = req.params.eventId
 
@@ -361,51 +349,93 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
 
     const user = req.user.id
 
+    const { memberId } = req.body
+
     const groupId = event.groupId
 
     const group = await Group.findByPk(groupId)
 
-    const attendance = await Attendee.findAll({
-        where: eventId
-    })
-
-    const attendee = await attendance.findOne({
+    const attendance = await Attendee.findOne({
         where: {
-            userId: user
+            userId: memberId,
+            eventId
         }
     })
 
-    if (user !== group.organizerId || user !== attendee.userId) {
-        res.status(403).json({
-            message: "Only the User or organizer may delete an Attendance",
-            statusCode: 403
+    if (!event) {
+        const err = new Error("Event couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
+    if (!attendance) {
+        const err = new Error("Attendance does not exist for this User")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
+        })
 
-
-    if (event) {
-        if (attendee) {
-            await attendee.destroy()
-
-        } else {
-            res.status(404).json({
-                message: "Attendance does not exist for this User",
-                statusCode: 404
-            })
-        }
-
+    }
+    if (user === group.organizerId || user === attendance.userId) {
+        await attendance.destroy()
+        res.json({
+            message: "Successfully deleted attendance from event"
+        })
 
     } else {
-        res.status(404).json({
-            message: "Event couldn't be found",
-            statusCode: 404
+        const err = new Error("Only the User or organizer may delete an Attendance")
+        err.status = 403
+        res.json({
+            message: err.message,
+            statusCode: err.status
         })
     }
 })
 
+/**************Delete an Event******************/
+router.delete('/:eventId', requireAuth, async (req, res) => {
 
+    const eventId = req.params.eventId
 
+    const user = req.user.id
 
+    const event = await Event.findByPk(eventId)
+
+    const groupId = event.groupId
+
+    const members = await Membership.findOne({
+        where: {
+            userId: user,
+            groupId
+        }
+    })
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        }
+    })
+
+    if (event) {
+        if (group.organizerId === user || members.status === 'co-host') {
+            await event.destroy();
+            res.status(200).json({
+                message: "Successfully deleted",
+                statusCode: 200
+            })
+        }
+
+    } else {
+        const err = new Error("Event couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
+        })
+    }
+})
 
 
 
