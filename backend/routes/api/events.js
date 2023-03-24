@@ -10,7 +10,7 @@ const router = express.Router();
 
 /*******Get All Events*******************/
 router.get('/', async (req, res) => {
-
+    let Events = []
     const events = await Event.findAll({
         include: [{
             model: Group
@@ -20,7 +20,28 @@ router.get('/', async (req, res) => {
         }
         ]
     })
-    res.json(events)
+
+    for(let i = 0; i < events.length; i++) {
+        let data = {}
+        let event = events[i]
+
+        let attending = await Attendee.count("userId", {
+            where: {
+                eventId: event.id
+            }
+        })
+        let previewimage = await EventImage.findOne({
+            where: {
+                preview: true
+            }
+        })
+        event.numAttending = attending
+        event.previewImage = previewimage.url
+
+        Events.push(event)
+    }
+
+    res.json({Events})
 })
 
 /*****Get Details of an Event by Id***************/

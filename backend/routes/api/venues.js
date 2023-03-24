@@ -11,7 +11,7 @@ const router = express.Router();
 /*****************Edit a Venue********************/
 router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) => {
     const id = req.params.venueId
-    console.log(id,'ppppppppppppppp')
+
     const user = req.user.id
 
     const { address, city, state, lat, lng } = req.body
@@ -33,10 +33,6 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
             groupId: group.id
         }
     })
-    // console.log(member)
-    // console.log(venueId,'VENUES ROUTE')
-
-
 
     if (venue) {
         if (user === group.organizerId || member.status === 'co-host') {
@@ -52,8 +48,8 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
 
             res.status(200).json(venue)
         } else {
-            const err = new Error("You are not authorized to make updates to this Venue")
-            err.status = 400
+            const err = new Error("Forbidden")
+            err.status = 403
             res.json({
                 message: err.message,
                 statusCode: err.status

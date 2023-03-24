@@ -43,13 +43,13 @@ router.post('/', validateSignup, async (req, res, next) => {
 
       const { firstName, lastName, email, username, password } = req.body;
 
-      if(email) {
-        const err = new Error("User already exists");
-        err.status = 403;
-        err.title = "User already exists";
-        err.errors = {email: "User with that email already exists"};
-        return next(err);
-      }
+      // if(email) {
+      //   const err = new Error("User already exists");
+      //   err.status = 403;
+      //   err.title = "User already exists";
+      //   err.errors = {email: "User with that email already exists"};
+      //   return next(err);
+      // }
 
       const userOne = await User.signup({ firstName, lastName, email, username, password });
 
