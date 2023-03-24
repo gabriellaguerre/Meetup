@@ -8,10 +8,20 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateSignup = [
+  check('firstName')
+  .exists({checkFalsy: true})
+  .not()
+  .isEmpty()
+  .withMessage('First Name is required'),
+  check('lastName')
+  .exists({checkFalsy: true})
+  .not()
+  .isEmpty()
+  .withMessage('Last Name is required'),
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage('Please provide a valid email.'),
+    .withMessage('Invalid email.'),
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
@@ -24,14 +34,23 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
-  handleValidationErrors
+   handleValidationErrors
 ];
 
 // Sign up
-router.post('/', validateSignup, async (req, res) => {
+router.post('/', validateSignup, async (req, res, next) => {
      let user = {}
 
       const { firstName, lastName, email, username, password } = req.body;
+
+      if(email) {
+        const err = new Error("User already exists");
+        err.status = 403;
+        err.title = "User already exists";
+        err.errors = {email: "User with that email already exists"};
+        return next(err);
+      }
+
       const userOne = await User.signup({ firstName, lastName, email, username, password });
 
       let token = await setTokenCookie(res, userOne);
