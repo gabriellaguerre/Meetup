@@ -27,15 +27,98 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
-    venueId: DataTypes.INTEGER,
+    venueId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        checkVenueId(value) {
+          if(value === null) {
+            throw new Error("Venue does not exist")
+          }
+        }
+      }
+    },
     groupId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    type: DataTypes.STRING,
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.NUMERIC,
-    description: DataTypes.STRING,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        checkLength(value) {
+          if(value.length < 5) {
+            throw new Error("Name must be at least 5 characters")
+          }
+        }
+      }
+
+    },
+    type: {
+      type: DataTypes.STRING,
+      validate: {
+        checkType(value) {
+          if(value !== "In person" || value !== "Online") {
+            throw new Error("Type must be Online or In person")
+          }
+        }
+      }
+
+    },
+    capacity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        checkInteger(value) {
+          if(!(Number.isInteger(value))) {
+            throw new Error("Capacity must be an integer")
+          }
+        }
+      }
+
+    },
+    price: {
+      type: DataTypes.NUMERIC,
+      validate: {
+        isNumeric: {
+          args: true,
+          message: "Price is invalid"
+        }
+      }
+
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        checkDescription(value) {
+          if(value.length === 0) {
+            throw new Error("Description is required")
+          }
+        }
+      }
+
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      validate: {
+        checkStartDate(value) {
+          let date = Date.now()
+          let startingDate = Date.parse(value)
+          if(startingDate < date) {
+            throw new Error("Start date must be in the future")
+          }
+        }
+      }
+
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      validate: {
+        checkEndDate(value) {
+          let endingDate = Date.parse(value)
+          if(endingDate < startingDate) {
+            throw new Error("End date is less than start date")
+          }
+        }
+
+      }
+
+    },
   }, {
     sequelize,
     modelName: 'Event',

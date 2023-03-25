@@ -10,7 +10,7 @@ const router = express.Router();
 
 /*******Get All Events*******************/
 router.get('/', async (req, res) => {
-
+    let Events = []
     const events = await Event.findAll({
         include: [{
             model: Group
@@ -20,14 +20,35 @@ router.get('/', async (req, res) => {
         }
         ]
     })
-    res.json(events)
+
+    for (let i = 0; i < events.length; i++) {
+        let data = {}
+        let event = events[i]
+
+        let attending = await Attendee.count("userId", {
+            where: {
+                eventId: event.id
+            }
+        })
+        let previewimage = await EventImage.findOne({
+            where: {
+                preview: true
+            }
+        })
+        event.numAttending = attending
+        event.previewImage = previewimage.url
+
+        Events.push(event)
+    }
+
+    res.json({ Events })
 })
 
 /*****Get Details of an Event by Id***************/
-router.get('/:eventsId', async (req, res) => {
-    const id = req.params.eventsId
+router.get('/:eventId', async (req, res) => {
+    const id = req.params.eventId
 
-    const event = await Event.findAll({
+    const event = await Event.findOne({
         where: { id },
         inlcude: [{
             model: Group
@@ -41,8 +62,15 @@ router.get('/:eventsId', async (req, res) => {
         }]
     })
     if (event) {
-        console.log(event)
-        res.status(200).json(event)
+        let attending = await Attendee.count("userId", {
+            where: {
+                eventId: event.id
+            }
+        })
+        event.numAttending = attending
+
+        res.json(event)
+
     } else {
         const err = new Error("Event couldn't be found")
         err.status = 404
@@ -57,17 +85,36 @@ router.get('/:eventsId', async (req, res) => {
 router.post('/:eventId/images', requireAuth, async (req, res) => {
     const eventId = req.params.eventId;
 
+    const user = req.user.id
+
     const event = await Event.findByPk(eventId)
+
+    const attendee = await Attendee.findOne({
+        where: {
+            eventId,
+            userId: user
+        }
+    })
 
     const { url, preview } = req.body
 
     if (event) {
-        const addImage = await EventImage.create({
-            eventId,
-            url,
-            preview
-        })
-        res.status(200).json(addImage)
+        if (attendee.status === 'attending' || attendee.status === 'host' || attendee.status === 'co-host') {
+            const addImage = await EventImage.create({
+                eventId,
+                url,
+                preview
+            })
+            res.status(200).json(addImage)
+        } else {
+            const err = new Error("Forbidden")
+            err.status = 403
+            res.json({
+                message: err.message,
+                statusCode: err.status
+            })
+        }
+
     } else {
         res.status(200).json({
             message: "Event couldn't be found",
@@ -78,22 +125,45 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
 
 /***********Edit an Event******************/
 router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) => {
-    const id = req.params.eventId
+    const eventId = req.params.eventId
 
-    const event = await Event.findByPk(id)
+    const event = await Event.findByPk(eventId)
+
+    const user = req.user.id
+
+    const groupId = event.groupId
+
+    const group = await Group.findOne({
+        where: groupId
+    })
+
+    const member = await Membership.findOne({
+        where: {
+            userId: user,
+            groupId
+        }
+    })
 
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
-    // if (!venueId) {
-    //     res.status(404).json({
-    //         message: "Venue couldn't be found",
-    //         statusCode: 404
-    //     })
-    // }
+    const venue = await Venue.findOne({
+        where: {
+            id: venueId
+        }
+    })
+    if(!venue) {
+        res.json({
+            message: "Venue couldn't be found",
+            statusCode: 404
+        })
+    }
 
     if (event) {
-        await event.update({
+        if(user === group.organizerId || member.status === 'co-host') {
+
+            await event.update({
             venueId,
+            groupId,
             name,
             type,
             capacity,
@@ -104,6 +174,15 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
         })
         event.save()
         res.status(200).json(event)
+        } else {
+            const err = new Error("Forbidden")
+            err.status = 403
+            res.json({
+                message: err.message,
+                statusCode: err.status
+            })
+        }
+
     } else {
         res.status(404).json({
             message: "Event couldn't be found",
@@ -137,6 +216,13 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
         if (user === group.organzierId || member.status === 'co-host') {
             await event.destroy()
             res.status(200).json({ message: "Successfully deleted" })
+        } else {
+            const err = new Error("Forbidden")
+            err.status = 403
+            res.json({
+                message: err.message,
+                statusCode: err.status
+            })
         }
 
     } else {
