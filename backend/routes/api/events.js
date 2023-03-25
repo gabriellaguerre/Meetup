@@ -151,7 +151,7 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
             id: venueId
         }
     })
-    if(!venue) {
+    if (!venue) {
         res.json({
             message: "Venue couldn't be found",
             statusCode: 404
@@ -159,21 +159,21 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
     }
 
     if (event) {
-        if(user === group.organizerId || member.status === 'co-host') {
+        if (user === group.organizerId || member.status === 'co-host') {
 
             await event.update({
-            venueId,
-            groupId,
-            name,
-            type,
-            capacity,
-            price,
-            description,
-            startDate,
-            endDate
-        })
-        event.save()
-        res.status(200).json(event)
+                venueId,
+                groupId,
+                name,
+                type,
+                capacity,
+                price,
+                description,
+                startDate,
+                endDate
+            })
+            event.save()
+            res.status(200).json(event)
         } else {
             const err = new Error("Forbidden")
             err.status = 403
@@ -248,7 +248,7 @@ router.get('/:eventId/attendees', async (req, res) => {
     if (!event) {
         const err = new Error("Event couldn't be found")
         err.status = 404
-        res.json({
+        return res.json({
             message: err.message,
             statusCode: err.status
         })
@@ -274,13 +274,24 @@ router.get('/:eventId/attendees', async (req, res) => {
     if (members) {
         if (group.organizerId === user || members.status === 'co-host') {
             const attendees = await Attendee.findAll({
-                where: { eventId }
+                where: { eventId },
+                attributes: ['status'],
+                include: {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+
+                }
             })
             res.json({ Attendees: attendees })
         } else {
             const attendees = await Attendee.findAll({
                 where: {
                     status: { [Op.notLike]: '%pending%' }
+                },
+                attributes: ['status'],
+                include: {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
                 }
             })
             res.json({ Attendees: attendees })
@@ -297,22 +308,23 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 
     const user = req.user.id
 
-    if (event) {
-        const groupId = event.groupId
-        const attendance = await Attendee.findOne({
-            where: {
-                eventId,
-                userId: user
-            }
-        })
-        const members = await Membership.findOne({
-            where: {
-                userId: user,
-                groupId
-            }
-        })
+    const groupId = event.groupId
 
-        if (!members && !attendance) {
+    const attendance = await Attendee.findOne({
+        where: {
+            eventId,
+            userId: user
+        }
+    })
+    const member = await Membership.findOne({
+        where: {
+            userId: user,
+            groupId
+        }
+    })
+
+    if (event) {
+        if (!member && !attendance) {
             const err = new Error("User is not a member of this group")
             err.status = 404
             res.json({
@@ -321,8 +333,8 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
             })
         }
 
-        if (members && !attendance) {
-            if (members.status === 'pending') {
+        if (member && !attendance) {
+            if (member.status === 'pending') {
                 const err = new Error("You must be a member of the group. Your current member status is pending")
                 err.status = 400
                 res.json({
@@ -330,18 +342,15 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
                     statusCode: 400
                 })
             }
-            if (members.status === 'member') {
+            if (member.status === 'member') {
                 const attend = await Attendee.create({
                     eventId,
                     userId: user,
                     status: "pending"
                 })
                 res.json(attend)
-                // userId: user,
-                // status: attend.status
-                // })
             }
-        } else if (members && attendance) {
+        } else if (member && attendance) {
             if (attendance.status === 'pending') {
                 const err = new Error("Attendance has already been requested")
                 err.status = 400
@@ -397,9 +406,15 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
         }
     })
 
-    const members = await Membership.findOne({
+    const authorizedMember = await Membership.findOne({
         where: {
-            userId,
+            userId: user,
+            groupId
+        }
+    })
+    const member = await Membership.findOne({
+        where: {
+            userId: userId,
             groupId
         }
     })
@@ -407,41 +422,40 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
     const attendance = await Attendee.findOne({
         where: {
             eventId,
-            userId
+            userId: userId
         }
     })
 
     if (event) {
-        if (members) {
-            if (members.status === 'pending') {
-                const err = new Error("You are not authorized to change the status")
-                err.status = 404
-                res.json({
-                    message: err.message,
-                    statusCode: err.status
-                })
-            }
-            if (group.organizerId === user || members.status === 'co-host') {
+        if (member) {
+            if (group.organizerId === user || authorizedMember.status === 'co-host') {
                 if (status === 'pending') {
                     res.status(400).json({
                         message: "Cannot change an attendance status to pending",
                         statusCode: 400
                     })
-                }
-                if (!attendance) {
-                    res.status(404).json({
-                        message: "Attendance between the user and the event does not exist",
-                        statusCode: 404
-                    })
                 } else {
-                    const attendance = await Attendee.update({
-                        eventId,
-                        userId,
+                    await attendance.update({
                         status
                     })
                     attendance.save()
                     res.status(200).json(attendance)
                 }
+
+            } else {
+                const err = new Error("Forbidden")
+                err.status = 403
+                res.json({
+                    message: err.message,
+                    statusCode: err.status
+                })
+            }
+
+            if (!attendance) {
+                res.status(404).json({
+                    message: "Attendance between the user and the event does not exist",
+                    statusCode: 404
+                })
             }
         }
     }
