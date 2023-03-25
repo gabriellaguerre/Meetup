@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, GroupImage, Venue, Membership, Event, Attendee } = require('../../db/models');
+const { User, Group, GroupImage, Venue, Membership, Event, Attendee, EventImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize')
@@ -48,6 +48,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 /*************Get All Groups*******************/
 router.get('/', async (req, res) => {
    let Groups = []
+
    const group = await Group.findAll();
 
    for (let i = 0; i < group.length; i++) {
@@ -60,12 +61,17 @@ router.get('/', async (req, res) => {
             groupId: eachGroup.id
          }
       })
-
-      let numCount = await Membership.count("userId", {
+      if(previewimage) {
+         urlImage = previewimage.url
+      } else {
+         urlImage = "No Image posted"
+      }
+      let members = await Membership.count({
          where: {
             groupId: eachGroup.id
          }
       })
+
       data.id = eachGroup.id;
       data.organizerId = eachGroup.organizerId,
          data.name = eachGroup.name,
@@ -76,8 +82,10 @@ router.get('/', async (req, res) => {
          data.state = eachGroup.state,
          data.createdAt = eachGroup.createdAt,
          data.updatedAt = eachGroup.updatedAt,
-         data.numMembers = numCount,
-         data.previewImage = previewimage.url
+         data.numMembers = members,
+         data.previewImage = urlImage
+
+
 
       Groups.push(data)
    }
@@ -96,33 +104,73 @@ router.get('/current', requireAuth, async (req, res) => {
          userId: id
       }
    })
-   if (member) {
-      for (let i = 0; i < member.length; i++) {
-         let membership = member[i]
-         allGroups.push(membership)
-      }
-   }
-
    const organizedGroups = await Group.findAll({
       where: {
          organizerId: id
       }
    })
+
+   if (member && !organizedGroups) {
+      for (let i = 0; i < member.length; i++) {
+         let membership = member[i]
+         let groupId = membership.groupId
+         let group = await Group.findOne({
+            where: {groupId}
+         })
+         let previewimage = await GroupImage.findOne({
+            where: {
+               groupId
+            }
+         })
+         if(previewimage) {
+            urlImage = previewimage.url
+         } else {
+            urlImage = "No Image posted"
+         }
+         let members = await Membership.count({
+            where: {
+               groupId
+            }
+         })
+
+         let data = {}
+         data.id = group.id,
+         data.organizerId = group.organizerId,
+         data.name = group.name,
+         data.about = group.about,
+         data.type = group.type,
+         data.private = group.private,
+         data.city = group.city,
+         data.state = group.state,
+         data.createdAt = group.createdAt,
+         data.updatedAt = group.updatedAt,
+         data.numMembers = members,
+         data.previewImage = urlImage
+
+         allGroups.push(data)
+      }
+   }
+
+
    if (organizedGroups) {
       for (let i = 0; i < organizedGroups.length; i++) {
          let data = {}
          let group = organizedGroups[i]
+         let groupId = group.id
 
          let previewimage = await GroupImage.findOne({
             where: {
-               groupId: group.id,
-               preview: true
+               groupId
             }
          })
-
-         let numCount = await Membership.count("userId", {
+         if(previewimage) {
+            urlImage = previewimage.url
+         } else {
+            urlImage = "No Image posted"
+         }
+         let members = await Membership.count({
             where: {
-               groupId: group.id
+               groupId
             }
          })
 
@@ -136,10 +184,8 @@ router.get('/current', requireAuth, async (req, res) => {
             data.state = group.state,
             data.createdAt = group.createdAt,
             data.updatedAt = group.updatedAt,
-            data.numMembers = numCount,
-            data.previewImage = previewimage.url
-
-         console.log(data)
+            data.numMembers = members,
+            data.previewImage = urlImage
 
          allGroups.push(data)
       }
@@ -177,6 +223,7 @@ router.get('/:groupId', async (req, res) => {
       ],
    })
    group.dataValues.numMembers = countMembers
+
 
    if (group) {
       res.json(group)
@@ -457,19 +504,29 @@ router.get('/:groupId/events', async (req, res) => {
    if (events) {
       for (let i = 0; i < events.length; i++) {
          let event = events[i]
+         let eventId = event.id
+         let data = {}
 
-         let attending = await Attendee.count("userId", {
-            where: {
-               eventId: event.id
-            }
-         })
          let previewimage = await EventImage.findOne({
             where: {
-               preview: true
+               eventId
             }
          })
-         event.numAttending = attending
-         event.previewImage = previewimage.url
+         if(previewimage) {
+            urlImage = "No Image posted"
+         } else {
+            urlImage = previewimage.url
+
+         }
+
+         let attending = await Attendee.count({
+            where: {
+               eventId
+            }
+         })
+         event.dataValues.numAttending = attending,
+       //  event.datatValues.previewImage = urlImage
+
 
          Events.push(event)
       }

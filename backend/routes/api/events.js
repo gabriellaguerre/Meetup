@@ -100,23 +100,31 @@ router.get('/', handleValidationErrors, async (req, res) => {
 
 /*****Get Details of an Event by Id***************/
 router.get('/:eventId', async (req, res) => {
-    const id = req.params.eventId
+    const eventId = req.params.eventId
 
     const event = await Event.findOne({
-        where: { id },
-        inlcude: [{
-            model: Group
+        where: {id: eventId},
+        attributes: ['id', 'groupId', 'venueId', 'name', 'description', 'type', 'capacity', 'price', 'startDate', 'endDate'],
+        inlcude: [
+        {
+            model: Group,
+           attributes: ['id', 'name', 'private', 'city', 'state']
         },
         {
-            model: Venue
+            model: Venue,
+            attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
         },
         {
             model: EventImage,
-            as: "EventImages"
+            as: "EventImages",
+            attributes:['id', 'url', 'preview']
         }]
     })
+
+     res.json(event)
+
     if (event) {
-        let attending = await Attendee.count("userId", {
+        let attending = await Attendee.count({
             where: {
                 eventId: event.id
             }
