@@ -8,8 +8,33 @@ const { Op } = require('sequelize')
 
 const router = express.Router();
 
+const validateQuery = [
+    check('page')
+    .exists({checkFalsy: true})
+    .min({min: 1})
+    .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+    .exists({checkFalsy: true})
+    .min({min: 1})
+    .withMessage('Size must be greater than or equal to 1'),
+    check('name')
+      .exists({ checkFalsy: true })
+      .isAlpha()
+      .withMessage("Name must be a string"),
+    check('type')
+      .exists({ checkFalsy: true })
+      .isAlpha()
+      .isIn({isIn: ['Online', 'In person']})
+      .withMessage("Type must be 'Online' or 'In Person'"),
+    check('startDate')
+      .exists({ checkFalsy: true })
+      .isDate()
+      .withMessage('Start date must be a valid datetime'),
+     handleValidationErrors
+  ];
+
 /*******Get All Events*******************/
-router.get('/', handleValidationErrors, async (req, res) => {
+router.get('/', validateQuery, async (req, res) => {
     let {page, size, name, type, startDate } = req.query
 
     if(name) {
