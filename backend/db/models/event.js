@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         checkType(value) {
-          if(value !== "In person" || value !== "Online") {
+          if(!(value === "In person" || value === "Online")) {
             throw new Error("Type must be Online or In person")
           }
         }
@@ -75,9 +75,10 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.NUMERIC,
       validate: {
-        isNumeric: {
-          args: true,
-          message: "Price is invalid"
+        checkPrice(value) {
+          if(typeof value !== 'number') {
+            throw new Error("Price is invalid")
+          }
         }
       }
 
@@ -111,7 +112,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkEndDate(value) {
           let endingDate = Date.parse(value)
-          if(endingDate < startingDate) {
+          if(endingDate < this.startingDate) {
             throw new Error("End date is less than start date")
           }
         }
