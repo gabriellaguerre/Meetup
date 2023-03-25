@@ -9,20 +9,43 @@ const { Op } = require('sequelize')
 const router = express.Router();
 
 /*******Get All Events*******************/
-router.get('/', async (req, res) => {
-    let Events = []
+router.get('/', handleValidationErrors, async (req, res) => {
+    let {page, size, name, type, startDate } = req.query
+
+    if(name) {
+        where.name = {[Op.substring]: name}
+    }
+
+    if(type) {
+        where.type = {[Op.substring]: type}
+    }
+
+    if(startDate) {
+        where.startDate = {[Op.substring]: startDate}
+    }
+
+    if(!page || page < 1 || page > 10) page = 1;
+    if(!size || size < 1 || size > 20) size = 20;
+
+    limit = size;
+    offset = limit * (page - 1)
+
+    let result = {};
+
+    let activities = []
+
     const events = await Event.findAll({
+        where,
         include: [{
             model: Group
         },
         {
             model: Venue
         }
-        ]
+        ],
     })
 
     for (let i = 0; i < events.length; i++) {
-        let data = {}
         let event = events[i]
 
         let attending = await Attendee.count("userId", {
@@ -38,10 +61,13 @@ router.get('/', async (req, res) => {
         event.numAttending = attending
         event.previewImage = previewimage.url
 
-        Events.push(event)
+        activities.push(event)
     }
+    result.rows = activities,
+    result.size = size,
+    result.limit = limit
 
-    res.json({ Events })
+    res.json(result)
 })
 
 /*****Get Details of an Event by Id***************/
