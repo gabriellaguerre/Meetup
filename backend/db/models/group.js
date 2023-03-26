@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Membership,
         foreignKey: 'groupId',
         otherKey: 'userId',
-        as: 'memberId'
       })
 
       Group.belongsTo(models.User, {
