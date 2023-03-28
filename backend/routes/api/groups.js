@@ -222,6 +222,7 @@ router.get('/:groupId', async (req, res) => {
          { model: Venue },
       ],
    })
+
    group.dataValues.numMembers = countMembers
 
 
@@ -672,6 +673,7 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
          if (user === organizer || authorizedMember.status === 'co-host') {
             if (member.status === 'pending' && status === 'member') {
                await member.update({
+                  id,
                   userId: memberId,
                   groupId,
                   status

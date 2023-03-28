@@ -453,7 +453,10 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 router.put('/:eventId/attendance', requireAuth, async (req, res) => {
     const eventId = req.params.eventId
 
+//console.log(eventId = 1)
+
     const { userId, status } = req.body
+//console.log(userId = null, status = pending)
 
     const user = req.user.id
 
@@ -506,6 +509,9 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                     })
                 } else {
                     await attendance.update({
+                        id,
+                        eventId,
+                        userId,
                         status
                     })
                     attendance.save()
