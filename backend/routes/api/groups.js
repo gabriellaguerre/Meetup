@@ -744,7 +744,6 @@ router.get('/:groupId/members', async (req, res) => {
       data.Membership.status = oneMember.dataValues.status
       allMembersArray.push(data)
    }
- //  res.json({Members: allMembersArray})
 
    const someMembers = await Membership.findAll({
       where: {
@@ -782,7 +781,7 @@ router.get('/:groupId/members', async (req, res) => {
       if (user === group.organizerId || coHost.status === 'co-host') {
          res.status(200).json({Members: allMembersArray})
       } else {
-         res.status(200).json({someMembersArray})
+         res.status(200).json({Members: someMembersArray})
       }
 
    } else {

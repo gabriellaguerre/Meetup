@@ -10,50 +10,50 @@ const router = express.Router();
 
 const validateQuery = [
     check('page')
-    .exists({checkFalsy: true})
- //   .min({min: 1})
-    .withMessage('Page must be greater than or equal to 1'),
+        .exists({ checkFalsy: true })
+        //   .min({min: 1})
+        .withMessage('Page must be greater than or equal to 1'),
     check('size')
-    .exists({checkFalsy: true})
-  //  .min({min: 1})
-    .withMessage('Size must be greater than or equal to 1'),
+        .exists({ checkFalsy: true })
+        //  .min({min: 1})
+        .withMessage('Size must be greater than or equal to 1'),
     check('name')
-      .exists({ checkFalsy: true })
-      .isAlpha()
-      .withMessage("Name must be a string"),
+        .exists({ checkFalsy: true })
+        .isAlpha()
+        .withMessage("Name must be a string"),
     check('type')
-      .exists({ checkFalsy: true })
-      .isAlpha()
-      .isIn({isIn: ['Online', 'In person']})
-      .withMessage("Type must be 'Online' or 'In Person'"),
+        .exists({ checkFalsy: true })
+        .isAlpha()
+        .isIn({ isIn: ['Online', 'In person'] })
+        .withMessage("Type must be 'Online' or 'In Person'"),
     check('startDate')
-      .exists({ checkFalsy: true })
-      .isDate()
-      .withMessage('Start date must be a valid datetime'),
-     //handleValidationErrors
-  ];
+        .exists({ checkFalsy: true })
+        .isDate()
+        .withMessage('Start date must be a valid datetime'),
+    //handleValidationErrors
+];
 
 /*******Get All Events*******************/
 router.get('/', handleValidationErrors, async (req, res) => {
-    let {page, size, name, type, startDate } = req.query
+    let { page, size, name, type, startDate } = req.query
 
     let where = {}
 
-    if(name) {
+    if (name) {
         validateQuery
-        where.name = {[Op.substring]: name}
+        where.name = { [Op.substring]: name }
     }
 
-    if(type) {
-        where.type = {[Op.substring]: type}
+    if (type) {
+        where.type = { [Op.substring]: type }
     }
 
-    if(startDate) {
-        where.startDate = {[Op.substring]: startDate}
+    if (startDate) {
+        where.startDate = { [Op.substring]: startDate }
     }
 
-    if(!page || page < 1 || page > 10) page = 1;
-    if(!size || size < 1 || size > 20) size = 20;
+    if (!page || page < 1 || page > 10) page = 1;
+    if (!size || size < 1 || size > 20) size = 20;
 
     limit = size;
     offset = limit * (page - 1)
@@ -92,8 +92,8 @@ router.get('/', handleValidationErrors, async (req, res) => {
         activities.push(event)
     }
     result.Events = activities,
-    result.page = page,
-    result.size = size
+        result.page = page,
+        result.size = size
 
     res.json(result)
 })
@@ -103,37 +103,11 @@ router.get('/:eventId', async (req, res) => {
     const eventId = req.params.eventId
 
     const event = await Event.findOne({
-        where: {id: eventId},
+        where: { id: eventId },
         attributes: ['id', 'groupId', 'venueId', 'name', 'description', 'type', 'capacity', 'price', 'startDate', 'endDate'],
-        inlcude: [
-        {
-            model: Group,
-           attributes: ['id', 'name', 'private', 'city', 'state']
-        },
-        {
-            model: Venue,
-            attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
-        },
-        {
-            model: EventImage,
-            as: "EventImages",
-            attributes:['id', 'url', 'preview']
-        }]
     })
 
-     res.json(event)
-
-    if (event) {
-        let attending = await Attendee.count({
-            where: {
-                eventId: event.id
-            }
-        })
-        event.numAttending = attending
-
-        res.json(event)
-
-    } else {
+    if (!event) {
         const err = new Error("Event couldn't be found")
         err.status = 404
         res.json({
@@ -141,6 +115,31 @@ router.get('/:eventId', async (req, res) => {
             statusCode: err.status
         })
     }
+
+    const group = await Group.findOne({
+        where: { id: event.groupId },
+        attributes: ['id', 'name', 'private', 'city', 'state']
+    })
+
+    const venue = await Venue.findOne({
+        where: { id: event.venueId },
+        attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
+    })
+    const eventImage = await EventImage.findAll({
+        where: { eventId },
+        attributes: ['id', 'url', 'preview']
+    })
+
+    const numAttending = await Attendee.count({
+        where: {eventId}
+    })
+
+    const data = event.toJSON()
+    data.numAttending = numAttending
+    data.Group = group
+    data.Venue = venue
+    data.EventImages = eventImage
+    res.json(data)
 })
 
 /*************Add an Image to an Event**************/
@@ -167,7 +166,12 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
                 url,
                 preview
             })
-            res.status(200).json(addImage)
+            let image = {}
+            image.id = addImage.id,
+            image.url = addImage.url,
+            image.preview = addImage.preview
+
+            res.status(200).json(image)
         } else {
             const err = new Error("Forbidden")
             err.status = 403
@@ -365,12 +369,14 @@ router.get('/:eventId/attendees', async (req, res) => {
 /*************Request Attendance to an Event***********/
 router.post('/:eventId/attendance', requireAuth, async (req, res) => {
     const eventId = req.params.eventId
-
+    //console.log(eventId = 2)
     const event = await Event.findByPk(eventId)
-
+    //console.log(event; id-venueId-groupId = 2)
     const user = req.user.id
+    //console.log(user = 3; jacky johnson)
 
     const groupId = event.groupId
+    //console.log(groupId = 2)
 
     const attendance = await Attendee.findOne({
         where: {
@@ -378,12 +384,14 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
             userId: user
         }
     })
+    //console.log(attendance = null)
     const member = await Membership.findOne({
         where: {
             userId: user,
             groupId
         }
     })
+    //console.log(member = null)
 
     if (event) {
         if (!member && !attendance) {
