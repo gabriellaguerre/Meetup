@@ -456,10 +456,10 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
 //console.log(eventId = 1)
 
     const { userId, status } = req.body
-//console.log(userId = null, status = pending)
+
 
     const user = req.user.id
-
+console.log(userId, status, user, 'pppppppppppp')
     const event = await Event.findByPk(eventId)
 
     if (!event) {
@@ -509,7 +509,6 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                     })
                 } else {
                     await attendance.update({
-                        id,
                         eventId,
                         userId,
                         status

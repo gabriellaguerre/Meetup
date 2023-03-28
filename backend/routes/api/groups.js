@@ -603,10 +603,12 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
 /**************POST Request Membership to a Group*********/
 router.post('/:groupId/membership', requireAuth, async (req, res) => {
    const groupId = req.params.groupId
+//console.log(groupId, 'ppppppppppppp')
 
    const group = await Group.findByPk(groupId)
 
    const user = req.user.id
+console.log(user, 'pppppppppppppppppp')
 
    if (group) {
          const newMember = await Membership.create({
@@ -614,7 +616,10 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
             groupId,
             status: "pending"
          })
-         res.status(200).json(newMember)
+         let data = {}
+         data.memberId = newMember.userId,
+         data.status = newMember.status
+         res.status(200).json(data)
 
       //  if (member && member.status === "pending") {
       //    const err = new Error("Membership has already been requested")
@@ -673,7 +678,6 @@ router.put('/:groupId/membership', requireAuth, async (req, res) => {
          if (user === organizer || authorizedMember.status === 'co-host') {
             if (member.status === 'pending' && status === 'member') {
                await member.update({
-                  id,
                   userId: memberId,
                   groupId,
                   status
@@ -803,6 +807,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
    const group = await Group.findByPk(groupId)
 
    const user = req.user.id
+//console.log(groupId, user, 'ppppppppppppp')
 
    const host = await Membership.findOne({
       where: {
@@ -810,7 +815,7 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
          groupId
       }
    })
-
+console.log(host, 'ppppppppppp')
    const { memberId } = req.body
 
    const members = await Membership.findOne({
