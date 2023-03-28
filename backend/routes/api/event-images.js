@@ -13,16 +13,26 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
     const imageId = req.params.imageId
 
     const user = req.user.id
-
+//console.log(user, 'ooooooooooooooo')
     const eventImage = await EventImage.findByPk(imageId)
-
+//console.log(eventImage, 'gggggggggg')
     const eventId = eventImage.eventId
+//console.log(eventId, 'pppppppppppp')
+    if(!eventImage) {
+        const err = new Error("Event Image couldn't be found")
+        err.status = 404
+        res.json({
+            message: err.message,
+            statusCode: err.status
+        })
+
+    }
 
     const event = await Event.findByPk(eventId)
 
     const groupId = event.groupId
 
-    const members = await Membership.findOne({
+    const member = await Membership.findOne({
         where: {
             userId: user,
             groupId
@@ -36,7 +46,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
 
 
     if(eventImage) {
-        if(group.organizerId === user || members.status === 'co-host') {
+        if(group.organizerId === user || member.status === 'co-host') {
             await eventImage.destroy();
             res.status(200).json({
                 message: "Successfully deleted",
@@ -45,12 +55,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
         }
 
     } else {
-        const err = new Error("Event Image couldn't be found")
-        err.status = 404
-        res.json({
-            message: err.message,
-            statusCode: err.status
-        })
+
     }
 })
 

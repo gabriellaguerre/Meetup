@@ -26,7 +26,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
    await Membership.create({
       userId: userId,
       groupId: newGroup.id,
-      status: "member"
+      status: "host"
    })
 
    let data = {};
@@ -815,10 +815,10 @@ router.delete('/:groupId/membership', requireAuth, async (req, res) => {
          groupId
       }
    })
-console.log(host, 'ppppppppppp')
+//console.log(host, 'ppppppppppp')
    const { memberId } = req.body
 
-   const members = await Membership.findOne({
+   const member = await Membership.findOne({
       where: {
          userId: memberId,
          groupId
@@ -834,7 +834,7 @@ console.log(host, 'ppppppppppp')
 
    }
 
-   if (!members) {
+   if (!member) {
       const err = new Error("Membership does not exist for this User")
       err.status = 404
       res.json({
@@ -844,9 +844,9 @@ console.log(host, 'ppppppppppp')
    }
 
    if (group) {
-      if (members) {
+      if (member) {
          if (user === memberId || host.status === 'host') {
-            await members.destroy()
+            await member.destroy()
             res.status(200).json({ message: "Successfully deleted membership from group" })
          }
       } else {
