@@ -1,5 +1,5 @@
 'use strict';
-const { 
+const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Membership.belongsTo(models.User, {
+        foreignKey: 'userId'
+      })
     }
   }
   Membership.init({
