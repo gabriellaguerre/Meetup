@@ -64,17 +64,22 @@ router.get('/', handleValidationErrors, async (req, res) => {
 
     const events = await Event.findAll({
         where,
-        include: [{
-            model: Group
+        attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
+        include: [
+        {
+            model: Group,
+            attributes: ['id', 'name', 'city', 'state']
         },
         {
-            model: Venue
+            model: Venue,
+            attributes: ['id', 'city', 'state']
         }
         ],
     })
 
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
+        let eventOne = event.toJSON()
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -86,12 +91,13 @@ router.get('/', handleValidationErrors, async (req, res) => {
                 preview: true
             }
         })
-        event.numAttending = attending
-        event.previewImage = previewimage.url
 
-        activities.push(event)
+        eventOne.numAttending = attending
+        eventOne.previewImage = previewimage.url
+
+        activities.push(eventOne)
     }
-    result.Events = activities,
+        result.Events = activities,
         result.page = page,
         result.size = size
 
