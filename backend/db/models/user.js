@@ -59,6 +59,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         otherKey: 'eventId'
       })
+      User.hasOne(models.Attendee, {
+        foreignKey: 'userId'
+      })
     }
   }
   User.init({

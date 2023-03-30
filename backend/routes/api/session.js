@@ -44,9 +44,7 @@ router.post('/', validateLogin, async (req, res, next) => {
       user1.username = user.username
 
 
-      return res.json({
-        user: user1
-      });
+      return res.json(user1);
     }
 );
 

@@ -16,19 +16,18 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
 
     const groupImage = await GroupImage.findByPk(imageId)
 
-    const groupId = groupImage.groupId
+    if (groupImage) {
+        const groupId = groupImage.groupId
 
-    const group = await Group.findByPk(groupId)
+        const group = await Group.findByPk(groupId)
 
-    const member = await Membership.findOne({
-        where: {
-            userId: user,
-            groupId
-        }
-    })
-
-    if(groupImage) {
-        if(group.organizerId === user || member.status === 'co-host') {
+        const member = await Membership.findOne({
+            where: {
+                userId: user,
+                groupId
+            }
+        })
+        if (group.organizerId === user || member.status === 'co-host') {
             await groupImage.destroy()
             res.json({
                 message: "Successfully deleted",

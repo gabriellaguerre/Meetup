@@ -17,7 +17,6 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
     const { address, city, state, lat, lng } = req.body
 
     const venue = await Venue.findByPk(id)
-    console.log(venue)
 
     const groupId = venue.groupId
 
@@ -45,8 +44,16 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
                 lng
             })
             venue.save();
+            let data = {}
+            data.id = venue.id,
+            data.groupId = venue.groupId,
+            data.address = venue.address,
+            data.city = venue.city,
+            data.state = venue.state,
+            data.lat = venue.lat,
+            data.lng = venue.lng
 
-            res.status(200).json(venue)
+            res.status(200).json(data)
         } else {
             const err = new Error("Forbidden")
             err.status = 403
