@@ -66,14 +66,14 @@ router.get('/', handleValidationErrors, async (req, res) => {
         where,
         attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
         include: [
-        {
-            model: Group,
-            attributes: ['id', 'name', 'city', 'state']
-        },
-        {
-            model: Venue,
-            attributes: ['id', 'city', 'state']
-        }
+            {
+                model: Group,
+                attributes: ['id', 'name', 'city', 'state']
+            },
+            {
+                model: Venue,
+                attributes: ['id', 'city', 'state']
+            }
         ],
     })
 
@@ -97,7 +97,7 @@ router.get('/', handleValidationErrors, async (req, res) => {
 
         activities.push(eventOne)
     }
-        result.Events = activities,
+    result.Events = activities,
         result.page = page,
         result.size = size
 
@@ -137,7 +137,7 @@ router.get('/:eventId', async (req, res) => {
     })
 
     const numAttending = await Attendee.count({
-        where: {eventId}
+        where: { eventId }
     })
 
     const data = event.toJSON()
@@ -174,8 +174,8 @@ router.post('/:eventId/images', requireAuth, async (req, res) => {
             })
             let image = {}
             image.id = addImage.id,
-            image.url = addImage.url,
-            image.preview = addImage.preview
+                image.url = addImage.url,
+                image.preview = addImage.preview
 
             res.status(200).json(image)
         } else {
@@ -266,28 +266,31 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
 /**************Delete an Event**********************/
 router.delete('/:eventId', requireAuth, async (req, res) => {
 
-    const id = req.params.eventId
+    const eventId = req.params.eventId
+
+    const event = await Event.findByPk(eventId)
 
     const user = req.user.id
 
-    const event = await Event.findByPk(id)
-
-    const groupId = event.groupId
-
-    const group = await Group.findOne({
-        where: { id: groupId }
-    })
-    const member = await Membership.findOne({
-        where: {
-            userId: user,
-            groupId
-        }
-    })
-
     if (event) {
-        if (user === group.organzierId || member.status === 'co-host') {
-            await event.destroy()
-            res.status(200).json({ message: "Successfully deleted" })
+        const groupId = event.groupId
+
+        const group = await Group.findOne({
+            where: { id: groupId }
+        })
+
+        const member = await Membership.findOne({
+            where: {
+                userId: user,
+                groupId
+            }
+        })
+        if (user === group.organizerId || member.status === 'co-host') {
+            event.destroy();
+            res.json({
+                message: "Successfully deleted",
+                statusCode: 200
+            })
         } else {
             const err = new Error("Forbidden")
             err.status = 403
@@ -342,6 +345,7 @@ router.get('/:eventId/attendees', async (req, res) => {
             groupId
         }
     })
+    let attends = []
 
     if (members) {
         if (group.organizerId === user || members.status === 'co-host') {
@@ -354,7 +358,20 @@ router.get('/:eventId/attendees', async (req, res) => {
 
                 }
             })
-            res.json({ Attendees: attendees })
+            for (let i = 0; i < attendees.length; i++) {
+                let data = {}
+                let attendee = attendees[i]
+                let attendor = attendee.toJSON()
+
+                data.id = attendor.User.id,
+                    data.firstName = attendor.User.firstName
+                data.lastName = attendor.User.lastName
+                data.Attendance = {}
+                data.Attendance.status = attendor.status
+                attends.push(data)
+            }
+            res.json({ Attendees: attends })
+
         } else {
             const attendees = await Attendee.findAll({
                 where: {
@@ -366,7 +383,19 @@ router.get('/:eventId/attendees', async (req, res) => {
                     attributes: ['id', 'firstName', 'lastName']
                 }
             })
-            res.json({ Attendees: attendees })
+            for (let i = 0; i < attendees.length; i++) {
+                let data = {}
+                let attendee = attendees[i]
+                let attendor = attendee.toJSON()
+
+                data.id = attendor.User.id,
+                    data.firstName = attendor.User.firstName
+                data.lastName = attendor.User.lastName
+                data.Attendance = {}
+                data.Attendance.status = attendor.status
+                attends.push(data)
+            }
+            res.json({ Attendees: attends })
         }
     }
 
@@ -459,13 +488,13 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 router.put('/:eventId/attendance', requireAuth, async (req, res) => {
     const eventId = req.params.eventId
 
-//console.log(eventId = 1)
+    //console.log(eventId = 1)
 
     const { userId, status } = req.body
 
 
     const user = req.user.id
-console.log(userId, status, user, 'pppppppppppp')
+    console.log(userId, status, user, 'pppppppppppp')
     const event = await Event.findByPk(eventId)
 
     if (!event) {

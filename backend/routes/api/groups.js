@@ -325,7 +325,6 @@ router.put('/:groupId', requireAuth, async (req, res) => {
 router.delete('/:groupId', requireAuth, async (req, res) => {
 
       const groupId = req.params.groupId
-   console.log(groupId, 'ppppppppppp')
 
       const group = await Group.findByPk(groupId)
 
@@ -333,7 +332,7 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
 
       if (group) {
          if (organizer === group.organizerId) {
-            group.destroy();
+            await group.destroy();
             res.json({
                message: "Successfully deleted",
                statusCode: 200
@@ -627,7 +626,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
    const group = await Group.findByPk(groupId)
 
    const user = req.user.id
-   console.log(user, 'pppppppppppppppppp')
+ //  console.log(user, 'pppppppppppppppppp')
 
    if (group) {
       const newMember = await Membership.create({
@@ -637,7 +636,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res) => {
       })
       let data = {}
       data.memberId = newMember.userId,
-         data.status = newMember.status
+      data.status = newMember.status
       res.status(200).json(data)
 
       //  if (member && member.status === "pending") {
