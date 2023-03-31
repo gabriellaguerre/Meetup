@@ -18,22 +18,21 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
 
     const venue = await Venue.findByPk(id)
 
-    const groupId = venue.groupId
-
-    const group = await Group.findOne({
-        where: {
-            id: groupId
-        }
-    })
-
-    const member = await Membership.findOne({
-        where: {
-            userId: user,
-            groupId: group.id
-        }
-    })
-
     if (venue) {
+        const groupId = venue.groupId
+
+        const group = await Group.findOne({
+            where: {
+                id: groupId
+            }
+        })
+
+        const member = await Membership.findOne({
+            where: {
+                userId: user,
+                groupId: group.id
+            }
+        })
         if (user === group.organizerId || member.status === 'co-host') {
             await venue.update({
                 groupId: group.id,
@@ -46,12 +45,12 @@ router.put('/:venueId', requireAuth, handleValidationErrors, async (req, res) =>
             venue.save();
             let data = {}
             data.id = venue.id,
-            data.groupId = venue.groupId,
-            data.address = venue.address,
-            data.city = venue.city,
-            data.state = venue.state,
-            data.lat = venue.lat,
-            data.lng = venue.lng
+                data.groupId = venue.groupId,
+                data.address = venue.address,
+                data.city = venue.city,
+                data.state = venue.state,
+                data.lat = venue.lat,
+                data.lng = venue.lng
 
             res.status(200).json(data)
         } else {
