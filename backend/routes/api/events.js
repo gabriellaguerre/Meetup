@@ -80,6 +80,7 @@ router.get('/', handleValidationErrors, async (req, res) => {
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
         let eventOne = event.toJSON()
+        console.log(eventOne, 'ppppppppppp')
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -91,9 +92,16 @@ router.get('/', handleValidationErrors, async (req, res) => {
                 preview: true
             }
         })
+        if(!previewimage) {
+            previewimage.url = "No image posted"
+        } else {
+            previewimage.url = "image url"
+        }
+        if(!eventOne.venueId) eventOne.venueId = null
+        if(!eventOne.Venue) eventOne.Venue = null
 
         eventOne.numAttending = attending
-        eventOne.previewImage = previewimage.url
+        //eventOne.previewImage = previewimage.url
 
         activities.push(eventOne)
     }
@@ -536,7 +544,14 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                         status
                     })
                     attendance.save()
-                    res.status(200).json(attendance)
+
+                    let going = {}
+                    going.id = attendance.id,
+                    going.eventId = attendance.eventId,
+                    going.userId = attendance.userId,
+                    going.status = attendance.status
+
+                    res.status(200).json(going)
                 }
 
             } else {

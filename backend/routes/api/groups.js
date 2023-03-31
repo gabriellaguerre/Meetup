@@ -508,7 +508,7 @@ router.get('/:groupId/events', async (req, res) => {
                   eventId
                }
             })
-            if (previewimage) {
+            if (!previewimage) {
                urlImage = "No Image posted"
             } else {
                urlImage = previewimage.url
@@ -554,6 +554,16 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
 
    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
 
+   // if(!venueId) {
+   //    const err = new Error("Validation Error")
+   //    err.status = 400
+   //    err.errors = {venueId: "Venue does not exist"}
+   //    res.json({
+   //       message: err.message,
+   //       statusCode: err.status,
+   //       errors: err.errors
+   //    })
+   // }
    const group = await Group.findByPk(groupId)
 
    const member = await Membership.findOne({

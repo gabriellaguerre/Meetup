@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
-    
+
     static associate(models) {
       Event.belongsToMany(models.User, {
         through: models.Attendee,
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   Event.init({
     venueId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       validate: {
         checkVenueId(value) {
           if(value === null) {
@@ -107,8 +107,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         checkEndDate(value) {
+          let startDate = Date.parse(this.startDate)
           let endingDate = Date.parse(value)
-          if(endingDate < this.startingDate) {
+          if(endingDate < startDate) {
             throw new Error("End date is less than start date")
           }
         }
