@@ -80,7 +80,7 @@ router.get('/', handleValidationErrors, async (req, res) => {
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
         let eventOne = event.toJSON()
-        console.log(eventOne, 'ppppppppppp')
+  //      console.log(eventOne, 'ppppppppppp')
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -296,7 +296,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
             }
         })
         if (user === group.organizerId || member.status === 'co-host') {
-            event.destroy();
+            await event.destroy();
             res.json({
                 message: "Successfully deleted",
                 statusCode: 200
@@ -418,8 +418,6 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
 
     const user = req.user.id
 
-
-
     if (event) {
         const groupId = event.groupId
 
@@ -429,7 +427,6 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
                 userId: user
             }
         })
-
         const member = await Membership.findOne({
             where: {
                 userId: user,
@@ -437,7 +434,7 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
             }
         })
 
-        if (!member && !attendance) {
+        if (!member) {
             const err = new Error("User is not a member of this group")
             err.status = 404
             res.json({
@@ -461,7 +458,11 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
                     userId: user,
                     status: "pending"
                 })
-                res.json(attend)
+                let data = {}
+              //  data.id = attend.id,
+                data.userId = attend.userId,
+                data.status = attend.status
+                res.json(data)
             }
         } else if (member && attendance) {
             if (attendance.status === 'pending') {
@@ -545,11 +546,14 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                     })
                     attendance.save()
 
+                    let attendanceOne = attendance.toJSON()
+
                     let going = {}
-                    going.id = attendance.id,
-                    going.eventId = attendance.eventId,
-                    going.userId = attendance.userId,
-                    going.status = attendance.status
+
+                    going.id = attendanceOne.id,
+                    going.eventId = attendanceOne.eventId,
+                    going.userId = attendanceOne.userId,
+                    going.status = attendanceOne.status
 
                     res.status(200).json(going)
                 }
@@ -619,7 +623,7 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res) => {
         }
         if (user === group.organizerId || user === attendance.userId) {
             await attendance.destroy()
-            res.json({
+            return res.json({
                 message: "Successfully deleted attendance from event"
             })
 
@@ -667,9 +671,16 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 
         if (group.organizerId === user || members.status === 'co-host') {
             await event.destroy();
-            res.status(200).json({
+            return res.status(200).json({
                 message: "Successfully deleted",
                 statusCode: 200
+            })
+        } else {
+            const err = new Error("Forbidden")
+            err.status = 403
+            res.json({
+                message: err.message,
+                statusCode: err.status
             })
         }
 
