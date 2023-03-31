@@ -331,7 +331,7 @@ router.delete('/:groupId', requireAuth, async (req, res) => {
    if (group) {
       if (organizer === group.organizerId) {
          await group.destroy();
-         res.json({
+         return res.json({
             message: "Successfully deleted",
             statusCode: 200
          })
@@ -585,7 +585,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             startDate,
             endDate
          })
-         await Attendee.create({
+            await Attendee.create({
             eventId: createEvent.id,
             userId: user,
             status: "host"
