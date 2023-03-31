@@ -18,12 +18,12 @@ module.exports = {
       eventId: {
         type: Sequelize.INTEGER,
         references: {model: 'Events'},
-        onDelete: 'CASCADE'
+
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {model: 'Users'},
-        onDelete: 'CASCADE'
+       
       },
       status: {
         type: Sequelize.STRING
