@@ -44,7 +44,7 @@ router.post('/', validateSignup, async (req, res, next) => {
   const { firstName, lastName, email, username, password } = req.body;
 
   const checkEmail = await User.findOne({
-    where: email
+    where: {email}
   })
 
   if (checkEmail) {
