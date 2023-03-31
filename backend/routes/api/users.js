@@ -9,15 +9,15 @@ const router = express.Router();
 
 const validateSignup = [
   check('firstName')
-  .exists({checkFalsy: true})
-  .not()
-  .isEmpty()
-  .withMessage('First Name is required'),
+    .exists({ checkFalsy: true })
+    .not()
+    .isEmpty()
+    .withMessage('First Name is required'),
   check('lastName')
-  .exists({checkFalsy: true})
-  .not()
-  .isEmpty()
-  .withMessage('Last Name is required'),
+    .exists({ checkFalsy: true })
+    .not()
+    .isEmpty()
+    .withMessage('Last Name is required'),
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
@@ -34,36 +34,40 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
-   handleValidationErrors
+  handleValidationErrors
 ];
 
 // Sign up
 router.post('/', validateSignup, async (req, res, next) => {
-     let user = {}
+  let user = {}
 
-      const { firstName, lastName, email, username, password } = req.body;
+  const { firstName, lastName, email, username, password } = req.body;
 
-      // if(email) {
-      //   const err = new Error("User already exists");
-      //   err.status = 403;
-      //   err.title = "User already exists";
-      //   err.errors = {email: "User with that email already exists"};
-      //   return next(err);
-      // }
+  const checkEmail = await User.findOne({
+    where: email
+  })
 
-      const userOne = await User.signup(req.body);
+  if (checkEmail) {
+    const err = new Error("User already exists");
+    err.status = 403;
+    //err.title = "User already exists";
+    err.errors = { email: "User with that email already exists" };
+    return next(err);
 
-      let token = await setTokenCookie(res, userOne);
-      userOne.token = token
+  } else {
+    const userOne = await User.signup(req.body);
 
-      user.id = userOne.id
-      user.firstName = userOne.firstName;
-      user.lastName = userOne.lastName;
-      user.email = userOne.email;
-      user.token = userOne.token
+    let token = await setTokenCookie(res, userOne);
+    userOne.token = token
 
-      return res.json(user);
-    }
-  );
+    user.id = userOne.id
+    user.firstName = userOne.firstName;
+    user.lastName = userOne.lastName;
+    user.email = userOne.email;
+    user.token = userOne.token
+
+    return res.json(user);
+  }
+});
 
 module.exports = router;
