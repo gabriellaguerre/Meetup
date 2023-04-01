@@ -2,45 +2,60 @@ const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Group, GroupImage, Venue, EventImage, Event, Membership, Attendee } = require('../../db/models');
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize')
 
 const router = express.Router();
 
 const validateQuery = [
-    check('page')
-        .exists({ checkFalsy: true })
-        //   .min({min: 1})
+    query('page')
+        .if((value, {req}) => req.query.page)
+        .custom((value, { req }) => value >= 1)
         .withMessage('Page must be greater than or equal to 1'),
-    check('size')
-        .exists({ checkFalsy: true })
-        //  .min({min: 1})
+    query('size')
+        .if((value, {req}) => req.query.size)
+        .custom((value, { req }) => value >= 1)
         .withMessage('Size must be greater than or equal to 1'),
-    check('name')
-        .exists({ checkFalsy: true })
-        .isAlpha()
+    query('name')
+        .if((value, { req }) => req.query.name)
+        .custom((value, {req}) => typeof value !== 'string')
         .withMessage("Name must be a string"),
-    check('type')
-        .exists({ checkFalsy: true })
-        .isAlpha()
-        .isIn({ isIn: ['Online', 'In person'] })
+    query('type')
+        .if((value, {req}) => req.query.type)
+        .custom((value, {req}) => value === 'Online' || value === 'In person')
         .withMessage("Type must be 'Online' or 'In Person'"),
-    check('startDate')
-        .exists({ checkFalsy: true })
+    query('startDate')
+        .if((value, {req}) => req.query.startDate)
         .isDate()
         .withMessage('Start date must be a valid datetime'),
-    //handleValidationErrors
+    handleValidationErrors,
+
 ];
 
+
 /*******Get All Events*******************/
-router.get('/', handleValidationErrors, async (req, res) => {
+router.get('/', validateQuery, async (req, res) => {
     let { page, size, name, type, startDate } = req.query
+
+    if (!page || page > 10) {
+        page = 1
+    } else {
+        page = Number.parseInt(page)
+    }
+
+    if (!size || size > 20) {
+        size = 20
+    }  else {
+        size = Number.parseInt(size)
+    }
+
+    limit = size;
+    offset = limit * (page - 1)
 
     let where = {}
 
     if (name) {
-        validateQuery
         where.name = { [Op.substring]: name }
     }
 
@@ -51,12 +66,6 @@ router.get('/', handleValidationErrors, async (req, res) => {
     if (startDate) {
         where.startDate = { [Op.substring]: startDate }
     }
-
-    if (!page || page < 1 || page > 10) page = 1;
-    if (!size || size < 1 || size > 20) size = 20;
-
-    limit = size;
-    offset = limit * (page - 1)
 
     let result = {};
 
@@ -75,12 +84,13 @@ router.get('/', handleValidationErrors, async (req, res) => {
                 attributes: ['id', 'city', 'state']
             }
         ],
+        limit,
+        offset
     })
 
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
         let eventOne = event.toJSON()
-  //      console.log(eventOne, 'ppppppppppp')
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -92,22 +102,22 @@ router.get('/', handleValidationErrors, async (req, res) => {
                 preview: true
             }
         })
-        if(!previewimage) {
-            previewimage.url = "No image posted"
+        if (!previewimage) {
+            eventOne.previewImage = "No image posted"
         } else {
-            previewimage.url = "image url"
+            eventOne.previewImage = previewimage.url
         }
-        if(!eventOne.venueId) eventOne.venueId = null
-        if(!eventOne.Venue) eventOne.Venue = null
+
+        if (!eventOne.venueId) eventOne.venueId = null
+        if (!eventOne.Venue) eventOne.Venue = null
 
         eventOne.numAttending = attending
-        //eventOne.previewImage = previewimage.url
 
         activities.push(eventOne)
     }
     result.Events = activities,
         result.page = page,
-        result.size = size
+        result.size = limit
 
     res.json(result)
 })
@@ -459,9 +469,9 @@ router.post('/:eventId/attendance', requireAuth, async (req, res) => {
                     status: "pending"
                 })
                 let data = {}
-              //  data.id = attend.id,
+                //  data.id = attend.id,
                 data.userId = attend.userId,
-                data.status = attend.status
+                    data.status = attend.status
                 res.json(data)
             }
         } else if (member && attendance) {
@@ -551,9 +561,9 @@ router.put('/:eventId/attendance', requireAuth, async (req, res) => {
                     let going = {}
 
                     going.id = attendanceOne.id,
-                    going.eventId = attendanceOne.eventId,
-                    going.userId = attendanceOne.userId,
-                    going.status = attendanceOne.status
+                        going.eventId = attendanceOne.eventId,
+                        going.userId = attendanceOne.userId,
+                        going.status = attendanceOne.status
 
                     res.status(200).json(going)
                 }

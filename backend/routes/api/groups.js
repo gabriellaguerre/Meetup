@@ -553,7 +553,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
    const user = req.user.id
 
    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
-
+  
    // if(!venueId) {
    //    const err = new Error("Validation Error")
    //    err.status = 400
