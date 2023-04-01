@@ -75,6 +75,7 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.NUMERIC,
       validate: {
+        isNumeric: true,
         checkPrice(value) {
           if(typeof value !== 'number') {
             throw new Error("Price is invalid")
