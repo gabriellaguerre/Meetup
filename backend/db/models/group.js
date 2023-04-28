@@ -42,6 +42,11 @@ module.exports = (sequelize, DataTypes) => {
           if (value.length > 60) {
             throw new Error('Name must be 60 characters or less')
           }
+        },
+        checkEmptyString(value) {
+          if(value.length === 0) {
+            throw new Error('Name cannot be empty')
+          }
         }
       }
     },

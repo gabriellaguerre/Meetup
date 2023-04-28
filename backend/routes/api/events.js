@@ -19,7 +19,7 @@ const validateQuery = [
         .withMessage('Size must be greater than or equal to 1'),
     query('name')
         .if((value, { req }) => req.query.name)
-        .custom((value, {req}) => typeof value !== 'string')
+        .custom((value, {req}) => typeof value === 'string')
         .withMessage("Name must be a string"),
     query('type')
         .if((value, {req}) => req.query.type)

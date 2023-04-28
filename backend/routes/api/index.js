@@ -30,9 +30,9 @@ router.use('/event-images', eventImageRouter);
 
 
 
-router.post('/test', function(req, res) {
-    res.json({ requestBody: req.body });
-  });
+// router.post('/test', function(req, res) {
+//     res.json({ requestBody: req.body });
+//   });
 
 //************All Code For Testing User Auth Middleware Routes**********/
 
