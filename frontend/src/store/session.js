@@ -40,7 +40,7 @@ export const restoreUser = () => async (dispatch) => {
 
 export const signUpUser = (newUser) => async (dispatch) => {
   const {firstName, lastName, email, username, password} = newUser
-  console.log(newUser, "IN SIGN UP SESSION")
+
   const response = await csrfFetch('/api/users', {
     method: "POST",
     body: JSON.stringify({
@@ -51,13 +51,18 @@ export const signUpUser = (newUser) => async (dispatch) => {
       password
     })
   })
-  console.log(response, 'IN RESPONSE IN SIGN UP')
   const data = await response.json()
   dispatch(setUser(data.user))
-  console.log(data, 'DATA in signUpUser session')
   return data
 }
 
+export const logoutUser = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE'
+  })
+  dispatch(removeUser())
+  return response
+}
 
 const initialState = { user: null };
 
