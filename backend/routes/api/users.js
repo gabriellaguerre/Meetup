@@ -38,10 +38,12 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post('/', validateSignup, async (req, res, next) => {
+router.post('/', async (req, res, next) => {  //'/', /*validateSignup*/, async (req, res, next
   let user = {}
 
   const { firstName, lastName, email, username, password } = req.body;
+
+  console.log(req.body, "IN BACKEND SIGNUP")
 
   const checkEmail = await User.findOne({
     where: {email}

@@ -7,6 +7,7 @@ import './LoginForm.css'
 function LoginFormPage() {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
+    console.log(sessionUser, "LOGIN FORM PAGE")
 
     const [credential, setCredential] = useState('')
     const [password, setPassword] = useState('')
@@ -20,9 +21,9 @@ function LoginFormPage() {
         dispatch(sessionActions.login({credential, password}))
     }
 
-    if(sessionUser) {
-        return <Redirect to='/' />
-        }
+    // if(sessionUser) {
+    //     return <Redirect to='/' />
+    //     }
     return (
         <form onSubmit={handleSubmit}>
             <ul>
