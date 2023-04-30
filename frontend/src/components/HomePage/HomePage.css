@@ -1,0 +1,28 @@
+#pageContainer {
+    display: grid;
+    grid-template-columns: (3,1fr);
+    grid-template-rows: (3,1fr);
+    grid-template-areas:
+    "top . top"
+    ". main ."
+    "bottom bottom bottom"
+    ". footer ."
+}
+.top{
+    grid-area: top;
+    background-color: yellow;
+}
+
+
+.main{
+    grid-area: main;
+    background-color: pink;
+}
+.bottom {
+    grid-area: bottom;
+    background-color: orange;
+}
+.footer {
+    grid-area: footer;
+    background-color:aqua;
+}
