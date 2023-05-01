@@ -5,6 +5,7 @@ import LoginFormPage from './components/LoginFormModal';
 import SignUpPage from './components/SignupFormModal';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
+import Groups from './components/Groups'
 
 function App() {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-
+          <Route path='/groups' component={Groups} />
         </Switch>
       )}
     </>
