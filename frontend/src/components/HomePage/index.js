@@ -1,6 +1,9 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
 import './HomePage.css'
+import Groups from '../Groups'
+
+
 
 
 function HomePage() {
@@ -14,11 +17,12 @@ function HomePage() {
             <img src=''/>
         </span>
         <div className='main'>
-            How FishNet works
+            How get2gether works
         </div>
         <div>
             <span className='bottom'>
                 <Link to='/groups'>See all groups</Link>
+                
             </span>
             <span className='bottom'>Find an event</span>
             <span className='bottom'>Start a new group</span>
