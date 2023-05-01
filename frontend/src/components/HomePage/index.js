@@ -24,7 +24,7 @@ function HomePage() {
             <span className='bottom'>Start a new group</span>
         </div>
         <div className='footer'>
-            <button>Join FishNet</button>
+            <button>Join get2gether</button>
         </div>
         </div>
         </>

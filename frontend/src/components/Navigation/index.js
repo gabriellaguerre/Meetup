@@ -40,7 +40,7 @@ function Navigation({ isLoaded }) {
         <>
         <ul id='homepageContainer'>
             <div className='homePage'>
-                <NavLink exact to='/'>FishNet</NavLink>
+                <NavLink exact to='/'>get2gether</NavLink>
             </div>
             {isLoaded && (
                 <div className='profileButton'>
