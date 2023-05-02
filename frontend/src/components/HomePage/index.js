@@ -7,9 +7,19 @@ import Groups from '../Groups'
 
 
 function HomePage() {
+
+    // const handleClick = (e) => {
+    //     e.preventDefault()
+    //     return(
+    //         <>
+
+    //         </>
+    //     )
+   // }
+
     return (
-        <>
-        <div>
+        // <>
+        {/* <div>
         <div className='top'>
             The people platform - Where interests become friendships
         </div>
@@ -20,9 +30,9 @@ function HomePage() {
             How get2gether works
         </div>
         <div>
-            <span className='bottom'>
+            <span className='bottom'
+            onClick={handleClick}>
                 <Link to='/groups'>See all groups</Link>
-                
             </span>
             <span className='bottom'>Find an event</span>
             <span className='bottom'>Start a new group</span>
@@ -31,7 +41,7 @@ function HomePage() {
             <button>Join get2gether</button>
         </div>
         </div>
-        </>
+        </> */}
     );
 }
 
