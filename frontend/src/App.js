@@ -6,6 +6,8 @@ import SignUpPage from './components/SignupFormModal';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import Groups from './components/Groups'
+import GroupDetail from './components/Groups/GroupDetails'
+import Events from './components/Events'
 
 function App() {
   const dispatch = useDispatch()
@@ -21,6 +23,8 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route path='/groups' component={Groups} />
+          <Route exact path='/groups/:groupId' component={GroupDetail} />
+          <Route path='/events' component={Events} />
         </Switch>
       )}
     </>

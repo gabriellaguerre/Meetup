@@ -5,7 +5,6 @@ const REMOVE_GROUP = 'group/removeGroup'
 const CREATE_GROUP = 'group/createGroup'
 
 const loadGroups = (data) => {
-    console.log(data, "IN LOAD GROUPS")
     return {
         type: GET_GROUPS,
         data

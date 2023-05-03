@@ -2,27 +2,28 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
 import {Link, Route} from 'react-router-dom'
-import * as groupActions from '../../store/group'
-import GroupDetail from './GroupDetails'
+import * as eventActions from '../../store/event'
+import EventDetail from './EventDetails'
+
 import Navigation from '../Navigation'
 
-function Groups() {
+function Events() {
     const dispatch = useDispatch();
-    const groupList = useSelector(state => Object.values(state.group))
+    const eventList = useSelector(state => Object.values(state.event))
 
-    const [groupD, setGroupD] = useState(false)
+     const [eventD, setEventD] = useState(false)
 
     useEffect(() => {
-        dispatch(groupActions.fetchGroups())
+        dispatch(eventActions.fetchEvents())
     }, [dispatch])
 
 
 
-    if(groupD === true) {
+    if(eventD === true) {
         return (
             <>
-            <Route path='/groups/:id'>
-            <GroupDetail />
+            <Route path='/events/:id'>
+            <EventDetail />
             </Route>
             </>
             )
@@ -31,16 +32,16 @@ function Groups() {
 
     return (
         <>
-        <span><Link to='/events'>Events</Link></span>
-        <div>Groups</div>
-        {groupList.map(group => (
+        <div>Events</div>
+        <span><Link to='/groups'>Groups</Link></span>
+        {eventList.map(event => (
             <div>
-                <Link to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
-                <li key={group.id}>{group.name}</li>
+                <Link to={`/events/${event.id}`} onClick={() => setEventD(true)}>
+                <li key={event.id}>{event.name}</li>
                 {/* <li>Organizer ID: {group.organizerId}</li>
                 <li>Name: {group.name}</li>/home/gabriel/appacademy-2022-meetup-project/Meetup/frontend/src/context
                 <li>About: {group.about}</li> */}
-                </Link>
+            </Link>
             </div>
         ))}
 
@@ -48,4 +49,4 @@ function Groups() {
     )
 }
 
-export default Groups
+export default Events
