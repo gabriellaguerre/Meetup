@@ -7,7 +7,9 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import Groups from './components/Groups'
 import GroupDetail from './components/Groups/GroupDetails'
+import CreateGroup from './components/Groups/CreateGroup'
 import Events from './components/Events'
+import HomePage from './components/HomePage'
 
 function App() {
   const dispatch = useDispatch()
@@ -20,13 +22,17 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+
       {isLoaded && (
         <Switch>
-          <Route path='/groups' component={Groups} />
+          <Route exact path='/' component={HomePage} />
+          <Route exact path='/groups' component={Groups} />
+           <Route exact path='/groups/new' component={CreateGroup} />
           <Route exact path='/groups/:groupId' component={GroupDetail} />
           <Route path='/events' component={Events} />
         </Switch>
       )}
+
     </>
   );
 }

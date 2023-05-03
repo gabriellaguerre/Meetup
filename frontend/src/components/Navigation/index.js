@@ -68,7 +68,7 @@ function Navigation({ isLoaded }) {
             )}
         </ul>
         <div>
-            <HomePage user={sessionUser}/>
+            {/* <HomePage user={sessionUser}/> */}
         </div>
 
         {/* <div>
