@@ -1,26 +1,26 @@
 import {Link, useParams, Redirect} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {useState} from 'react'
-import Groups from './index'
+import Events from './index'
 
-function GroupDetail() {
+function EventDetail() {
  const {id} = useParams();
 
- const group = useSelector(state => state.group[id])
+ const event = useSelector(state => state.event[id])
 
- 
+
     return (
         <>
-        <h2>IN GROUP DETAIL</h2>
-        <Link to='/groups'> Groups</Link>
+       
+        <Link to='/events'> Back to Events</Link>
          <section> Name:
-          {group.name}
+          {event.name}
          <br/> Organizer:
-          {group.organizerId}
+          {}
          <br/>
          What We Are About:
          <p>
-         {group.about}
+         {}
          </p>
          <br/>
       </section>
@@ -28,4 +28,4 @@ function GroupDetail() {
     )
 }
 
-export default GroupDetail;
+export default EventDetail;

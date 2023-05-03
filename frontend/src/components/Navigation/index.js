@@ -67,8 +67,11 @@ function Navigation({ isLoaded }) {
                 </div>
             )}
         </ul>
-
         <div>
+            <HomePage user={sessionUser}/>
+        </div>
+
+        {/* <div>
         <div className='top'>
             The people platform - Where interests become friendships
         </div>
@@ -90,7 +93,7 @@ function Navigation({ isLoaded }) {
         <div className='footer'>
             <button onClick={() => setSignUp(true)}>Join get2gether</button>
         </div>
-        </div>
+        </div> */}
         </>
 
 
