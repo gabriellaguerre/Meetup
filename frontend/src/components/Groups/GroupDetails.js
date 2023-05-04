@@ -5,10 +5,11 @@ import Groups from './index'
 
 function GroupDetail() {
  const {id} = useParams();
+ console.log(id, "ID")
 
  const group = useSelector(state => state.group[id])
+console.log(group, "IN GROUP DETAILS")
 
- 
     return (
         <>
         <h2>IN GROUP DETAIL</h2>

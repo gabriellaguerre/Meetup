@@ -17,9 +17,10 @@ const removeGroup = () => {
     }
 }
 
-const createGroup = () => {
+const createGroup = (group) => {
     return {
-        type: CREATE_GROUP
+        type: CREATE_GROUP,
+        group
     }
 }
 
@@ -34,6 +35,19 @@ export const fetchGroups = () => async (dispatch) => {
 
 }
 
+export const creatingGroup = (payload) => async (dispatch) => {
+    console.log("IN CREATING GROUP THUNK")
+    const response = await csrfFetch('/api/groups', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(createGroup(data))
+    }
+}
+
 const groupReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
@@ -41,10 +55,13 @@ const groupReducer = (state = {}, action) => {
             newState = {}
             action.data.Groups.map((Group) => newState[Group.id] = Group)
             return newState;
+        case CREATE_GROUP:
+            newState = {...state, [action.group.id]: action.group}
+            return newState
         case REMOVE_GROUP:
-            newState = Object.assign({}, state);
-            newState.user = null;
-            return newState;
+            newState = {...state}
+            delete newState[action.reportId]
+            return newState
         default:
             return state;
     }

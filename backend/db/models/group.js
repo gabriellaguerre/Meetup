@@ -64,8 +64,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isIn: {
-          args: [['Online', 'In person']],
-          msg: "Type must be 'Online' or 'In person'"
+          args: [['Online', 'In Person']],
+          msg: "Type must be 'Online' or 'In Person'"
         }
       }
     },

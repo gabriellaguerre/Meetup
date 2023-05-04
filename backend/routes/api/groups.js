@@ -10,12 +10,13 @@ const router = express.Router();
 
 //************POST Create a Group*****************/
 router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
+
    const userId = req.user.id
 
    const organizerId = userId
 
    const { name, about, type, private, city, state } = req.body
-
+   
    const newGroup = await Group.create({
       organizerId,
       name,
@@ -25,6 +26,8 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       city,
       state
    })
+   console.log(newGroup, 'NEW GROUP IN POST CREATE GROUP')
+
    await Membership.create({
       userId: userId,
       groupId: newGroup.id,
@@ -553,7 +556,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
    const user = req.user.id
 
    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
-  
+
    // if(!venueId) {
    //    const err = new Error("Validation Error")
    //    err.status = 400
