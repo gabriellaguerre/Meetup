@@ -1,11 +1,13 @@
 import React from 'react'
-import {Link, Route} from 'react-router-dom'
-
+import {NavLink, Route} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 import './HomePage.css'
 import Groups from '../Groups'
+import CreateGroup from '../Groups/CreateGroup'
 
-function HomePage({ user }) {
-console.log(user, "IN HOME PAGE")
+function HomePage() {
+    const user = useSelector(state => state.session.user)
+
     return (
          <>
          <div>
@@ -20,14 +22,14 @@ console.log(user, "IN HOME PAGE")
         </div>
         <div>
             <span className='bottom'>
-                <Link to='/groups'>See all groups</Link>
+                <NavLink to='/groups'>See all groups</NavLink>
             </span>
             <span className='bottom'>
-              <Link to='/events'>Find an event</Link>
+              <NavLink to='/events'>Find an event</NavLink>
             </span>
             <span className='bottom'>
             {user ? (
-                <Link to='/groups/new'>Start a new group</Link>
+                <NavLink to='/groups/new'>Start a new group</NavLink>
             ) : (
                 <span>Start a new group</span>
                 )}
