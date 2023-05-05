@@ -8,54 +8,79 @@ import * as sessionGroup from '../../store/group'
 
 function GroupForm({ group, formType }) {
     const user = useSelector(state => state.session.user)
-
-    //  console.log(group, "IN GROUP FORM")
-    // location = [group.city,group.state]
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [oneGroup, setOneGroup] = useState(group)
-    const [city, setCity] = useState(group.city)
-    const [state, setState] = useState(group.state)
-    const [oneLocation, setOneLocation] = useState([city, state])
+    console.log(group.groupId, "GROUP ID IN GROUP FORM")
+    const id = group.groupId
+
+    const [oneLocation, setOneLocation] = useState(group.oneLocation)
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
     const [type, setType] = useState(group.type)
     const [privatePublic, setPrivatePublic] = useState(group.privatePublic)
-    const [url, setUrl] = useState(group.previewImage)
-
-
+    const [url, setUrl] = useState(group.url)
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (formType === "Update Group") {
-            group = { ...group, oneLocation, name, about, type, privatePublic, url }
-            console.log(group, "IN IF STATEMENT UPDATE GROUP")
+        const form = {
+            oneLocation,
+            name,
+            about,
+            type,
+            privatePublic,
+            url
+        }
+        const newLocation = oneLocation.split(',')
+        let boolVal = JSON.parse(privatePublic)
+
+        const form2 = {
+            city: newLocation[0],
+            state: newLocation[1],
+            name,
+            about,
+            type,
+            privatePublic: boolVal,
+            url
         }
 
-        if (formType === "Create Group") {
-            const newLocation = oneLocation.split(',')
-            let boolVal = JSON.parse(privatePublic)
+        dispatch(sessionGroup.creatingGroup(form2))
+        history.push(`/groups`)
 
-            const form = {
-                city: newLocation[0],
-                state: newLocation[1],
-                name,
-                about,
-                type,
-                privatePublic: boolVal,
-                url
-            }
-
-            console.log(form, "FORM IN GROUP FORM")
-            dispatch(sessionGroup.creatingGroup(form))
-            history.push(`/groups`)
-        }
-
-        // setCity(newLocation[0])
-        // setState(newLocation[1])
     }
+
+    const handleUpdate = (e) => {
+        e.preventDefault()
+
+        const form = {
+            oneLocation,
+            name,
+            about,
+            type,
+            privatePublic,
+            url
+        }
+
+
+        const newLocation = oneLocation.split(',')
+        let boolVal = JSON.parse(privatePublic)
+
+        const form2 = {
+            city: newLocation[0],
+            state: newLocation[1],
+            name,
+            about,
+            type,
+            privatePublic: boolVal,
+            url
+        }
+        console.log(form2, 'IN FORM2 UPDATE BUTTON')
+        dispatch(sessionGroup.editingGroup(form2, id))
+        history.push(`/groups`)
+
+    }
+
 
     if (user === null) {
         return (
@@ -67,16 +92,16 @@ function GroupForm({ group, formType }) {
         if (formType === "Update Group") {
             return (
                 <>
-                    <button onClick={handleSubmit}>Update Group</button>
+                    <button onClick={handleUpdate}>Update Group</button>
                     <button onClick={() => history.push('/groups')}>Cancel</button>
                 </>
             )
         } else {
             return (
-            <>
-                <button onClick={handleSubmit}>Create Group</button>
-                <button onClick={() => history.push('/')}>Cancel</button>
-            </>
+                <>
+                    <button onClick={handleSubmit}>Create Group</button>
+                    <button onClick={() => history.push('/')}>Cancel</button>
+                </>
             )
         }
     }

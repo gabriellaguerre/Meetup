@@ -44,6 +44,7 @@ function GroupDetail() {
                 <button>Create Event</button>
                 <button onClick={() => EditGroup()}>Update</button>
                 <button type='submit' onClick={removeGroup}>Delete</button>
+                <button onClick={() => history.push('/groups')}>back</button>
             </p>
         </>
     )

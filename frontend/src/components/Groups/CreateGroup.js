@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import GroupForm from './GroupForm';
 
 
@@ -5,13 +6,14 @@ function CreateGroup() {
 
         const group = {
             oneLocation: '',
-            name: '',
+            name:'',
             about: '',
             type: '',
-            private: '',
+            privatePublic: '',
             url: ''
         }
 
+console.log(group, "IN CREATE GROUP")
 
     return (
         <GroupForm group={group} formType="Create Group" />

@@ -26,7 +26,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       city,
       state
    })
-   
+
    await Membership.create({
       userId: userId,
       groupId: newGroup.id,
@@ -280,6 +280,7 @@ router.post('/:groupId/images', requireAuth, async (req, res) => {
 
 /***********PUT Edit a Group*******************/
 router.put('/:groupId', requireAuth, async (req, res) => {
+   
    const groupId = req.params.groupId
 
    const user = req.user.id

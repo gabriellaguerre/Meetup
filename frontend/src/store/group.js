@@ -56,8 +56,8 @@ export const creatingGroup = (payload) => async (dispatch) => {
     }
 }
 
-export const editingGroup = (payload) => async (dispatch) => {
-    const response = await csrfFetch('/api/groups', {
+export const editingGroup = (payload, id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
