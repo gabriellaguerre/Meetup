@@ -16,7 +16,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
    const organizerId = userId
 
    const { name, about, type, private, city, state } = req.body
-   
+
    const newGroup = await Group.create({
       organizerId,
       name,
@@ -26,8 +26,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       city,
       state
    })
-   console.log(newGroup, 'NEW GROUP IN POST CREATE GROUP')
-
+   
    await Membership.create({
       userId: userId,
       groupId: newGroup.id,

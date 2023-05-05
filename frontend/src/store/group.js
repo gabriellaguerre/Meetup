@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const GET_GROUPS = 'group/getGroups'
 const REMOVE_GROUP = 'group/removeGroup'
 const CREATE_GROUP = 'group/createGroup'
+const UPDATE_GROUP = 'group/updateGroup'
 
 const loadGroups = (data) => {
     return {
@@ -11,15 +12,23 @@ const loadGroups = (data) => {
     }
 }
 
-const removeGroup = () => {
+const removeGroup = (groupId) => {
     return {
-        type: REMOVE_GROUP
+        type: REMOVE_GROUP,
+        groupId
     }
 }
 
 const createGroup = (group) => {
     return {
         type: CREATE_GROUP,
+        group
+    }
+}
+
+const editGroup = (group) => {
+    return {
+        type: UPDATE_GROUP,
         group
     }
 }
@@ -32,11 +41,10 @@ export const fetchGroups = () => async (dispatch) => {
         dispatch(loadGroups(data))
         return data
     }
-
 }
 
 export const creatingGroup = (payload) => async (dispatch) => {
-    console.log("IN CREATING GROUP THUNK")
+
     const response = await csrfFetch('/api/groups', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -46,6 +54,28 @@ export const creatingGroup = (payload) => async (dispatch) => {
         const data = await response.json()
         dispatch(createGroup(data))
     }
+}
+
+export const editingGroup = (payload) => async (dispatch) => {
+    const response = await csrfFetch('/api/groups', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(editGroup(data))
+    }
+}
+
+export const groupRemover = (groupId) => async (dispatch) => {
+
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'DELETE'
+    })
+
+    dispatch(removeGroup(groupId))
+    return response
 }
 
 const groupReducer = (state = {}, action) => {
@@ -58,9 +88,12 @@ const groupReducer = (state = {}, action) => {
         case CREATE_GROUP:
             newState = {...state, [action.group.id]: action.group}
             return newState
+        case UPDATE_GROUP:
+            newState = {...state, [action.group.id]: action.group}
+            return newState
         case REMOVE_GROUP:
             newState = {...state}
-            delete newState[action.reportId]
+            delete newState[action.groupId]
             return newState
         default:
             return state;
