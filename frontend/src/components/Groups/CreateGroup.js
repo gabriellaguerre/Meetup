@@ -13,7 +13,6 @@ function CreateGroup() {
             url: ''
         }
 
-console.log(group, "IN CREATE GROUP")
 
     return (
         <GroupForm group={group} formType="Create Group" />

@@ -27,8 +27,8 @@ function Events() {
 
     return (
         <>
-        <div>Events</div>
-        <span><Link to='/groups'>Groups</Link></span>
+        <div>Events <Link to='/groups'>Groups</Link></div>
+      
         {eventList.map(event => (
             <div>
                 <Link to={`/events/${event.id}`} onClick={() => setEventD(true)}>

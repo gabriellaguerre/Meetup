@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -19,9 +19,27 @@ function GroupForm({ group, formType }) {
     const [type, setType] = useState(group.type)
     const [privatePublic, setPrivatePublic] = useState(group.privatePublic)
     const [url, setUrl] = useState(group.url)
+    const [errors, setErrors] = useState([])
+ //   const [disable, setDisable] = useState(true)
+
+//     useEffect(() => {
+//         const error = []
+//         if(errors.name) error.push(errors.name)
+//         if(errors.about) error.push(errors.about)
+//         if(errors.type) error.push(errors.about)
+//         if(errors.privatePublic) error.push(errors.privatePublic)
+//         if(errors.url) error.push(errors.url)
+// console.log(error, "IN USE EFFECT")
+//         if(error) {
+//             setDisable(true)
+//         } else {
+//             setDisable(false)
+//         }
+//     }, [disable])
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setErrors([])
 
         const form = {
             oneLocation,
@@ -44,8 +62,17 @@ function GroupForm({ group, formType }) {
             url
         }
 
-        dispatch(sessionGroup.creatingGroup(form2))
-        history.push(`/groups`)
+        return dispatch(sessionGroup.creatingGroup(form2))
+               .catch(async (res) => {
+                const data = await res.json()
+                if(data && data.errors) {
+                    setErrors(data.errors)
+                  //  setDisable(true)
+                } else {
+                    history.push('/groups')
+                }
+
+               })
 
     }
 
@@ -74,10 +101,17 @@ function GroupForm({ group, formType }) {
             privatePublic: boolVal,
             url
         }
-       
-        dispatch(sessionGroup.editingGroup(form2, id))
-        history.push(`/groups`)
 
+       return dispatch(sessionGroup.editingGroup(form2, id))
+              .catch(async (res) => {
+                const data = await res.json()
+                if(data && data.errors) {
+                    setErrors(data.errors)
+                   // setDisable(true)
+                } else {
+                    history.push('/groups')
+                }
+              })
     }
 
 
@@ -89,16 +123,17 @@ function GroupForm({ group, formType }) {
 
     const typeButton = (formType) => {
         if (formType === "Update Group") {
+
             return (
                 <>
-                    <button onClick={handleUpdate}>Update Group</button>
+                    <button onSubmit={handleUpdate} >Update Group</button>
                     <button onClick={() => history.push('/groups')}>Cancel</button>
                 </>
             )
         } else {
             return (
                 <>
-                    <button onClick={handleSubmit}>Create Group</button>
+                    <button onSubmit={handleSubmit}>Create Group</button>
                     <button onClick={() => history.push('/')}>Cancel</button>
                 </>
             )
@@ -118,6 +153,12 @@ function GroupForm({ group, formType }) {
                 type='text'
                 value={oneLocation}
                 onChange={(e) => setOneLocation(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.city && (<p>{errors.city}</p>)}
+            </div>
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.state && (<p>{errors.state}</p>)}
+            </div>
 
 
             <h3>What will your group's name be?</h3>
@@ -127,6 +168,9 @@ function GroupForm({ group, formType }) {
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.name && (<p>{errors.name}</p>)}
+            </div>
 
             <h3>Now describe what your group will be about</h3>
             <p>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
@@ -134,9 +178,12 @@ function GroupForm({ group, formType }) {
             <ul>2. Who should join?</ul>
             <ul>3. What will you do at your events?</ul>
             <textarea
-                placeholder='Please write at least 30 characters'
+                placeholder='Please write at least 50 characters'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.about && (<p>{errors.about}</p>)}
+            </div>
 
             <h3>Final steps...</h3>
             <p>Is this an in person or online group?</p>
@@ -145,12 +192,19 @@ function GroupForm({ group, formType }) {
                 <option>In Person</option>
                 <option>Online</option>
             </select>
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.type && (<p>{errors.type}</p>)}
+            </div>
             <p>Is this group private or public?</p>
             <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
             </select>
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.private && (<p>{errors.private}</p>)}
+            </div>
+
             <p>Please add an image url for your group below</p>
             <input
                 placeholder='Image Url'

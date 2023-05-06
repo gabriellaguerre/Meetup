@@ -27,11 +27,7 @@ function LoginFormModal() {
         })
     }
 
-    // if (sessionUser) {
-    //     return <Redirect to='/' />
-    // }
-
-
+   
     return (
         <>
         <h1>Log In</h1>

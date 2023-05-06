@@ -22,9 +22,11 @@ function CreateEvent() {
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState()
     const [url, setUrl] = useState()
+    const [errors, setErrors] = useState([])
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setErrors([])
 
         const form = {
             venueId: 1,
@@ -50,13 +52,21 @@ function CreateEvent() {
             endDate,
             url
         }
-        dispatch(sessionEvent.creatingEvent(form2, groupId))
-        history.push(`/events`)
+        return dispatch(sessionEvent.creatingEvent(form2, groupId))
+               .catch(async (res) => {
+                const data = await res.json()
+                if(data && data.errors) {
+                    setErrors(data.errors)
+                }
+                else {
+                    history.push('/events')
+                }
+               })
 
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
 
             <h3>Create an event for {group.name}</h3>
             <p>What is the name of your event?</p>
@@ -65,6 +75,9 @@ function CreateEvent() {
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.name && (<p>{errors.name}</p>)}
+            </div>
 
             <p>Is this an in person or online event?</p>
             <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -72,6 +85,10 @@ function CreateEvent() {
                 <option>In person</option>
                 <option>Online</option>
             </select>
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.type && (<p>{errors.type}</p>)}
+            </div>
+
             <p>Is this group private or public?</p>
             <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}>
                 <option value='' disabled>(select one)</option>
@@ -85,6 +102,9 @@ function CreateEvent() {
                 type='number'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.price && (<p>{errors.price}</p>)}
+            </div>
 
 
             <p>When does your event start?</p>
@@ -93,6 +113,9 @@ function CreateEvent() {
                 type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.startDate && (<p>{errors.startDate}</p>)}
+            </div>
 
             <p>When does your event end?</p>
             <input
@@ -100,6 +123,9 @@ function CreateEvent() {
                 type='date'
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.endDate && (<p>{errors.endDate}</p>)}
+            </div>
 
             <p>Please add an image url for your group below</p>
             <input
@@ -113,8 +139,13 @@ function CreateEvent() {
                 placeholder='Please include at least 30 characters'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)} />
+            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            {errors.description && (<p>{errors.description}</p>)}
+            </div>
+
             <p>
-                <button>Create Event</button>
+                <button onClick={handleSubmit}>Create Event</button>
+                <button onClick={()=> history.push('/events')}>Cancel</button>
             </p>
         </form>
     )
