@@ -4,6 +4,7 @@ import * as sessionGroup from '../../store/group'
 import { useEffect } from 'react'
 import Groups from './index'
 import EditGroupForm from './EditGroup'
+import CreateEvent from '../Events/CreateEvent'
 
 function GroupDetail() {
     const { groupId } = useParams();
@@ -19,18 +20,26 @@ function GroupDetail() {
     }
 
     const EditGroup = () => {
-        console.log("IN EDIT GROUP")
         history.push(`/groups/${group.id}/edit`)
     }
 
+    const createEvent = () => {
+        history.push(`/groups/${group.id}/events/new`)
+       return (
+        <>
+        <CreateEvent groupId={group.id} />
+        </>
+       )
+
+    }
 
     return (
         <>
 
             <Link to='/groups'> Groups</Link>
-            <p>
-                <div><img src='' alt='' width='300' height='300' />Name: {group.name}</div>
 
+                <div><img src='' alt='' width='300' height='300' />Name: {group.name}</div>
+                <p>
 
                 <br /> Organizer:
                 {group.organizerId}
@@ -41,7 +50,7 @@ function GroupDetail() {
                 </p>
                 <br />
 
-                <button>Create Event</button>
+                <button onClick={() => createEvent(group)}>Create Event</button>
                 <button onClick={() => EditGroup()}>Update</button>
                 <button type='submit' onClick={removeGroup}>Delete</button>
                 <button onClick={() => history.push('/groups')}>back</button>

@@ -12,6 +12,7 @@ import CreateGroup from './components/Groups/CreateGroup'
 import EditGroup from './components/Groups/EditGroup'
 import Events from './components/Events'
 import EventDetail from './components/Events/EventDetails'
+import CreateEvent from './components/Events/CreateEvent'
 
 
 
@@ -33,9 +34,11 @@ function App() {
           <Route exact path='/groups' component={Groups} />
            <Route exact path='/groups/new' component={CreateGroup} />
           <Route  exact path='/groups/:groupId' component={GroupDetail} />
+          <Route path='/groups/:groupId/events/new' component={CreateEvent} />
           <Route path='/groups/:groupId/edit' component={EditGroup} />
-          <Route path='/events' component={Events} />
-          <Route path='/events/id' component={EventDetail} />
+          <Route exact path='/events' component={Events} />
+          <Route exact path='/events/:eventId' component={EventDetail} />
+
         </Switch>
       )}
 
