@@ -11,7 +11,6 @@ function GroupForm({ group, formType }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    console.log(group.groupId, "GROUP ID IN GROUP FORM")
     const id = group.groupId
 
     const [oneLocation, setOneLocation] = useState(group.oneLocation)
@@ -75,7 +74,7 @@ function GroupForm({ group, formType }) {
             privatePublic: boolVal,
             url
         }
-        console.log(form2, 'IN FORM2 UPDATE BUTTON')
+       
         dispatch(sessionGroup.editingGroup(form2, id))
         history.push(`/groups`)
 

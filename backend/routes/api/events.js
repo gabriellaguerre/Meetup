@@ -292,6 +292,7 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 
     const user = req.user.id
 
+
     if (event) {
         const groupId = event.groupId
 
