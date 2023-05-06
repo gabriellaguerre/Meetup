@@ -550,7 +550,7 @@ router.get('/:groupId/events', async (req, res) => {
 })
 
 /*************POST Create an Event by Group ID***********/
-router.post('/:groupId/events', /*requireAuth, handleValidationErrors,*/ async (req, res) => {
+router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req, res) => {
    const groupId = req.params.groupId
 
    const user = req.user.id
