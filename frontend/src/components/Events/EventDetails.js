@@ -13,7 +13,7 @@ function EventDetail() {
 
     const removeEvent = () => {
         dispatch(sessionEvent.eventRemover(eventId))
-        history.push('/events')
+        return history.push('/events')
     }
 
 
