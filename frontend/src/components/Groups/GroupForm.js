@@ -20,6 +20,7 @@ function GroupForm({ group, formType }) {
     const [privatePublic, setPrivatePublic] = useState(group.privatePublic)
     const [url, setUrl] = useState(group.url)
     const [errors, setErrors] = useState([])
+    
  //   const [disable, setDisable] = useState(true)
 
 //     useEffect(() => {
@@ -103,13 +104,12 @@ function GroupForm({ group, formType }) {
         }
 
        return dispatch(sessionGroup.editingGroup(form2, id))
+              .then(() => history.push('/groups'))
               .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {
                     setErrors(data.errors)
                    // setDisable(true)
-                } else {
-                    history.push('/groups')
                 }
               })
     }

@@ -53,13 +53,11 @@ function CreateEvent() {
             url
         }
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
+            .then(() => history.push('/events'))
                .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {
                     setErrors(data.errors)
-                }
-                else {
-                    history.push('/events')
                 }
                })
 
