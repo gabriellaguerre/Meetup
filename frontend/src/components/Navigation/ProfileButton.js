@@ -5,10 +5,11 @@ import * as sessionActions from '../../store/session'
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+
 //import './Navigation.css'
 
 function ProfileButton({ user }) {
-  
+
   const dispatch = useDispatch()
   const [showMenu, setShowMenu] = useState(false)
   const ulRef = useRef()
@@ -46,31 +47,36 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu}>
         <i className="fa-solid fa-user" />
+        
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+            <ul><Link to='/groups'>View Groups</Link></ul>
+            <p></p>
+            <ul>username:{user.username}</ul>
+            <ul>name: {user.firstName} {user.lastName}</ul>
+            <ul>email: {user.email}</ul>
+            <ul>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </ul>
           </>
         ) : (
           <>
-            <li>
+            <ul><Link to='/groups'>View Groups</Link></ul>
+            <p></p>
+            <ul>
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
-            </li>
-            <li>
+            </ul>
+            <ul>
               <OpenModalButton
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
-            </li>
+            </ul>
           </>
         )}
       </ul>

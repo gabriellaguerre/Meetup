@@ -3,6 +3,14 @@ import { csrfFetch } from './csrf';
 const GET_EVENTS = 'event/getEvents'
 const REMOVE_EVENT = 'event/removeEvent'
 const CREATE_EVENT = 'event/createEvent'
+const FIND_EVENT_GROUP = 'event/findEventGroup'
+
+const findEvent = (data) => {
+    return {
+        type: FIND_EVENT_GROUP,
+        data
+    }
+}
 
 const loadEvents = (data) => {
     return {
@@ -22,6 +30,18 @@ const createEvent = (event) => {
     return {
         type: CREATE_EVENT,
         event
+    }
+}
+
+export const findEvents = (groupId) => async () => {
+    const response = await fetch(`/api/groups/${groupId}/events`)
+
+    if(response.ok) {
+        const data = await response.json()
+        const numEvents = data.Events.length
+        console.log(numEvents)
+        // dispatch(findEvent(data))
+        return numEvents
     }
 }
 
@@ -63,7 +83,11 @@ const eventReducer = (state = {}, action) => {
         case GET_EVENTS:
             newState = {}
             action.data.Events.map((Event) => newState[Event.id] = Event)
-            return newState;
+            return newState
+        // case FIND_EVENT_GROUP:
+        //     newState={...state}
+        //     action.data.Events.map((Event) => newState[Event.id] = Event)
+        //     return newState;
         case CREATE_EVENT:
             newState = { ...state, [action.event.id]: action.event }
             return newState
