@@ -1,28 +1,87 @@
-/* #pageContainer {
+.homePageBox {
     display: grid;
-    grid-template-columns: (3,1fr);
-    grid-template-rows: (3,1fr);
-    grid-template-areas:
-    "top . top"
-    ". main ."
-    "bottom bottom bottom"
-    ". footer ."
-}
-.top{
-    grid-area: top;
-    background-color: yellow;
+    background-color: white;
+    width: auto;
+    height: 400px;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(4, 1fr);
+   grid-template-areas:
+      "header header header"
+      ". main ."
+      "footer footer footer"
+      ". footer .";
+
+    column-gap: 10px;
+    row-gap: 10px;
 }
 
+.item-a {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    justify-self: center;
+    align-self: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+.item-a .ipsum {
+    font-size: 15px;
+    font-weight: normal;
+}
 
-.main{
-    grid-area: main;
-    background-color: pink;
+.item-aPic {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    justify-self: center;
+    align-self: center;
 }
-.bottom {
-    grid-area: bottom;
-    background-color: orange;
+
+.item-b {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
 }
-.footer {
-    grid-area: footer;
-    background-color:aqua;
-} */
+
+.item-b .head {
+    font-size: 30px;
+    font-weight: bold;
+}
+.item-c {
+    grid-column: 1/2;
+    grid-row: 3/4;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+.item-d {
+    grid-column: 2/3;
+    grid-row: 3/4;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+
+}
+.item-e {
+    grid-column: 3/4;
+    grid-row: 3/4;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+.item-e #noUser {
+    color: gray;
+}
+
+.item-f {
+    grid-column: 2/3;
+    grid-row: 4/5;
+    justify-self: center;
+    align-self: end;
+}
+
+.item-f button {
+    background-color: blue;
+    color: white;
+    height: 40px;
+}

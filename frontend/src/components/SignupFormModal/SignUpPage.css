@@ -1,18 +1,79 @@
-/* .formbody{
-    display: block;
-    position: sticky;
-    left: 540px;
-    border: 2px solid;
-    width: 350px;
-    height: 450px;
-    /* background-color: pink; */
+.modalBackground1 {
+    width: 300px;
+    height: 300px;
+    background-color: rgb(85, 81, 81);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    position: static;
+    bottom: 100px;
+    right: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-/* }
-button{
-    position: relative;
-    left: 120px;
-    border: 2px solid;
-    border-radius: 15px;
-    height: 40px;
-    background-color: yellow;
-} */ 
+  .modalContainer1 {
+    width: 350px;
+    height: 500px;
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px;
+  }
+  .modalContainer1 .title1 {
+    display: inline-block;
+    text-align: center;
+    margin-top: 5x;
+    margin-bottom: 20px;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .titleCloseButton1 {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .titleCloseButton1 button {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .modalContainer1 .body1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+  }
+
+  .modalContainer1 .footer1 {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modalContainer1 .footer1 button {
+    width: 150px;
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  #cancelButton1 {
+    background-color: crimson;
+  }
+.errors {
+    color: red;
+    text-align: center;
+}
