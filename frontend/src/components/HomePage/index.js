@@ -2,7 +2,11 @@ import React from 'react'
 import {NavLink, Route} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import './HomePage.css'
-import screen from './HomePageImages/homepage1.png'
+import groupImage from './HomePageImages/groupImage.png'
+import groupImage2 from './HomePageImages/groupImage2.png'
+import eventPic from './HomePageImages/eventsPic.png'
+import newGroup from './HomePageImages/newGroupPic.png'
+
 import Groups from '../Groups'
 import CreateGroup from '../Groups/CreateGroup'
 
@@ -20,22 +24,34 @@ function HomePage() {
            typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
            Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
         </div>
-            <img className='item-aPic' src={screen} alt='screen image' height={250} width={300}/>
-        <div className='item-b'>How get2gether works </div>
+            <img className='item-aPic' src={groupImage} alt='screen' height={250} width={400} />
+        <div className='item-b'><div className='head'>How get2gether works</div>
+        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco </div>
+        </div>
 
         <div className='item-c'>
+        <div>
+        <img className='group' src={groupImage2} alt='group' height={100} width={150}/>
+        </div>
          <NavLink to='/groups'>See all groups</NavLink>
         </div>
 
         <div className='item-d'>
+        <div>
+        <img className='event' src={eventPic} alt='events' height={100} width={150}/>
+        </div>
          <NavLink to='/events'>Find an event</NavLink>
          </div>
 
             <div className='item-e'>
+            <div>
+            <img className='newGroup' src={newGroup} alt='newGroup' height={100} width={150} />
+            </div>
             {user ? (
                 <NavLink to='/groups/new'>Start a new group</NavLink>
             ) : (
-                <div>Start a new group</div>
+                <div id='noUser'>Start a new group</div>
                 )}
             </div>
 
