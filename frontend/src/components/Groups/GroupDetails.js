@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import Groups from './index'
 import EditGroupForm from './EditGroup'
 import CreateEvent from '../Events/CreateEvent'
+import './groupDetail.css'
 
 function GroupDetail() {
     const { groupId } = useParams();
@@ -34,27 +35,35 @@ function GroupDetail() {
     }
 
     return (
-        <>
+        <>      <div className='backLink'><Link to='/groups'> Groups</Link></div>
+                <div className='topContainer'>
+                <span className='groupImage'><img src='' alt='' width='200' height='200' /></span>
+                <span className='name'>{group.name}
+                <div className='location'>{group.city}, {group.state}</div>
+                <div>
+                <span className='events'># events</span>
+                <span className='public'>public</span>
+                </div>
+                <div className='organizer'>Organized by: {group.organizerId}</div>
+                <button className='joinButton'>Join This Group</button>
+                </span>
+                </div>
 
-            <Link to='/groups'> Groups</Link>
 
-                <div><img src='' alt='' width='300' height='300' />Name: {group.name}</div>
-                <p>
+                 <div className='bottomContainer'>
+                <div className='organizer'> Organizer </div>
+                <div className='name'>{group.organizerId}</div>
+                <div className='about'>What We're About:</div>
+                <div className='description'>{group.about}</div>
+                <div className='upcomingEvents'>Upcoming Events</div>
+                <div className='pastEvents'>Past Events</div>
+                </div>
 
-                <br /> Organizer:
-                {group.organizerId}
-                <br />
-                What We Are About:
-                <p>
-                    {group.about}
-                </p>
-                <br />
-
+                {/* <div>
                 <button onClick={() => createEvent(group)}>Create Event</button>
                 <button onClick={() => EditGroup()}>Update</button>
                 <button type='submit' onClick={removeGroup}>Delete</button>
-                <button onClick={() => history.push('/groups')}>back</button>
-            </p>
+                <button onClick={() => history.push('/groups')}>back</button> */}
         </>
     )
 }

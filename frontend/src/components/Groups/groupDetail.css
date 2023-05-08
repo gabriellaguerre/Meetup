@@ -1,0 +1,59 @@
+.backLink {
+    padding: 10px;
+}
+
+.topContainer {
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+.groupImage {
+    padding: 10px;
+}
+
+.name {
+    font-size: 30px;
+    padding: 10px;
+}
+
+.location {
+    padding: 8px;
+
+}
+
+.events {
+    font-size: 15px;
+    padding: 5px;
+}
+
+.public {
+    font-size: 15px;
+    padding: 5px;
+}
+
+.organizer {
+    font-size: 15px;
+    padding: 10px;
+}
+
+.bottomContainer .organizer {
+    font-size: 25px;
+}
+
+.bottomContainer .name {
+    font-size: 15px;
+}
+
+.bottomContainer .about {
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+.upcomingEvents {
+    padding: 20px;
+    font-size: 25px;
+}
+
+.pastEvents {
+    padding: 20px;
+    font-size: 25px;
+}

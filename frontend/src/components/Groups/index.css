@@ -22,7 +22,7 @@
 
 .groupList {
     display: flex;
-    height: 100px;
+    height: 150px;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
 }
@@ -47,4 +47,18 @@
 .about {
     font-size: 12px;
     padding-top: 10px;
+}
+
+.event {
+    font-size: 12px;
+}
+
+ .private {
+    font-size: 12px;
+}
+
+.dot {
+    font-size: 30px;
+    padding-right: 5px;
+    text-align: center;
 }
