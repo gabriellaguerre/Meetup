@@ -16,8 +16,6 @@ function Groups() {
     const groupList = useSelector(state => Object.values(state.group))
     const eventList = useSelector(state => Object.values(state.event))
 
-    console.log(eventList, "EVENTLIST IN GROUPS")
-
     const [groupD, setGroupD] = useState(false)
     const [events, setEvent] = useState([])
     const [groupId, setGroupId] = useState()
@@ -31,34 +29,37 @@ function Groups() {
         dispatch(eventActions.fetchEvents())
     }, [dispatch])
 
-    // let count = 0;
 
-  //  const counter = (groupId) => {
-        // eventList.map(event => {
-        //     console.log(event, "EVENT")
-        //     console.log(event.groupId, groupId, event.groupId === groupId, "IN COUNTER LOGIC")
-        //     if (event.groupId === groupId) {
-        //         count = count + 1
-        //         console.log(count)
-        //     }
-       // })
-        // return count
-        // for(let i = 0; i < eventList.length; i++) {
-        //     let event = eventList[i]
-        //     if(event.groupId === groupId) {
-        //         console.log(event.groupId, groupId, event.groupId === groupId)
-        //         console.log("YES")
-        //     }
-            //console.log(event, "IN FOR LOOP");
-   //     }
 
-  //  }
-  //  console.log(counter(groupId))
 
-  const count = async (groupId) => {
-    await eventList.count({
-        groupId: groupId
-    })}
+    //    console.log(groupList, "GROUPLIST")
+    //    console.log(eventList, "EVENTLIST IN GROUPS")
+    useEffect(() => {
+        let count = []
+        const counter = () => {
+            for (let i = 0; i < groupList.length; i++) {
+                for (let j = 0; j < eventList.length; j++) {
+                    let group = groupList[i]
+                    let event = eventList[j]
+                    console.log(group.id, event.groupId, "GROUP IN LOOP")
+                    if (group.id === event.groupId) {
+                        count.push(event)
+                    }
+                }
+        }
+        return count
+    }
+    }, [groupList, eventList])
+
+
+
+    //     let arr = []
+    //    const counter = async (groupId) =>{
+    //       let count = await dispatch(eventActions.findEvents(groupId))
+    //       console.log(count, "IN COUNTER")
+    //       arr.push(count)
+    //    }
+    // console.log(arr)
 
 
     if (groupD === true) {
@@ -84,22 +85,12 @@ function Groups() {
                                 <div className='location'>{group.city},{group.state}</div>
                                 <div className='about'>{group.about}</div>
                                 <div>
-                                    {/* {eventList.map(event => (
-                                    <ul key={event.groupId}>
-                                        if({event.groupId} === {group.id}) {
-                                        <div>hello</div>
-                                    }
-                                    </ul>
-                                ))} */}
-                                    <span className='event' >{count(group.id)}# events </span>
+                                    <span className='event' > events </span>
                                     <span className='dot'>.</span>
                                     <span className='private'>private {group.privatePublic}</span>
                                 </div>
                             </div>
                         </ul>
-                        {/* <li>Organizer ID: {group.organizerId}</li>
-                <li>Name: {group.name}</li>/home/gabriel/appacademy-2022-meetup-project/Meetup/frontend/src/context
-                <li>About: {group.about}</li> */}
                     </NavLink>
                 </div>
             ))}

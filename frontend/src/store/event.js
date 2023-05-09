@@ -38,8 +38,8 @@ export const findEvents = (groupId) => async () => {
 
     if(response.ok) {
         const data = await response.json()
-        const numEvents = data.Events.length
-        console.log(numEvents, "IN THUNK FIND EVENTS")
+        const numEvents = data.Events
+       // console.log(numEvents, "IN THUNK FIND EVENTS")
        // dispatch(findEvent(numEvents))
         return numEvents
     }
@@ -85,7 +85,7 @@ const eventReducer = (state = {}, action) => {
             action.data.Events.map((Event) => newState[Event.id] = Event)
             return newState
         case FIND_EVENT_GROUP:
-            newState = {...state}
+            newState = action.data
             return newState;
         case CREATE_EVENT:
             newState = { ...state, [action.event.id]: action.event }
