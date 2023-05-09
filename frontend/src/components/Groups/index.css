@@ -1,0 +1,64 @@
+.groupEvent {
+    color: gray;
+    text-decoration: none;
+    padding-right: 10px;
+    font-size: 25px;
+}
+
+.groupEvent:hover {
+    text-decoration: underline;
+}
+
+.groupGroup {
+    color: blue;
+    text-decoration: underline;
+    font-size: 25px;
+}
+
+.smallHeader {
+    color: gray;
+    padding: 10px;
+}
+
+.groupList {
+    display: flex;
+    height: 150px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+.groupListLink {
+
+    text-decoration: none;
+}
+
+.groupInfo {
+    padding-left: 20px;
+    font-size: 20px;
+}
+
+.groupListContainer {
+    display: block;
+}
+
+.location {
+    font-size: 15px;
+}
+
+.about {
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+.event {
+    font-size: 12px;
+}
+
+ .private {
+    font-size: 12px;
+}
+
+.dot {
+    font-size: 30px;
+    padding-right: 5px;
+    text-align: center;
+}

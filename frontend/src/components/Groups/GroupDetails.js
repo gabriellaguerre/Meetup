@@ -1,10 +1,11 @@
 import { Link, useParams, Route, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Groups from './index'
 import EditGroupForm from './EditGroup'
 import CreateEvent from '../Events/CreateEvent'
+import './groupDetail.css'
 
 function GroupDetail() {
     const { groupId } = useParams();
@@ -12,6 +13,58 @@ function GroupDetail() {
     const history = useHistory()
 
     const group = useSelector(state => state.group[groupId])
+    const user = useSelector(state => state.session.user)
+    const event = useSelector(state => Object.values(state.event))
+
+    const [theUser, setTheUser] = useState(false)
+    const [numEvents, setNumEvents] = useState(0)
+    const [pastEvents, setPastEvents] = useState(0)
+
+    console.log(event, "EVENT")
+
+    let upcoming = []
+    let past = []
+    const allEvents = (groupId) => {
+        for (let i = 0; i < event.length; i++) {
+            let oneEvent = event[i]
+
+            if (oneEvent.groupId === groupId) {
+                if (oneEvent.name !== null) {
+
+                    let date = Date.now()
+                    let startDate = Date.parse(oneEvent.startDate)
+
+                    if (startDate > date) {
+                        upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
+                    } else {
+                        past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    console.log(upcoming, "UPCOMING")
+    console.log(past, "PAST")
+    console.log(event, "EVENTS")
+
+    useEffect(() => {
+        setNumEvents(upcoming.length/2)
+        setPastEvents(past.length)
+    }, [numEvents, pastEvents])
+
+
+    useEffect(() => {
+        if (!user) {
+            setTheUser(false)
+        }
+        if (user && user.id === group.organizerId) {
+            setTheUser(true)
+        }
+
+    }, [user])
 
     const removeGroup = (e) => {
         e.preventDefault()
@@ -25,36 +78,81 @@ function GroupDetail() {
 
     const createEvent = () => {
         history.push(`/groups/${group.id}/events/new`)
-       return (
-        <>
-        <CreateEvent groupId={group.id} />
-        </>
-       )
-
+        return (
+            <>
+                <CreateEvent groupId={group.id} />
+            </>
+        )
     }
+
+
 
     return (
         <>
+            <div className='backLink'><Link to='/groups'> Groups</Link></div>
+            <div className='topContainer'>
+                <span className='groupImage'><img src='' alt='' width='200' height='200' /></span>
+                <span className='name'>{group.name}
+                    <div className='location'>{group.city}, {group.state}</div>
+                    <div>
+                        <span className='events'>{numEvents} events</span>
+                        <span className='public'>public</span>
+                    </div>
+                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
 
-            <Link to='/groups'> Groups</Link>
+                    <div>
+                        {theUser ? (
+                            <>
+                                <button onClick={() => createEvent(group)}>Create Event</button>
+                                <button onClick={() => EditGroup()}>Update</button>
+                                <button type='submit' onClick={removeGroup}>Delete</button>
+                                <button onClick={() => history.push('/groups')}>back</button>
+                            </>
+                        ) : (
+                            <button className='joinButton'>Join This Group</button>
+                        )}
+                    </div>
+                </span>
+            </div>
 
-                <div><img src='' alt='' width='300' height='300' />Name: {group.name}</div>
-                <p>
+            <div className='bottomContainer'>
+                <div className='organizer'> Organizer </div>
+                <div className='name'>{user.firstName} {user.lastName}</div>
+                <div className='about'>What We're About:</div>
+                <div className='description'>{group.about}</div>
 
-                <br /> Organizer:
-                {group.organizerId}
-                <br />
-                What We Are About:
-                <p>
-                    {group.about}
-                </p>
-                <br />
+                <div className='upcomingEvents'>{allEvents(group.id)}Upcoming Events ({numEvents})</div>
+                {upcoming.map(event => (
+                    <ul key={event.id}>
 
-                <button onClick={() => createEvent(group)}>Create Event</button>
-                <button onClick={() => EditGroup()}>Update</button>
-                <button type='submit' onClick={removeGroup}>Delete</button>
-                <button onClick={() => history.push('/groups')}>back</button>
-            </p>
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src='' alt='' height='100px' width='100px' /></span>
+                            <span>{event[3]}
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{event[4]}, {event[5]} </div>
+                            </span>
+                        </div>
+
+                    </ul>
+                ))}
+
+                <div className='pastEvents'>{allEvents(group.id)}Past Events ({pastEvents})</div>
+                {past.map(event => (
+                    <ul key={event.id}>
+
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src='' alt='' height='100px' width='100px' /></span>
+                            <span>{event[3]}
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{event[4]}, {event[5]} </div>
+                            </span>
+                        </div>
+
+                    </ul>
+                ))}
+            </div>
+
+
         </>
     )
 }

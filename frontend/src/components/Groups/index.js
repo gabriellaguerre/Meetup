@@ -1,48 +1,102 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {useEffect, useState} from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, useHistory } from 'react-router-dom'
 import * as groupActions from '../../store/group'
-// import GroupDetail from './GroupDetails'
-// import Navigation from '../Navigation'
+import * as eventActions from '../../store/event'
+import boatImage from '../HomePage/HomePageImages/boatImage.png'
+import carCollector from '../HomePage/HomePageImages/carCollectorsImage.png'
+import hunterImage from '../HomePage/HomePageImages/hunterImage.png'
+import skyDive from '../HomePage/HomePageImages/skyDiveImage.png'
+import './index.css'
 
 function Groups() {
     const history = useHistory()
     const dispatch = useDispatch();
     const groupList = useSelector(state => Object.values(state.group))
+    const eventList = useSelector(state => Object.values(state.event))
 
     const [groupD, setGroupD] = useState(false)
+    const [events, setEvent] = useState([])
+    const [groupId, setGroupId] = useState()
+
 
     useEffect(() => {
-        dispatch(groupActions.fetchGroups())
+        dispatch(groupActions.fetchGroups());
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(eventActions.fetchEvents())
     }, [dispatch])
 
 
 
-    if(groupD === true) {
+
+    //    console.log(groupList, "GROUPLIST")
+    //    console.log(eventList, "EVENTLIST IN GROUPS")
+    useEffect(() => {
+        let count = []
+        const counter = () => {
+            for (let i = 0; i < groupList.length; i++) {
+                for (let j = 0; j < eventList.length; j++) {
+                    let group = groupList[i]
+                    let event = eventList[j]
+                    console.log(group.id, event.groupId, "GROUP IN LOOP")
+                    if (group.id === event.groupId) {
+                        count.push(event)
+                    }
+                }
+        }
+        return count
+    }
+    }, [groupList, eventList])
+
+
+
+    //     let arr = []
+    //    const counter = async (groupId) =>{
+    //       let count = await dispatch(eventActions.findEvents(groupId))
+    //       console.log(count, "IN COUNTER")
+    //       arr.push(count)
+    //    }
+    // console.log(arr)
+
+
+    if (groupD === true) {
         history.push('/groups/:groupId')
     }
 
+    // let images = [boatImage, carCollector, hunterImage, skyDive]
+    // let randomNum = Math.floor(Math.random() * images.length);
+    // const pic = images[randomNum]
 
     return (
         <>
-        <div><Link to='/events'>Events</Link> Groups</div>
+            <span><NavLink className='groupEvent' to='/events'>Events</NavLink></span>
+            <span className='groupGroup'>Groups</span>
+            <div className='smallHeader'>Groups in get2gether</div>
 
-        {groupList.map(group => (
-            <div>
-                <Link to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
-                <ul key={group.id}>
-                    <div><img src={group.url} alt='  ' width="50" height="50"/>
-                    {group.name}</div></ul>
-                {/* <li>Organizer ID: {group.organizerId}</li>
-                <li>Name: {group.name}</li>/home/gabriel/appacademy-2022-meetup-project/Meetup/frontend/src/context
-                <li>About: {group.about}</li> */}
-                </Link>
-            </div>
-        ))}
+            {groupList.map(group => (
+                <div className='groupListContainer'>
+                    <NavLink className='groupListLink' to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
+                        <ul className='groupList' key={group.id}>
+                            <span><img src='' alt='random pic' width="100" height="100" /></span>
+                            <div className='groupInfo'>{group.name}
+                                <div className='location'>{group.city},{group.state}</div>
+                                <div className='about'>{group.about}</div>
+                                <div>
+                                    <span className='event' > events </span>
+                                    <span className='dot'>.</span>
+                                    <span className='private'>private {group.privatePublic}</span>
+                                </div>
+                            </div>
+                        </ul>
+                    </NavLink>
+                </div>
+            ))}
 
         </>
     )
 }
 
-export default Groups
+export default Groups;
