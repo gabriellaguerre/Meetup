@@ -14,20 +14,57 @@ function GroupDetail() {
 
     const group = useSelector(state => state.group[groupId])
     const user = useSelector(state => state.session.user)
+    const event = useSelector(state => Object.values(state.event))
 
     const [theUser, setTheUser] = useState(false)
+    const [numEvents, setNumEvents] = useState(0)
+    const [pastEvents, setPastEvents] = useState(0)
 
-    console.log(user, "USER IN GROUPDETAIL")
+    console.log(event, "EVENT")
 
-    useEffect(()=> {
-        if(!user) {
+    let upcoming = []
+    let past = []
+    const allEvents = (groupId) => {
+        for (let i = 0; i < event.length; i++) {
+            let oneEvent = event[i]
+
+            if (oneEvent.groupId === groupId) {
+                if (oneEvent.name !== null) {
+
+                    let date = Date.now()
+                    let startDate = Date.parse(oneEvent.startDate)
+
+                    if (startDate > date) {
+                        upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
+                    } else {
+                        past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    console.log(upcoming, "UPCOMING")
+    console.log(past, "PAST")
+    console.log(event, "EVENTS")
+
+    useEffect(() => {
+        setNumEvents(upcoming.length/2)
+        setPastEvents(past.length)
+    }, [numEvents, pastEvents])
+
+
+    useEffect(() => {
+        if (!user) {
             setTheUser(false)
         }
-        if(user && user.id === group.organizerId) {
+        if (user && user.id === group.organizerId) {
             setTheUser(true)
         }
 
-    },[user])
+    }, [user])
 
     const removeGroup = (e) => {
         e.preventDefault()
@@ -58,10 +95,10 @@ function GroupDetail() {
                 <span className='name'>{group.name}
                     <div className='location'>{group.city}, {group.state}</div>
                     <div>
-                        <span className='events'># events</span>
+                        <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    <div className='organizer'>Organized by: {group.organizerId}</div>
+                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
 
                     <div>
                         {theUser ? (
@@ -80,11 +117,39 @@ function GroupDetail() {
 
             <div className='bottomContainer'>
                 <div className='organizer'> Organizer </div>
-                <div className='name'>{group.organizerId}</div>
+                <div className='name'>{user.firstName} {user.lastName}</div>
                 <div className='about'>What We're About:</div>
                 <div className='description'>{group.about}</div>
-                <div className='upcomingEvents'>Upcoming Events</div>
-                <div className='pastEvents'>Past Events</div>
+
+                <div className='upcomingEvents'>{allEvents(group.id)}Upcoming Events ({numEvents})</div>
+                {upcoming.map(event => (
+                    <ul key={event.id}>
+
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src='' alt='' height='100px' width='100px' /></span>
+                            <span>{event[3]}
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{event[4]}, {event[5]} </div>
+                            </span>
+                        </div>
+
+                    </ul>
+                ))}
+
+                <div className='pastEvents'>{allEvents(group.id)}Past Events ({pastEvents})</div>
+                {past.map(event => (
+                    <ul key={event.id}>
+
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src='' alt='' height='100px' width='100px' /></span>
+                            <span>{event[3]}
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{event[4]}, {event[5]} </div>
+                            </span>
+                        </div>
+
+                    </ul>
+                ))}
             </div>
 
 

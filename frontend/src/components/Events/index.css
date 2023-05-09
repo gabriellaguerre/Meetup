@@ -1,0 +1,76 @@
+.eventGroup {
+    color: gray;
+    text-decoration: none;
+    padding-right: 10px;
+    font-size: 25px;
+}
+
+.eventGroup:hover {
+    text-decoration: underline;
+}
+
+.eventEvent {
+    color: blue;
+    text-decoration: underline;
+    font-size: 25px;
+    padding-right: 5px;
+}
+
+ .smallHeader {
+    color: gray;
+    padding: 10px;
+}
+.eventListContainer {
+    display: block;
+   
+}
+
+.eventListLink {
+    text-decoration: none;
+}
+
+.eventList {
+    display: flex;
+    height: 150px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+
+ .eventDate {
+    color: teal;
+    padding-left: 20px;
+    font-size: 15px;
+}
+
+.eventName {
+    color: black;
+    padding-left: 0px;
+    font-size: 20px;
+}
+
+
+.eventLocation {
+    padding-left: 5px;
+    font-size: 13px;
+    color: gray
+}
+/*
+.about {
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+.event {
+    font-size: 12px;
+}
+
+ .private {
+    font-size: 12px;
+}
+
+.dot {
+    font-size: 30px;
+    padding-right: 5px;
+    text-align: center;
+} */

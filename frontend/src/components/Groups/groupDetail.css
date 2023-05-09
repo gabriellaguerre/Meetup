@@ -57,3 +57,8 @@
     padding: 20px;
     font-size: 25px;
 }
+
+.upcomingEventsListContainer {
+    display: flex;
+    background-color: pink;
+}
