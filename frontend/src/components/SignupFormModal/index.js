@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useModal } from '../../context/Modal'
 import * as sessionActions from '../../store/session'
 import './SignUpPage.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch()
-  //const sessionUser = useSelector(state => state.session.user)
+  const sessionUser = useSelector(state => state.session.user)
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')

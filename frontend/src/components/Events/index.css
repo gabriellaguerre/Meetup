@@ -22,7 +22,7 @@
 }
 .eventListContainer {
     display: block;
-   
+
 }
 
 .eventListLink {
@@ -55,22 +55,4 @@
     font-size: 13px;
     color: gray
 }
-/*
-.about {
-    font-size: 12px;
-    padding-top: 10px;
-}
 
-.event {
-    font-size: 12px;
-}
-
- .private {
-    font-size: 12px;
-}
-
-.dot {
-    font-size: 30px;
-    padding-right: 5px;
-    text-align: center;
-} */

@@ -36,18 +36,25 @@ function ProfileButton({ user }) {
   // const closeMenu = () => setShowMenu(false)
 
   const logout = (e) => {
+    console.log("IN LOGOUT")
     e.preventDefault()
     dispatch(sessionActions.logoutUser())
     //  closeMenu()
   }
+ const credential = "DemoUser"
+ const password = 'abc'
 
+ const demo = (e) => {
+    e.preventDefault()
+    dispatch(sessionActions.login({credential, password}))
+  }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden")
 
   return (
     <>
       <button onClick={openMenu}>
         <i className="fa-solid fa-user" />
-        
+
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
@@ -76,6 +83,9 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
+            </ul>
+            <ul>
+              <button onClick={demo}>Demo User</button>
             </ul>
           </>
         )}
