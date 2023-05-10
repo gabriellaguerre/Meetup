@@ -6,7 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
-//import './Navigation.css'
+
 
 function ProfileButton({ user }) {
 
@@ -36,10 +36,8 @@ function ProfileButton({ user }) {
   // const closeMenu = () => setShowMenu(false)
 
   const logout = (e) => {
-    console.log("IN LOGOUT")
     e.preventDefault()
     dispatch(sessionActions.logoutUser())
-    //  closeMenu()
   }
  const credential = "DemoUser"
  const password = 'abc'

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 import * as sessionActions from '../../store/session'
 import './SignUpPage.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch()
-  const sessionUser = useSelector(state => state.session.user)
+  const history = useHistory()
+
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -17,21 +19,24 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({})
   const {closeModal} = useModal()
 
- // if (sessionUser) return <Redirect to='/' />
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
-        sessionActions.signUpUser({
+      dispatch(sessionActions.signUpUser({
           email,
           username,
           firstName,
           lastName,
           password,
         })
-      ).then(closeModal)
+
+      )
+      const credential = email;
+      return dispatch(sessionActions.login({credential, password}))
+      .then(closeModal)
+       .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
