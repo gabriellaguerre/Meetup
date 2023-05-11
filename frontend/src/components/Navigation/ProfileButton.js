@@ -6,7 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
-//import './Navigation.css'
+
 
 function ProfileButton({ user }) {
 
@@ -38,21 +38,28 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault()
     dispatch(sessionActions.logoutUser())
-    //  closeMenu()
   }
+ const credential = "DemoUser"
+ const password = 'abc'
 
+ const demo = (e) => {
+    e.preventDefault()
+    dispatch(sessionActions.login({credential, password}))
+  }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden")
 
   return (
     <>
       <button onClick={openMenu}>
         <i className="fa-solid fa-user" />
-        
+
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <ul><Link to='/groups'>View Groups</Link></ul>
+            <p></p>
+            <ul>Hello, {user.firstName}</ul>
             <p></p>
             <ul>username:{user.username}</ul>
             <ul>name: {user.firstName} {user.lastName}</ul>
@@ -76,6 +83,9 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
+            </ul>
+            <ul>
+              <button onClick={demo}>Demo User</button>
             </ul>
           </>
         )}

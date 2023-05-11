@@ -9,10 +9,13 @@ import * as sessionEvent from '../../store/event'
 function CreateEvent() {
     const { groupId } = useParams()
     const group = useSelector(state => state.group[groupId])
+    const event = useSelector(state => state.event)
 
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const history = useHistory()
+
+console.log(event)
 
     const [name, setName] = useState()
     const [description, setDescription] = useState()
@@ -53,7 +56,7 @@ function CreateEvent() {
             url
         }
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
-            .then(() => history.push('/events'))
+            .then(() => history.push(`/events`))
                .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {
@@ -125,7 +128,7 @@ function CreateEvent() {
             {errors.endDate && (<p>{errors.endDate}</p>)}
             </div>
 
-            <p>Please add an image url for your group below</p>
+            <p>Please add an image url for your event below</p>
             <input
                 placeholder='Image Url'
                 value={url}

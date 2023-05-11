@@ -73,7 +73,7 @@ router.get('/', validateQuery, async (req, res) => {
 
     const events = await Event.findAll({
         where,
-        attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
+        attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate', 'description'],
         include: [
             {
                 model: Group,

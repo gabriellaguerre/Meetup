@@ -38,7 +38,7 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post('/', async (req, res, next) => {  //'/', /*validateSignup*/, async (req, res, next
+router.post('/', validateSignup, async (req, res, next) => { 
   let user = {}
 
   const { firstName, lastName, email, username, password } = req.body;

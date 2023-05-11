@@ -67,6 +67,16 @@
     font-size: 20px;
     cursor: pointer;
   }
+  .modalContainer .footer button#isDisabled {
+    width: 150px;
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: gray;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+  }
 
   #cancelButton {
     background-color: crimson;
@@ -74,4 +84,9 @@
 .errors {
     color: red;
     text-align: center;
+}
+
+.logInButtonDisabled {
+  background-color: gray;
+
 }

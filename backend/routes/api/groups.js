@@ -570,8 +570,11 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
    const group = await Group.findByPk(groupId)
 
    const member = await Membership.findOne({
-      userId: user,
-      groupId
+      where: {
+          userId: user,
+          groupId
+      }
+
    })
 
    if (group) {
