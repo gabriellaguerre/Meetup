@@ -15,12 +15,16 @@ function GroupDetail() {
     const group = useSelector(state => state.group[groupId])
     const user = useSelector(state => state.session.user)
     const event = useSelector(state => Object.values(state.event))
+    const allUsers = useSelector(state => state.user)
 
+    const [noUser, setNoUser] = useState(false)
     const [theUser, setTheUser] = useState(false)
     const [numEvents, setNumEvents] = useState(0)
     const [pastEvents, setPastEvents] = useState(0)
+    const [typeButton, setTypeButton] = useState('')
 
-    console.log(event, "EVENT")
+
+   // console.log(user, group, allUsers, "IN LINE 25")
 
     let upcoming = []
     let past = []
@@ -46,9 +50,6 @@ function GroupDetail() {
 
     }
 
-    console.log(upcoming, "UPCOMING")
-    console.log(past, "PAST")
-    console.log(event, "EVENTS")
 
     useEffect(() => {
         setNumEvents(upcoming.length/2)
@@ -56,15 +57,22 @@ function GroupDetail() {
     }, [numEvents, pastEvents])
 
 
+
     useEffect(() => {
-        if (!user) {
+
+        if (user && user.id !== group.organizerId) {
+            setTypeButton('joinButton')
             setTheUser(false)
         }
         if (user && user.id === group.organizerId) {
             setTheUser(true)
         }
+        if(!user) {
+            setTypeButton('noJoinButton')
+            setNoUser(true)
+        }
 
-    }, [user])
+    }, [user, typeButton])
 
     const removeGroup = (e) => {
         e.preventDefault()
@@ -85,7 +93,9 @@ function GroupDetail() {
         )
     }
 
-
+ const sendAlert = () => {
+      return window.alert("Feature Coming Soon")
+ }
 
     return (
         <>
@@ -98,7 +108,7 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
+                    {/* <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div> */}
 
                     <div>
                         {theUser ? (
@@ -109,15 +119,16 @@ function GroupDetail() {
                                 <button onClick={() => history.push('/groups')}>back</button>
                             </>
                         ) : (
-                            <button className='joinButton'>Join This Group</button>
+                            <button onClick={()=> sendAlert()} className={typeButton}>Join This Group</button>
                         )}
+
                     </div>
                 </span>
             </div>
 
             <div className='bottomContainer'>
                 <div className='organizer'> Organizer </div>
-                <div className='name'>{user.firstName} {user.lastName}</div>
+                {/* <div className='name'>{user.firstName} {user.lastName}</div> */}
                 <div className='about'>What We're About:</div>
                 <div className='description'>{group.about}</div>
 

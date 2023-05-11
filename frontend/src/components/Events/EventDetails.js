@@ -24,6 +24,8 @@ function EventDetail() {
     }
 
 
+let newDate = new Date(event.startDate)
+console.log(newDate.toString(), "DATE AND TIME")
     return (
         <>
             <div className='eventTopContainer'>
@@ -43,12 +45,17 @@ function EventDetail() {
                    <div className='clockImg'><img src={clockIcon} alt='clock' height='20'width='20'/></div>
                    <div className='start'>Start</div>
                    <div className='end'>End</div>
-                   <div className='startDate'>Time 1</div>
-                   <div ClassName='endDate'>Time 2</div>
+                   <div className='startDate'>{event.startDate}</div>
+                   <div className='endDate'>{event.endDate}</div>
                    <div className='money'><img src={moneyIcon} alt='Money' height='20'width='20' /></div>
-                   <div className='free'>Free</div>
+                   <div className='free'>{event.price}</div>
                    <div className='pin'><img src={pinIcon} alt='pin' height='20'width='20'/></div>
-                   <div className='inPerson'>In person</div>
+                    {event.type ? (
+                        <div className='inPerson'>{event.type}</div>
+                    ) : (
+                        <div className='inPerson'>In person</div>
+                    )}
+
                 </div>
             </div>
 

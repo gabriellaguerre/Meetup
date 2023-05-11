@@ -15,7 +15,7 @@ function LoginFormModal() {
     const [disable, setDisable] = useState(true)
     const { closeModal } = useModal()
 
-    
+
     useEffect(() => {
         if(credential.length < 4 || password.length < 6) {
             setDisable(true)
@@ -81,7 +81,7 @@ function LoginFormModal() {
                             ) : (
                                 <button disabled={disable} >Log In</button>
                             )}
-                            <button>Demo-User login</button>
+                            
                             <button id='cancelButton' onClick={closeModal}>Cancel</button>
                         </div>
                     </div>

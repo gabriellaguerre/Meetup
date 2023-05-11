@@ -4,6 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
+import boat from './GroupImages/boatImage.png'
+import carCollectors from './GroupImages/carCollectorsImage.png'
+import hunter from './GroupImages/hunterImage.png'
+import noImage from './GroupImages/noImageAvailable.png'
+import skyDive from './GroupImages/skyDiveImage.png'
 
 
 function GroupForm({ group, formType }) {
@@ -21,25 +26,28 @@ function GroupForm({ group, formType }) {
     const [url, setUrl] = useState(group.url)
     const [errors, setErrors] = useState([])
 
- //   const [disable, setDisable] = useState(true)
+    const [disable, setDisable] = useState(true)
 
-//     useEffect(() => {
-//         const error = []
-//         if(errors.name) error.push(errors.name)
-//         if(errors.about) error.push(errors.about)
-//         if(errors.type) error.push(errors.about)
-//         if(errors.privatePublic) error.push(errors.privatePublic)
-//         if(errors.url) error.push(errors.url)
-// console.log(error, "IN USE EFFECT")
-//         if(error) {
-//             setDisable(true)
-//         } else {
-//             setDisable(false)
-//         }
-//     }, [disable])
+  //  useEffect(() => {
+    //     if(errors) {
+    //         setDisable(true)
+    //     } else {
+    //         setDisable(false)
+    //     }
+    // }, [disable, errors])
+
+    useEffect(() => {
+        if(oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length ===0 || url.length === 0) {
+            setDisable(true)
+        } else {
+          setDisable(false)
+        }
+    console.log(url)
+    }, [oneLocation, name, about, type, privatePublic, url])
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setDisable(false)
         setErrors([])
 
         const form = {
@@ -59,18 +67,20 @@ function GroupForm({ group, formType }) {
             name,
             about,
             type,
-            privatePublic: boolVal,
-            url
+            private: boolVal,
+            previewImage: url
         }
+    console.log(form2, "FORM 2 IN HANDLESUBMIT")
 
         return dispatch(sessionGroup.creatingGroup(form2))
                .then(() => history.push('/groups'))
                .catch(async (res) => {
                 const data = await res.json()
+                console.log(data, "DATA IN HANDLE SUBMIT")
                 if(data && data.errors) {
                     setErrors(data.errors)
-                  //  setDisable(true)
-                } 
+                    setDisable(true)
+                }
 
                })
 
@@ -78,7 +88,7 @@ function GroupForm({ group, formType }) {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-
+        setDisable(false)
         const form = {
             oneLocation,
             name,
@@ -98,8 +108,8 @@ function GroupForm({ group, formType }) {
             name,
             about,
             type,
-            privatePublic: boolVal,
-            url
+            private: boolVal,
+            previewImage: url
         }
 
        return dispatch(sessionGroup.editingGroup(form2, id))
@@ -108,7 +118,7 @@ function GroupForm({ group, formType }) {
                 const data = await res.json()
                 if(data && data.errors) {
                     setErrors(data.errors)
-                   // setDisable(true)
+                    setDisable(true)
                 }
               })
     }
@@ -125,14 +135,14 @@ function GroupForm({ group, formType }) {
 
             return (
                 <>
-                    <button onSubmit={handleUpdate} >Update Group</button>
+                    <button disabled={disable} onSubmit={handleUpdate} >Update Group</button>
                     <button onClick={() => history.push('/groups')}>Cancel</button>
                 </>
             )
         } else {
             return (
                 <>
-                    <button onSubmit={handleSubmit}>Create Group</button>
+                    <button disabled={disable} onSubmit={handleSubmit}>Create Group</button>
                     <button onClick={() => history.push('/')}>Cancel</button>
                 </>
             )
@@ -143,7 +153,7 @@ function GroupForm({ group, formType }) {
     return (
         <form onSubmit={handleSubmit}>
 
-            <h3>BECOME AN ORGANIZER</h3>
+            <h1>Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>
             <h2>First, set your group's location</h2>
             <p>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</p>
@@ -205,10 +215,18 @@ function GroupForm({ group, formType }) {
             </div>
 
             <p>Please add an image url for your group below</p>
-            <input
+            <span onClick={()=>setUrl(boat)}><img src={boat} height='100' width='150' margin='50'/></span>
+            <span onClick={()=>setUrl(carCollectors)}><img src={carCollectors} height='100' width='150' /></span>
+            <span onClick={()=>setUrl(hunter)}><img src={hunter} height='100' width='150' /></span>
+            <span onClick={()=>setUrl(skyDive)}><img src={skyDive} height='100' width='150' /></span>
+            <span onClick={()=>setUrl(noImage)}><img src={noImage} height='100' width='150' /></span>
+
+
+            <div><input
                 placeholder='Image Url'
                 value={url}
-                onChange={(e) => setUrl(e.target.value)} />
+                onChange={(e) => setUrl(e.target.value)} /></div>
+
             <p>
                 {typeButton(formType)}
             </p>

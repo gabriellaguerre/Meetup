@@ -59,6 +59,8 @@ function ProfileButton({ user }) {
           <>
             <ul><Link to='/groups'>View Groups</Link></ul>
             <p></p>
+            <ul><Link to='/events'>View Events</Link></ul>
+            <p></p>
             <ul>Hello, {user.firstName}</ul>
             <p></p>
             <ul>username:{user.username}</ul>
@@ -71,6 +73,8 @@ function ProfileButton({ user }) {
         ) : (
           <>
             <ul><Link to='/groups'>View Groups</Link></ul>
+            <p></p>
+            <ul><Link to='/events'>View Events</Link></ul>
             <p></p>
             <ul>
               <OpenModalButton
