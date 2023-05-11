@@ -59,6 +59,8 @@ function ProfileButton({ user }) {
           <>
             <ul><Link to='/groups'>View Groups</Link></ul>
             <p></p>
+            <ul>Hello, {user.firstName}</ul>
+            <p></p>
             <ul>username:{user.username}</ul>
             <ul>name: {user.firstName} {user.lastName}</ul>
             <ul>email: {user.email}</ul>

@@ -5,6 +5,8 @@ import { useState } from 'react'
 import Events from './index'
 import './EventDetail.css'
 import clockIcon from './EventImages/clockIcon.png'
+import moneyIcon from './EventImages/moneyIcon.png'
+import pinIcon from './EventImages/pinIcon.png'
 
 function EventDetail() {
     const dispatch = useDispatch()
@@ -31,23 +33,32 @@ function EventDetail() {
                 </div>
             </div>
 
-         <div className='eventMiddleContainer'>
-           <div className='image1Box'> <img src='' alt='event1' height='100' width='100' /></div>
-            <span className='image2Box'><img className='insideImage2'src='' alt='event2' height='100' width='50' />
+         <div className='wrapperMiddleContainer'>
+            <div className='image1Box'> <img src='' alt='event1' height='100' width='100' /></div>
 
-            <div className='middleBottomContainer'>
-                <div><img className='clockIcon'src={clockIcon} height='30' /></div>
-                <span>Start
-                <div>End</div>
-                </span>
+            <div className='image2Box'><img className='insideImage2'src='' alt='event2' /></div>
 
-
-
-                <div>Free</div>
-                <div>In Person</div>
+            <div className='clock'>
+                <div className='wrapperClock'>
+                   <div className='clockImg'><img src={clockIcon} alt='clock' height='20'width='20'/></div>
+                   <div className='start'>Start</div>
+                   <div className='end'>End</div>
+                   <div className='startDate'>Time 1</div>
+                   <div ClassName='endDate'>Time 2</div>
+                   <div className='money'><img src={moneyIcon} alt='Money' height='20'width='20' /></div>
+                   <div className='free'>Free</div>
+                   <div className='pin'><img src={pinIcon} alt='pin' height='20'width='20'/></div>
+                   <div className='inPerson'>In person</div>
+                </div>
             </div>
-            </span>
-         </div>
+
+        </div>
+
+
+
+
+
+
 
 
             <div className='eventbottomContainer'>

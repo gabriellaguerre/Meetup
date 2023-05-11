@@ -69,6 +69,16 @@
     font-size: 20px;
     cursor: pointer;
   }
+  .modalContainer1 .footer1 button#isDisabled2 {
+    width: 150px;
+    height: 45px;
+    margin: 10px;
+    border: none;
+    background-color: gray;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+  }
 
   #cancelButton1 {
     background-color: crimson;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import { useModal } from '../../context/Modal'
@@ -16,14 +16,29 @@ function SignupFormModal() {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState([])
+  const [disable, setDisabled] = useState(true)
   const {closeModal} = useModal()
 
+ useEffect(()=> {
+
+  if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length < 4 || password.length < 6 ) {
+      setDisabled(true)
+  } else {
+    setDisabled(false)
+  }
+
+ },[firstName, lastName, email, username, password, errors])
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if(firstName.length === 0) {
+      errors = 'First Name is required'
+    }
+
     if (password === confirmPassword) {
-      setErrors({});
+      setErrors([]);
       dispatch(sessionActions.signUpUser({
           email,
           username,
@@ -39,14 +54,15 @@ function SignupFormModal() {
        .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors);
+
+          if (data && data.errors.credential) {
+            setErrors(data.errors.credential);
           }
         });
+    } else {
+      setErrors("Confirm Password field must be the same as the Password field")
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+
   };
 
 
@@ -64,7 +80,7 @@ function SignupFormModal() {
 
         <label>
           <div className='errors'>
-          {errors.firstName && <p>{errors.firstName}</p>}
+          {errors && <p>{errors}</p>}
           </div>
           <div className='body1'>
             <input
@@ -78,9 +94,9 @@ function SignupFormModal() {
 
         <label>
         <div className='body1'>
-          <div>
+          {/* <div>
           {errors.lastName && <p>{errors.lastName}</p>}
-          </div>
+          </div> */}
               <input
                 placeholder='Last Name'
                 type='text'
@@ -91,12 +107,12 @@ function SignupFormModal() {
           </label>
 
         <label>
-        <div className='errors'>
+        {/* <div className='errors'>
           {errors.username && <p>{errors.username}</p>}
-        </div>
-        <div className='errors'>
+        </div> */}
+        {/* <div className='errors'>
           {errors.email && <p>{errors.email}</p>}
-          </div>
+          </div> */}
 
             <div className='body1'>
               <input
@@ -142,12 +158,16 @@ function SignupFormModal() {
             </div>
           </label>
 
-          <div className='body1'>
+          {/* <div className='body1'>
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-          </div>
+          </div> */}
 
         <div className='footer1'>
-          <button type="submit">Sign Up</button>
+        {disable ? (
+          <button id='isDisabled2' disabled={disable}>Sign Up</button>
+          ) : (
+            <button disabled={disable}>Sign Up</button>
+            )}
           <button id='cancelButton1' onClick={closeModal}>Cancel</button>
         </div>
         </div>
