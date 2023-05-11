@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import * as groupActions from '../../store/group'
 import * as eventActions from '../../store/event'
-import boatImage from '../HomePage/HomePageImages/boatImage.png'
-import carCollector from '../HomePage/HomePageImages/carCollectorsImage.png'
-import hunterImage from '../HomePage/HomePageImages/hunterImage.png'
-import skyDive from '../HomePage/HomePageImages/skyDiveImage.png'
+// import boatImage from '../HomePage/HomePageImages/boatImage.png'
+// import carCollector from '../HomePage/HomePageImages/carCollectorsImage.png'
+// import hunterImage from '../HomePage/HomePageImages/hunterImage.png'
+// import skyDive from '../HomePage/HomePageImages/skyDiveImage.png'
 import './index.css'
+import noImage from './GroupImages/noImageAvailable.png'
 
 function Groups() {
     const history = useHistory()
@@ -65,7 +66,26 @@ function Groups() {
     if (groupD === true) {
         history.push('/groups/:groupId')
     }
+    let pic;
+    let publicPrivate
 
+    console.log(groupList, "GROUPLIST")
+    groupList.map(group => {
+        if(group.previewImage === "No Image posted"){
+            pic = noImage
+        } else {
+            pic = group.previewImage
+        }
+
+        if(group.private === true) {
+            publicPrivate = 'Private'
+        } else if (group.private === null) {
+            publicPrivate = 'Public'
+        } else {
+            publicPrivate = 'Public'
+        }
+        console.log(publicPrivate, "IN CONDITIONAL")
+    })
     // let images = [boatImage, carCollector, hunterImage, skyDive]
     // let randomNum = Math.floor(Math.random() * images.length);
     // const pic = images[randomNum]
@@ -77,17 +97,17 @@ function Groups() {
             <div className='smallHeader'>Groups in get2gether</div>
 
             {groupList.map(group => (
-                <div className='groupListContainer'>
+                <div key={group.id} className='groupListContainer'>
                     <NavLink className='groupListLink' to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
-                        <ul className='groupList' key={group.id}>
-                            <span><img src='' alt='random pic' width="100" height="100" /></span>
+                        <ul className='groupList' >
+                            <span><img src={pic} alt='random pic' width="100" height="100" /></span>
                             <div className='groupInfo'>{group.name}
                                 <div className='location'>{group.city},{group.state}</div>
                                 <div className='about'>{group.about}</div>
                                 <div>
                                     <span className='event' > events </span>
                                     <span className='dot'>.</span>
-                                    <span className='private'>private {group.privatePublic}</span>
+                                    <span className='private'>{publicPrivate}</span>
                                 </div>
                             </div>
                         </ul>

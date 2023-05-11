@@ -54,6 +54,13 @@ function Navigation({ isLoaded }) {
     //         </li>
     //     );
     // }
+    let createLink;
+
+    if(!sessionUser) {
+        createLink = 'noUser'
+    } else {
+        createLink = 'createGroup'
+    }
 
     return (
         <>
@@ -62,9 +69,12 @@ function Navigation({ isLoaded }) {
                 <NavLink exact to='/'>get2gether</NavLink>
             </div>
             {isLoaded && (
+                <>
+                <div className={createLink}> <NavLink to='/groups/new'>Start a new group </NavLink></div>
                 <div className='profileButton'>
                     <ProfileButton user={sessionUser} />
                 </div>
+                </>
             )}
         </ul>
         <div>

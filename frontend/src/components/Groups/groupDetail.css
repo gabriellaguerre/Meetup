@@ -62,3 +62,12 @@
     display: flex;
     background-color: pink;
 }
+
+.joinButton {
+    background-color: red;
+    color: white;
+}
+
+.noJoinButton {
+    visibility: hidden;
+}

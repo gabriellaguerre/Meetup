@@ -17,6 +17,19 @@
     text-decoration: none;
 }
 
+.createGroup {
+    position: relative;
+    right: 300px;
+}
+
 .profileButton {
+    position: absolute;
     padding-right: 10px;
+    left: 1100px;
+    background-color: rgb(176, 176, 231);
+    text-align: left;
+}
+
+.noUser {
+    display: none;
 }
