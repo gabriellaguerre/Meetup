@@ -28,21 +28,13 @@ function GroupForm({ group, formType }) {
 
     const [disable, setDisable] = useState(true)
 
-  //  useEffect(() => {
-    //     if(errors) {
-    //         setDisable(true)
-    //     } else {
-    //         setDisable(false)
-    //     }
-    // }, [disable, errors])
-
     useEffect(() => {
         if(oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length ===0 || url.length === 0) {
             setDisable(true)
         } else {
           setDisable(false)
         }
-    console.log(url)
+
     }, [oneLocation, name, about, type, privatePublic, url])
 
     const handleSubmit = (e) => {
@@ -73,7 +65,7 @@ function GroupForm({ group, formType }) {
     console.log(form2, "FORM 2 IN HANDLESUBMIT")
 
         return dispatch(sessionGroup.creatingGroup(form2))
-               .then(() => history.push('/groups'))
+              // .then(() => history.push('/groups'))
                .catch(async (res) => {
                 const data = await res.json()
                 console.log(data, "DATA IN HANDLE SUBMIT")

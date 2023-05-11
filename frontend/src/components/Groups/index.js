@@ -69,7 +69,7 @@ function Groups() {
     let pic;
     let publicPrivate
 
-    console.log(groupList, "GROUPLIST")
+    
     groupList.map(group => {
         if(group.previewImage === "No Image posted"){
             pic = noImage
@@ -84,7 +84,7 @@ function Groups() {
         } else {
             publicPrivate = 'Public'
         }
-        console.log(publicPrivate, "IN CONDITIONAL")
+
     })
     // let images = [boatImage, carCollector, hunterImage, skyDive]
     // let randomNum = Math.floor(Math.random() * images.length);

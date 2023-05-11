@@ -10,7 +10,7 @@ const router = express.Router();
 
 //************POST Create a Group*****************/
 router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
-
+   console.log("IN CREATE GROUP BACKEND")
    const userId = req.user.id
 
    const organizerId = userId

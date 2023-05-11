@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link, useParams, Route, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
@@ -74,10 +75,9 @@ function GroupDetail() {
 
     }, [user, typeButton])
 
-    const removeGroup = (e) => {
-        e.preventDefault()
-        dispatch(sessionGroup.groupRemover(groupId))
-        history.push('/groups')
+    const removeGroup = () => {
+       return dispatch(sessionGroup.groupRemover(groupId))
+        .then(history.push('/groups'))
     }
 
     const EditGroup = () => {
@@ -115,7 +115,7 @@ function GroupDetail() {
                             <>
                                 <button onClick={() => createEvent(group)}>Create Event</button>
                                 <button onClick={() => EditGroup()}>Update</button>
-                                <button type='submit' onClick={removeGroup}>Delete</button>
+                                <button onClick={removeGroup}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                             </>
                         ) : (
