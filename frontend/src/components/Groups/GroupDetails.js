@@ -75,8 +75,8 @@ function GroupDetail() {
 
     }, [user, typeButton])
 
-    const removeGroup = () => {
-       return dispatch(sessionGroup.groupRemover(groupId))
+    const removeGroup = async () => {
+       return await dispatch(sessionGroup.groupRemover(groupId))
         .then(history.push('/groups'))
     }
 
@@ -108,14 +108,14 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    {/* <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div> */}
+                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
 
                     <div>
                         {theUser ? (
                             <>
                                 <button onClick={() => createEvent(group)}>Create Event</button>
                                 <button onClick={() => EditGroup()}>Update</button>
-                                <button onClick={removeGroup}>Delete</button>
+                                <button onClick={()=>removeGroup()}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                             </>
                         ) : (
@@ -128,7 +128,7 @@ function GroupDetail() {
 
             <div className='bottomContainer'>
                 <div className='organizer'> Organizer </div>
-                {/* <div className='name'>{user.firstName} {user.lastName}</div> */}
+                <div className='name'>{user.firstName} {user.lastName}</div>
                 <div className='about'>What We're About:</div>
                 <div className='description'>{group.about}</div>
 

@@ -15,7 +15,7 @@ function CreateEvent() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-console.log(event)
+
 
     const [name, setName] = useState()
     const [description, setDescription] = useState()

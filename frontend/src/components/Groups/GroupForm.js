@@ -13,6 +13,7 @@ import skyDive from './GroupImages/skyDiveImage.png'
 
 function GroupForm({ group, formType }) {
     const user = useSelector(state => state.session.user)
+    const theGroup = useSelector(state => state.group)
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -37,7 +38,11 @@ function GroupForm({ group, formType }) {
 
     }, [oneLocation, name, about, type, privatePublic, url])
 
-    const handleSubmit = (e) => {
+    useEffect(() =>{
+
+       })
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setDisable(false)
         setErrors([])
@@ -64,17 +69,22 @@ function GroupForm({ group, formType }) {
         }
     console.log(form2, "FORM 2 IN HANDLESUBMIT")
 
-        return dispatch(sessionGroup.creatingGroup(form2))
-              // .then(() => history.push('/groups'))
+        return await dispatch(sessionGroup.creatingGroup(form2))
+                  .then(history.push('/groups'))
+        //        .then(console.log(theGroup, "THE GROUP"))
+            //     }
+            //    .then((data)=> {
+            //     console.log(data)
+            //    })
+              // .then(() => history.push(`/groups`))
                .catch(async (res) => {
                 const data = await res.json()
-                console.log(data, "DATA IN HANDLE SUBMIT")
                 if(data && data.errors) {
                     setErrors(data.errors)
                     setDisable(true)
                 }
 
-               })
+              })
 
     }
 
@@ -154,10 +164,10 @@ function GroupForm({ group, formType }) {
                 type='text'
                 value={oneLocation}
                 onChange={(e) => setOneLocation(e.target.value)} />
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.city && (<p>{errors.city}</p>)}
             </div>
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.state && (<p>{errors.state}</p>)}
             </div>
 
@@ -169,7 +179,7 @@ function GroupForm({ group, formType }) {
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)} />
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.name && (<p>{errors.name}</p>)}
             </div>
 
@@ -182,7 +192,7 @@ function GroupForm({ group, formType }) {
                 placeholder='Please write at least 50 characters'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)} />
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.about && (<p>{errors.about}</p>)}
             </div>
 
@@ -193,7 +203,7 @@ function GroupForm({ group, formType }) {
                 <option>In Person</option>
                 <option>Online</option>
             </select>
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.type && (<p>{errors.type}</p>)}
             </div>
             <p>Is this group private or public?</p>
@@ -202,7 +212,7 @@ function GroupForm({ group, formType }) {
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
             </select>
-            <div className='errors' style={{backgroundColor: 'yellow'}}>
+            <div className='errors'>
             {errors.private && (<p>{errors.private}</p>)}
             </div>
 
