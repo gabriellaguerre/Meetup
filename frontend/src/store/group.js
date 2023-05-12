@@ -51,8 +51,11 @@ export const creatingGroup = (payload) => async (dispatch) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
     })
-    if(response.ok) {        const data = await response.json()
+    if(response.ok) {
+        const data = await response.json()
+        console.log(data, "IN THUNK")
         dispatch(createGroup(data))
+        return data
     }
 }
 

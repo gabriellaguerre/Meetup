@@ -69,7 +69,7 @@ function Groups() {
     let pic;
     let publicPrivate
 
-    console.log(groupList, "GROUPLIST")
+
     groupList.map(group => {
         if(group.previewImage === "No Image posted"){
             pic = noImage
@@ -84,7 +84,7 @@ function Groups() {
         } else {
             publicPrivate = 'Public'
         }
-        console.log(publicPrivate, "IN CONDITIONAL")
+
     })
     // let images = [boatImage, carCollector, hunterImage, skyDive]
     // let randomNum = Math.floor(Math.random() * images.length);
@@ -97,7 +97,7 @@ function Groups() {
             <div className='smallHeader'>Groups in get2gether</div>
 
             {groupList.map(group => (
-                <div key={group.id} className='groupListContainer'>
+                <div key={group.startDate} className='groupListContainer'>
                     <NavLink className='groupListLink' to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
                         <ul className='groupList' >
                             <span><img src={pic} alt='random pic' width="100" height="100" /></span>

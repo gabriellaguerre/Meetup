@@ -18,9 +18,9 @@ function EventDetail() {
 
     console.log(event, "IN EVENTDETAIL")
 
-    const removeEvent = () => {
-        dispatch(sessionEvent.eventRemover(eventId))
-        return history.push('/events')
+    const removeEvent = async (eventId) => {
+      return await dispatch(sessionEvent.eventRemover(eventId))
+             .then(history.push('/events'))
     }
 
 
@@ -61,17 +61,10 @@ console.log(newDate.toString(), "DATE AND TIME")
 
         </div>
 
-
-
-
-
-
-
-
             <div className='eventbottomContainer'>
             <div className='eventDetails'>Details:
                 <div className='eventDescription'>{event.description}</div>
-                <div className='deleteButton'><button onClick={() => removeEvent()}>Delete</button></div>
+                <div className='deleteButton'><button onClick={()=>removeEvent(event.id)}>Delete</button></div>
             </div>
 
 

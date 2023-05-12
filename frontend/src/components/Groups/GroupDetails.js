@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link, useParams, Route, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
@@ -74,10 +75,9 @@ function GroupDetail() {
 
     }, [user, typeButton])
 
-    const removeGroup = (e) => {
-        e.preventDefault()
-        dispatch(sessionGroup.groupRemover(groupId))
-        history.push('/groups')
+    const removeGroup = async () => {
+       return await dispatch(sessionGroup.groupRemover(groupId))
+        .then(history.push('/groups'))
     }
 
     const EditGroup = () => {
@@ -108,14 +108,14 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    {/* <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div> */}
+                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
 
                     <div>
                         {theUser ? (
                             <>
                                 <button onClick={() => createEvent(group)}>Create Event</button>
                                 <button onClick={() => EditGroup()}>Update</button>
-                                <button type='submit' onClick={removeGroup}>Delete</button>
+                                <button onClick={()=>removeGroup()}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                             </>
                         ) : (
@@ -128,7 +128,7 @@ function GroupDetail() {
 
             <div className='bottomContainer'>
                 <div className='organizer'> Organizer </div>
-                {/* <div className='name'>{user.firstName} {user.lastName}</div> */}
+                <div className='name'>{user.firstName} {user.lastName}</div>
                 <div className='about'>What We're About:</div>
                 <div className='description'>{group.about}</div>
 

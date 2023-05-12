@@ -62,3 +62,7 @@
     padding-right: 5px;
     text-align: center;
 }
+.errors {
+    display: block;
+    text-align: left;
+}

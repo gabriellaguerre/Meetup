@@ -288,6 +288,8 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
 
     const eventId = req.params.eventId
 
+    console.log(eventId, "EVENT ID IN BACKEND")
+
     const event = await Event.findByPk(eventId)
 
     const user = req.user.id
