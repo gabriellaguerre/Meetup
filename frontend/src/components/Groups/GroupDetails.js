@@ -38,15 +38,24 @@ function GroupDetail() {
         console.log(showMenu, "AFTER IF STATEMENT")
     }
 
+    const closeMenu = (e) => {
+        //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+        // if (!ulRef.current.contains(e.target) ) {
+            setShowMenu(false)
+        // }
+    }
+
+
     useEffect(() => {
         if (!showMenu) return
 
-        const closeMenu = (e) => {
-            console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
-            if (!ulRef.current.contains(e.target) ) {
-                setShowMenu(false)
-            }
-        }
+
+        // const closeMenu = (e) => {
+        //     console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+        //     if (!ulRef.current.contains(e.target) ) {
+        //         setShowMenu(false)
+        //     }
+      //  }
 
         document.addEventListener('click', closeMenu)
 
