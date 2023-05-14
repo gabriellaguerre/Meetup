@@ -148,9 +148,8 @@ function CreateEvent() {
                 placeholder='Image Url'
                 value={url}
                 onChange={(e) => setUrl(e.target.value)} />
-            <p>
-                <p>Please describe your event</p>
-            </p>
+
+            <p>Please describe your event</p>
             <textarea
                 placeholder='Please include at least 30 characters'
                 value={description}

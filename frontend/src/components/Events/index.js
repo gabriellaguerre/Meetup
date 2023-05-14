@@ -2,7 +2,7 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
 import {NavLink, useHistory} from 'react-router-dom'
-import * as sessionEvent from '../../store/event'
+import * as eventActions from '../../store/event'
 import EventDetail from './EventDetails'
 import Navigation from '../Navigation'
 import './index.css'
@@ -14,12 +14,12 @@ function Events() {
 
      const [eventD, setEventD] = useState(false)
 
-    console.log(eventList)
+    console.log(eventList, "LINE 17 IN EVENTS PAGE")
 
 
-    useEffect(() => {
-        dispatch(sessionEvent.fetchEvents())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(eventActions.fetchEvents())
+    // }, [dispatch])
 
 
 
@@ -36,15 +36,13 @@ function Events() {
         <div className='smallHeader'>Events in get2gether</div>
 
         {eventList.map(event => (
-            <div className='eventListContainer'>
+            <div key={event.id} className='eventListContainer'>
                 <NavLink className='eventListLink'to={`/events/${event.id}`} onClick={() => setEventD(true)}>
                 <ul className='eventList' key={event.id}>
                     <span><img src='' alt='random pic' width="100" height="100" /></span>
                     <div className='eventDate'>{event.startDate}
                     <div className='eventName'>{event.name}</div>
-                    <div className='eventLocation'>{event.Venue.city}, {event.Venue.state}</div>
-
-
+                    <div className='eventLocation'>New York, NY</div>
 
                     </div>
 
@@ -64,4 +62,4 @@ function Events() {
     )
 }
 
-export default Events
+export default Events;

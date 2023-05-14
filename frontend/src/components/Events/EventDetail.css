@@ -1,3 +1,7 @@
+.delete-dropdownhidden {
+    display: none;
+  }
+
 .eventTopContainer {
     display: flex;
     border-bottom: 1px solid black;
@@ -116,15 +120,20 @@
     height: 200px;
 }
 
-
-
-
 .eventDetailImg {
 
     background-color: pink;
     border: 1px solid blue;
 }
 
+.dotEventDet {
+    display: inline-block;
+
+    position: relative;
+    font-size: 25px;
+    bottom: 5px;
+
+}
 
 /* .container {  display: grid;
     grid-template-columns: 1fr 1fr 1fr;
