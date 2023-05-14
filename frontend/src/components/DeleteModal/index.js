@@ -15,7 +15,7 @@ function DeleteModal({ groupId }) {
 
 
 
-    const confirmDelete = () => {
+    const confirmDelete = (groupId) => {
         return dispatch(sessionGroup.groupRemover(groupId))
         .then(history.push('/groups'))
     }
@@ -35,7 +35,7 @@ function DeleteModal({ groupId }) {
                         <div>Are you sure you want to remove this group?</div>
                     </div>
                     <div className='footer'>
-                        <button id='yesButton' onClick={() => confirmDelete()}>Yes (Delete Group)</button>
+                        <button id='yesButton' onClick={() => confirmDelete(groupId)}>Yes (Delete Group)</button>
                         <button id='noButton' onClick={closeModal}>No (Keep Group)</button>
                     </div>
                 </div>
