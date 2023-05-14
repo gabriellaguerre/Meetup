@@ -58,7 +58,7 @@ function GroupDetail() {
 
     const openMenu = () => {
         setShowMenu(true)
-       
+
         console.log(showMenu, "IN OPEN MENU")
         if (showMenu) return;
 
@@ -152,8 +152,8 @@ function GroupDetail() {
             <div className='backLink'><Link to='/groups'> Groups</Link></div>
             <div className='topContainer'>
                 <span className='groupImage'><img src='' alt='' width='200' height='200' /></span>
-                <span className='name'>{group.name}
-                    <div className='location'>{group.city}, {group.state}</div>
+                <span className='name'>{group?.name}
+                    <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>

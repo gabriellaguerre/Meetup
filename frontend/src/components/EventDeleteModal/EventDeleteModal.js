@@ -7,10 +7,10 @@ import { useModal } from '../../context/Modal'
 import OpenModalButton from '../OpenModalButton';
 import './eventDeleteModal.css'
 
-function EventDeleteModal({eventId }) {
+function EventDeleteModal({eventId, groupId}) {
 
 
-    console.log(eventId, "IN EVENT DELETE MODAL")
+    console.log(eventId, groupId, "IN EVENT DELETE MODAL")
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -19,7 +19,8 @@ function EventDeleteModal({eventId }) {
 
     const removeEvent = (eventId) => {
         dispatch(sessionEvent.eventRemover(eventId))
-            .then(history.push('/events'))
+        console.log(groupId, "IN REMOVE EVENT")
+            .then(history.push(`/groups/${groupId}`))
 
     }
 

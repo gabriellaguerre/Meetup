@@ -70,7 +70,7 @@ function CreateEvent() {
         console.log(form2, 'FORM 2 IN HANDLESUBMIT')
 
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
-            .then(() => history.push(`/events`))
+            .then((groupId) => history.push()`/groups/${groupId}`)
                .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {

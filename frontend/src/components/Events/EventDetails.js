@@ -20,7 +20,7 @@ function EventDetail() {
     const user = useSelector(state => state.session.user)
 
 
-    console.log(event, "IN EVENTDETAILS")
+    console.log(event, event.groupId, "IN EVENTDETAILS")
 
     // const removeEvent = async (eventId, groupId) => {
     //   return await dispatch(sessionEvent.eventRemover(eventId))
@@ -123,7 +123,7 @@ const stopTime = endingDate.toString().slice(16,21)
                 <div className='deleteButton'><button onClick={openMenu}>Delete</button></div>
                 <div className='updateButton'><button>Update</button></div>
                 <div className={divClassName} ref={ulRef}>
-                        <EventDeleteModal eventId={event.id}/>
+                        <EventDeleteModal eventId={event.id} groupId={event.groupId}/>
                 </div>
             </div>
 
