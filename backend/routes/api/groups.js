@@ -10,7 +10,7 @@ const router = express.Router();
 
 //************POST Create a Group*****************/
 router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
-   console.log("IN CREATE GROUP BACKEND")
+
    const userId = req.user.id
 
    const organizerId = userId
@@ -53,7 +53,12 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 router.get('/', async (req, res) => {
    let Groups = []
 
-   const group = await Group.findAll();
+   const group = await Group.findAll(
+      {
+      order: [['id', 'DESC']]}
+      );
+
+
 
    for (let i = 0; i < group.length; i++) {
       let data = {};
@@ -91,7 +96,7 @@ router.get('/', async (req, res) => {
 
       Groups.push(data)
    }
-
+   
    res.json({ Groups })
 })
 

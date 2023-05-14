@@ -1,9 +1,17 @@
 import { csrfFetch } from './csrf';
 
+const GET_USERS = 'group/getUsers'
 const GET_GROUPS = 'group/getGroups'
 const REMOVE_GROUP = 'group/removeGroup'
 const CREATE_GROUP = 'group/createGroup'
 const UPDATE_GROUP = 'group/updateGroup'
+
+const loadUsers = (data) => {
+    return {
+        type: GET_USERS,
+        data
+    }
+}
 
 
 const loadGroups = (data) => {
@@ -31,6 +39,16 @@ const editGroup = (group) => {
     return {
         type: UPDATE_GROUP,
         group
+    }
+}
+
+export const fetchUsers = () => async (dispatch) => {
+    const response = await csrfFetch('/api/users')
+
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(loadUsers(data))
+        return data
     }
 }
 
@@ -72,7 +90,6 @@ export const editingGroup = (payload, id) => async (dispatch) => {
 }
 
 export const groupRemover = (groupId) => async (dispatch) => {
-
     const response = await csrfFetch(`/api/groups/${groupId}`, {
         method: 'DELETE'
     })
@@ -84,6 +101,10 @@ export const groupRemover = (groupId) => async (dispatch) => {
 const groupReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
+        case GET_USERS:
+            newState = {}
+            action.data.Users.map((User) => newState[User.id] = User)
+            return newState;
         case GET_GROUPS:
             newState = {}
             action.data.Groups.map((Group) => newState[Group.id] = Group)

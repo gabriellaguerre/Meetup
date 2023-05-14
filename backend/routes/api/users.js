@@ -38,7 +38,7 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post('/', validateSignup, async (req, res, next) => { 
+router.post('/', validateSignup, async (req, res, next) => {
   let user = {}
 
   const { firstName, lastName, email, username, password } = req.body;
@@ -69,5 +69,13 @@ router.post('/', validateSignup, async (req, res, next) => {
     return res.json(user);
   }
 });
+
+router.get('/', async (req, res) => {
+
+   const user = await User.findAll();
+
+   return res.json(user)
+
+})
 
 module.exports = router;
