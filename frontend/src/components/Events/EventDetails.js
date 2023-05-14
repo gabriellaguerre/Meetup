@@ -20,7 +20,6 @@ function EventDetail() {
     const user = useSelector(state => state.session.user)
 
 
-    console.log(event, event.groupId, "IN EVENTDETAILS")
 
     // const removeEvent = async (eventId, groupId) => {
     //   return await dispatch(sessionEvent.eventRemover(eventId))
@@ -47,10 +46,10 @@ const stopTime = endingDate.toString().slice(16,21)
 
  const openMenu = () => {
      setShowMenu(true)
-     console.log(showMenu, "IN OPEN MENU")
+
      if (showMenu) return;
 
-     console.log(showMenu, "AFTER IF STATEMENT")
+    
  }
 
  const closeMenu = (e) => {

@@ -44,7 +44,6 @@ function CreateGroup() {
 
 
     const handleSubmit = (e) => {
-        console.log("IN HANDLE SUBMIT")
 
         e.preventDefault()
         setDisable(false)
@@ -70,7 +69,7 @@ function CreateGroup() {
             private: boolVal,
             previewImage: url
         }
-        console.log(form2, "FORM 2 IN HANDLESUBMIT")
+        
 
         return dispatch(sessionGroup.creatingGroup(form2))
             .then(history.push('/groups'))

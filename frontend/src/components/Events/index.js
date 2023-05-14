@@ -14,8 +14,7 @@ function Events() {
 
      const [eventD, setEventD] = useState(false)
 
-    console.log(eventList, "LINE 17 IN EVENTS PAGE")
-
+  
 
     // useEffect(() => {
     //     dispatch(eventActions.fetchEvents())

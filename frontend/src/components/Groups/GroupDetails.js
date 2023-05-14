@@ -59,10 +59,10 @@ function GroupDetail() {
     const openMenu = () => {
         setShowMenu(true)
 
-        console.log(showMenu, "IN OPEN MENU")
+
         if (showMenu) return;
 
-        console.log(showMenu, "AFTER IF STATEMENT")
+
     }
 
     const closeMenu = (e) => {
@@ -120,7 +120,7 @@ function GroupDetail() {
     }
 
     const EditGroup = (group) => {
-    console.log(group, "IN GROUP DETAILS EDIT GROUP ROUTE LINE 123")
+   
         history.push(`/groups/${group.id}/edit`)
         return (
             <>
