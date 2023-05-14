@@ -4,6 +4,7 @@ const GET_EVENTS = 'event/getEvents'
 const REMOVE_EVENT = 'event/removeEvent'
 const CREATE_EVENT = 'event/createEvent'
 const FIND_EVENT_GROUP = 'event/findEventGroup'
+const UPDATE_EVENT = 'event/updateEvent'
 
 const findEvent = (data) => {
     return {
@@ -33,6 +34,12 @@ const createEvent = (event) => {
     }
 }
 
+const updateEvent = (eventId) => {
+    return {
+        type: UPDATE_EVENT,
+        eventId
+    }
+}
 export const findEvents = (eventId) => async () => {
     const response = await fetch(`/api/events/${eventId}/`)
 
@@ -54,6 +61,7 @@ export const fetchEvents = () => async (dispatch) => {
 }
 
 export const creatingEvent = (payload, groupId) => async (dispatch) => {
+
     const response = await csrfFetch(`/api/groups/${groupId}/events`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -61,7 +69,21 @@ export const creatingEvent = (payload, groupId) => async (dispatch) => {
     })
     if(response.ok) {
         const data = await response.json()
+
         dispatch(createEvent(data))
+        return data
+    }
+}
+
+export const updatingEvent = (payload, eventId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(updateEvent(data))
     }
 }
 
@@ -86,8 +108,10 @@ const eventReducer = (state = {}, action) => {
             newState={}
             return newState[action.data];
         case CREATE_EVENT:
-            newState = { ...state, [action.event.id]: action.event }
+            newState = {...state, [action.event.id]: action.event}
             return newState
+        case UPDATE_EVENT:
+            newState = {...state, [action.event.id]: action.event}
         case REMOVE_EVENT:
             newState = {...state}
             delete newState[action.eventId]

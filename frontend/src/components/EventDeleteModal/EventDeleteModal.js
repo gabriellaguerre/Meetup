@@ -5,28 +5,29 @@ import { useDispatch, useSelector, } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 import OpenModalButton from '../OpenModalButton';
-import './index.css'
+import './eventDeleteModal.css'
 
-function DeleteModal({ groupId}) {
+function EventDeleteModal({eventId, groupId}) {
 
 
-    console.log(groupId, "IN DELETE MODAL")
+    console.log(eventId, groupId, "IN EVENT DELETE MODAL")
 
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
 
 
-    const confirmDelete = (groupId) => {
-        dispatch(sessionGroup.groupRemover(groupId))
-            .then(history.push('/groups'))
+    const removeEvent = (eventId) => {
+        dispatch(sessionEvent.eventRemover(eventId))
+        console.log(groupId, "IN REMOVE EVENT")
+            .then(history.push(`/groups/${groupId}`))
+
     }
-
-
 
 
     return (
         <>
+
                 <div className='modalBackground1'>
                     <div className="modalContainer1">
                         <div className='titleCloseButton1'>
@@ -35,15 +36,21 @@ function DeleteModal({ groupId}) {
                         <div className='title'>Confirm Delete</div>
 
                         <div className='body'>
-                            <div>Are you sure you want to remove this group?</div>
+                            <div>Are you sure you want to remove this event?</div>
                         </div>
                         <div className='footer'>
-                            <button id='yesButton' onClick={() => confirmDelete(groupId)}>Yes (Delete Group)</button>
-                            <button id='noButton' onClick={closeModal}>No (Keep Group)</button>
+                            <button id='yesButton' onClick={() => removeEvent(eventId)}>Yes (Delete Event)</button>
+                            <button id='noButton' onClick={closeModal}>No (Keep Event)</button>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
         </>
     )
 }
-export default DeleteModal;
+export default EventDeleteModal;

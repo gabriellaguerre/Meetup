@@ -28,12 +28,37 @@ function GroupDetail() {
     const [pastEvents, setPastEvents] = useState(0)
     const [typeButton, setTypeButton] = useState('')
 
+
+    useEffect(() => {
+        setNumEvents(upcoming.length / 2)
+        setPastEvents(past.length)
+    }, [numEvents, pastEvents])
+
+
+
+    useEffect(() => {
+
+        if (user && user.id !== group.organizerId) {
+            setTypeButton('joinButton')
+            setTheUser(false)
+        }
+        if (user && user.id === group.organizerId) {
+            setTheUser(true)
+        }
+        if (!user) {
+            setTypeButton('noJoinButton')
+            setNoUser(true)
+        }
+
+    }, [user, typeButton])
+
     ////////////////////////////////////////////////////////
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef()
 
     const openMenu = () => {
         setShowMenu(true)
+
         console.log(showMenu, "IN OPEN MENU")
         if (showMenu) return;
 
@@ -44,6 +69,7 @@ function GroupDetail() {
         //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
         // if (!ulRef.current.contains(e.target) ) {
             setShowMenu(false)
+
         // }
     }
 
@@ -93,32 +119,6 @@ function GroupDetail() {
 
     }
 
-
-    useEffect(() => {
-        setNumEvents(upcoming.length / 2)
-        setPastEvents(past.length)
-    }, [numEvents, pastEvents])
-
-
-
-    useEffect(() => {
-
-        if (user && user.id !== group.organizerId) {
-            setTypeButton('joinButton')
-            setTheUser(false)
-        }
-        if (user && user.id === group.organizerId) {
-            setTheUser(true)
-        }
-        if (!user) {
-            setTypeButton('noJoinButton')
-            setNoUser(true)
-        }
-
-    }, [user, typeButton])
-
-
-
     const EditGroup = (group) => {
     console.log(group, "IN GROUP DETAILS EDIT GROUP ROUTE LINE 123")
         history.push(`/groups/${group.id}/edit`)
@@ -138,6 +138,11 @@ function GroupDetail() {
         )
     }
 
+    // const confirmDelete = (groupId) => {
+    //     return dispatch(sessionGroup.groupRemover(groupId))
+    //     .then(history.push('/groups'))
+    // }
+
     const sendAlert = () => {
         return window.alert("Feature Coming Soon")
     }
@@ -147,8 +152,8 @@ function GroupDetail() {
             <div className='backLink'><Link to='/groups'> Groups</Link></div>
             <div className='topContainer'>
                 <span className='groupImage'><img src='' alt='' width='200' height='200' /></span>
-                <span className='name'>{group.name}
-                    <div className='location'>{group.city}, {group.state}</div>
+                <span className='name'>{group?.name}
+                    <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>

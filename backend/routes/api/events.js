@@ -10,23 +10,23 @@ const router = express.Router();
 
 const validateQuery = [
     query('page')
-        .if((value, {req}) => req.query.page)
+        .if((value, { req }) => req.query.page)
         .custom((value, { req }) => value >= 1)
         .withMessage('Page must be greater than or equal to 1'),
     query('size')
-        .if((value, {req}) => req.query.size)
+        .if((value, { req }) => req.query.size)
         .custom((value, { req }) => value >= 1)
         .withMessage('Size must be greater than or equal to 1'),
     query('name')
         .if((value, { req }) => req.query.name)
-        .custom((value, {req}) => typeof value === 'string')
+        .custom((value, { req }) => typeof value === 'string')
         .withMessage("Name must be a string"),
     query('type')
-        .if((value, {req}) => req.query.type)
-        .custom((value, {req}) => value === 'Online' || value === 'In person')
+        .if((value, { req }) => req.query.type)
+        .custom((value, { req }) => value === 'Online' || value === 'In person')
         .withMessage("Type must be 'Online' or 'In Person'"),
     query('startDate')
-        .if((value, {req}) => req.query.startDate)
+        .if((value, { req }) => req.query.startDate)
         .isDate()
         .withMessage('Start date must be a valid datetime'),
     handleValidationErrors,
@@ -46,7 +46,7 @@ router.get('/', validateQuery, async (req, res) => {
 
     if (!size || size > 20) {
         size = 20
-    }  else {
+    } else {
         size = Number.parseInt(size)
     }
 
@@ -308,20 +308,24 @@ router.delete('/:eventId', requireAuth, async (req, res) => {
                 groupId
             }
         })
-        if (user === group.organizerId || member.status === 'co-host') {
-            await event.destroy();
-            res.json({
-                message: "Successfully deleted",
-                statusCode: 200
-            })
-        } else {
-            const err = new Error("Forbidden")
-            err.status = 403
-            res.json({
-                message: err.message,
-                statusCode: err.status
-            })
+        if (group.organizerId) {
+            if (user === group.organizerId || member.status === 'co-host') {
+                await event.destroy();
+                res.json({
+                    message: "Successfully deleted",
+                    statusCode: 200
+                })
+            } else {
+                const err = new Error("Forbidden")
+                err.status = 403
+                res.json({
+                    message: err.message,
+                    statusCode: err.status
+                })
+            }
+
         }
+
 
     } else {
         const err = new Error("Event couldn't be found")

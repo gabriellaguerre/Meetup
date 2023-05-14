@@ -1,7 +1,10 @@
+import React, {useRef, useEffect} from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionEvent from '../../store/event'
+import DeleteModal from '../DeleteModal'
 import { useState } from 'react'
+import EventDeleteModal from '../EventDeleteModal/EventDeleteModal'
 import Events from './index'
 import './EventDetail.css'
 import clockIcon from './EventImages/clockIcon.png'
@@ -16,16 +19,69 @@ function EventDetail() {
     const event = useSelector(state => state.event[eventId])
     const user = useSelector(state => state.session.user)
 
-    console.log(event, "IN EVENTDETAIL")
 
-    const removeEvent = async (eventId) => {
-      return await dispatch(sessionEvent.eventRemover(eventId))
-             .then(history.push('/events'))
-    }
+    console.log(event, event.groupId, "IN EVENTDETAILS")
 
+    // const removeEvent = async (eventId, groupId) => {
+    //   return await dispatch(sessionEvent.eventRemover(eventId))
+    //        //  .then(history.push('/events'))
+    //          .then(history.push(`/groups/${groupId}`))
+    // }
+
+    // const updateEvent =  (eventId) => {
+    //     return await dispatch(sessionEvent.eventRemover(eventId))
+    //            .then(history.push(`/events`))
+    //   }
 
 let newDate = new Date(event.startDate)
-console.log(newDate.toString(), "DATE AND TIME")
+const date = newDate.toString().slice(0,15)
+const time = newDate.toString().slice(16,21)
+
+let endingDate = new Date(event.endDate)
+const stopDate = endingDate.toString().slice(0,15)
+const stopTime = endingDate.toString().slice(16,21)
+
+ ////////////////////////////////////////////////////////
+ const [showMenu, setShowMenu] = useState(false)
+ const ulRef = useRef()
+
+ const openMenu = () => {
+     setShowMenu(true)
+     console.log(showMenu, "IN OPEN MENU")
+     if (showMenu) return;
+
+     console.log(showMenu, "AFTER IF STATEMENT")
+ }
+
+ const closeMenu = (e) => {
+     //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+     // if (!ulRef.current.contains(e.target) ) {
+         setShowMenu(false)
+     // }
+ }
+
+
+ useEffect(() => {
+     if (!showMenu) return
+
+
+     // const closeMenu = (e) => {
+     //     console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+     //     if (!ulRef.current.contains(e.target) ) {
+     //         setShowMenu(false)
+     //     }
+   //  }
+
+     document.addEventListener('click', closeMenu)
+
+     return () => document.removeEventListener('click', closeMenu)
+ }, [showMenu])
+
+ const divClassName = "delete-dropdown" + (showMenu ? "" : "hidden")
+ console.log(divClassName, "DIVCLASSNAME")
+
+///////////////////////////////////////////////////////////////////
+
     return (
         <>
             <div className='eventTopContainer'>
@@ -45,8 +101,8 @@ console.log(newDate.toString(), "DATE AND TIME")
                    <div className='clockImg'><img src={clockIcon} alt='clock' height='20'width='20'/></div>
                    <div className='start'>Start</div>
                    <div className='end'>End</div>
-                   <div className='startDate'>{event.startDate}</div>
-                   <div className='endDate'>{event.endDate}</div>
+                   <div className='startDate'>{date} <span className='dotEventDet'>.</span> {time} hours</div>
+                   <div className='endDate'>{stopDate} <span className='dotEventDet'>.</span> {stopTime} hours</div>
                    <div className='money'><img src={moneyIcon} alt='Money' height='20'width='20' /></div>
                    <div className='free'>{event.price}</div>
                    <div className='pin'><img src={pinIcon} alt='pin' height='20'width='20'/></div>
@@ -64,7 +120,11 @@ console.log(newDate.toString(), "DATE AND TIME")
             <div className='eventbottomContainer'>
             <div className='eventDetails'>Details:
                 <div className='eventDescription'>{event.description}</div>
-                <div className='deleteButton'><button onClick={()=>removeEvent(event.id)}>Delete</button></div>
+                <div className='deleteButton'><button onClick={openMenu}>Delete</button></div>
+                <div className='updateButton'><button>Update</button></div>
+                <div className={divClassName} ref={ulRef}>
+                        <EventDeleteModal eventId={event.id} groupId={event.groupId}/>
+                </div>
             </div>
 
 

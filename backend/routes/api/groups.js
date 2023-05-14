@@ -96,7 +96,7 @@ router.get('/', async (req, res) => {
 
       Groups.push(data)
    }
-   
+
    res.json({ Groups })
 })
 
@@ -556,7 +556,9 @@ router.get('/:groupId/events', async (req, res) => {
 
 /*************POST Create an Event by Group ID***********/
 router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req, res) => {
-   const groupId = req.params.groupId
+   const groupId = +req.params.groupId
+
+   console.log(groupId, "IN BACKEND CREATE EVENT")
 
    const user = req.user.id
 

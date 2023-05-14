@@ -71,7 +71,7 @@ export const creatingGroup = (payload) => async (dispatch) => {
     })
     if(response.ok) {
         const data = await response.json()
-        console.log(data, "IN THUNK")
+      
         dispatch(createGroup(data))
         return data
     }

@@ -31,10 +31,6 @@ function Groups() {
     }, [dispatch])
 
 
-
-
-    //    console.log(groupList, "GROUPLIST")
-    //    console.log(eventList, "EVENTLIST IN GROUPS")
     useEffect(() => {
         let count = []
         const counter = () => {
@@ -42,7 +38,7 @@ function Groups() {
                 for (let j = 0; j < eventList.length; j++) {
                     let group = groupList[i]
                     let event = eventList[j]
-                    console.log(group.id, event.groupId, "GROUP IN LOOP")
+
                     if (group.id === event.groupId) {
                         count.push(event)
                     }
