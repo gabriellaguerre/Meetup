@@ -20,7 +20,6 @@ function EditGroup() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    console.log(group, "GROUP IN EDIT GROUP FORM LINE 24")
 
     const [city, setCity] = useState(group.city)
     const [state, setState] = useState(group.state)
@@ -55,7 +54,6 @@ let boolVal
         e.preventDefault()
         setDisable(false)
 
-        console.log("IN HANDLE UPDATE FXN")
         const form = {
             oneLocation,
             name,
@@ -64,7 +62,7 @@ let boolVal
             privatePublic,
             url
         }
-        console.log(form, "FORM IN HANDLE UPDATE LINE 108")
+
         const newLocation = oneLocation.split(',')
         if(privatePublic) {
              boolVal = JSON.parse(privatePublic)
@@ -82,8 +80,7 @@ let boolVal
             private: boolVal,
             previewImage: url
         }
-        console.log(form2, "FORM 2 IN HANDLE UPDATE")
-
+       
         return dispatch(sessionGroup.editingGroup(form2, groupId))
             .then(() => history.push('/groups'))
             .catch(async (res) => {

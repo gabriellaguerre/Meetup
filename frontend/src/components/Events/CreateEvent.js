@@ -67,7 +67,6 @@ function CreateEvent() {
             endDate,
             url
         }
-        console.log(form2, 'FORM 2 IN HANDLESUBMIT')
 
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
             .then((groupId) => history.push()`/groups/${groupId}`)

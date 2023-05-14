@@ -9,9 +9,6 @@ import './index.css'
 
 function DeleteModal({ groupId}) {
 
-
-    console.log(groupId, "IN DELETE MODAL")
-
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
@@ -21,8 +18,6 @@ function DeleteModal({ groupId}) {
         dispatch(sessionGroup.groupRemover(groupId))
             .then(history.push('/groups'))
     }
-
-
 
 
     return (

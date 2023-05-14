@@ -9,9 +9,6 @@ import './eventDeleteModal.css'
 
 function EventDeleteModal({eventId, groupId}) {
 
-
-    console.log(eventId, groupId, "IN EVENT DELETE MODAL")
-
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
