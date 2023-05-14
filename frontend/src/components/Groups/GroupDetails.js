@@ -18,7 +18,9 @@ function GroupDetail() {
     const group = useSelector(state => state.group[groupId])
     const user = useSelector(state => state.session.user)
     const event = useSelector(state => Object.values(state.event))
-    const allUsers = useSelector(state => state.user)
+    //const allUsers = useSelector(state => Object.values(state.user))
+
+    //console.log(allUsers, "ALL USERS")
 
     const [noUser, setNoUser] = useState(false)
     const [theUser, setTheUser] = useState(false)
@@ -117,8 +119,14 @@ function GroupDetail() {
 
 
 
-    const EditGroup = () => {
+    const EditGroup = (group) => {
+    console.log(group, "IN GROUP DETAILS EDIT GROUP ROUTE LINE 123")
         history.push(`/groups/${group.id}/edit`)
+        return (
+            <>
+              <EditGroup group={group} />
+            </>
+        )
     }
 
     const createEvent = () => {
@@ -145,13 +153,13 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
+                    {/* <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div> */}
 
                     <div>
                         {theUser ? (
                             <>
                                 <button onClick={() => createEvent(group)}>Create Event</button>
-                                <button onClick={() => EditGroup()}>Update</button>
+                                <button onClick={() => EditGroup(group)}>Update</button>
                                 <button onClick={openMenu}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                                 <div className={divClassName} ref={ulRef}>
@@ -169,7 +177,7 @@ function GroupDetail() {
 
         <div className='bottomContainer'>
             <div className='organizer'> Organizer </div>
-            <div className='name'>{user.firstName} {user.lastName}</div>
+            {/* <div className='name'>{user.firstName} {user.lastName}</div> */}
             <div className='about'>What We're About:</div>
             <div className='description'>{group.about}</div>
 

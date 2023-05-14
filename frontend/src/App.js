@@ -33,9 +33,11 @@ function App() {
           <Route exact path='/' component={HomePage} />
           <Route exact path='/groups' component={Groups} />
            <Route exact path='/groups/new' component={CreateGroup} />
+           <Route path='/groups/:groupId/edit' component={EditGroup} />
           <Route  exact path='/groups/:groupId' component={GroupDetail} />
+
           <Route path='/groups/:groupId/events/new' component={CreateEvent} />
-          <Route path='/groups/:groupId/edit' component={EditGroup} />
+
           <Route exact path='/events' component={Events} />
           <Route exact path='/events/:eventId' component={EventDetail} />
 
