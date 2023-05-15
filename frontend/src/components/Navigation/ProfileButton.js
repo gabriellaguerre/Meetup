@@ -40,7 +40,7 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logoutUser())
   }
  const credential = "DemoUser"
- const password = 'abc'
+ const password = '123456789'
 
  const demo = (e) => {
     e.preventDefault()

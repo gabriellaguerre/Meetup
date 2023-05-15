@@ -68,8 +68,9 @@ function CreateEvent() {
             url
         }
 
+
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
-            .then((groupId) => history.push()`/groups/${groupId}`)
+            .then(() => history.push(`/events`))
                .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {

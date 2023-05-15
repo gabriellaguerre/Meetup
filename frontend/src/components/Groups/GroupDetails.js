@@ -1,28 +1,20 @@
 import React from 'react'
-import { Link, useParams, Route, useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import * as sessionGroup from '../../store/group'
+import { Link, useParams, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
-import Groups from './index'
-import EditGroupForm from './EditGroup'
 import CreateEvent from '../Events/CreateEvent'
 import DeleteModal from '../DeleteModal'
-import OpenModalButton from '../OpenModalButton'
 import './groupDetail.css'
 
 function GroupDetail() {
     const { groupId } = useParams();
-    const dispatch = useDispatch()
+
     const history = useHistory()
 
     const group = useSelector(state => state.group[groupId])
     const user = useSelector(state => state.session.user)
     const event = useSelector(state => Object.values(state.event))
-    //const allUsers = useSelector(state => Object.values(state.user))
 
-    //console.log(allUsers, "ALL USERS")
-
-    const [noUser, setNoUser] = useState(false)
     const [theUser, setTheUser] = useState(false)
     const [numEvents, setNumEvents] = useState(0)
     const [pastEvents, setPastEvents] = useState(0)
@@ -47,7 +39,7 @@ function GroupDetail() {
         }
         if (!user) {
             setTypeButton('noJoinButton')
-            setNoUser(true)
+
         }
 
     }, [user, typeButton])
@@ -91,7 +83,7 @@ function GroupDetail() {
     }, [showMenu])
 
     const divClassName = "delete-dropdown" + (showMenu ? "" : "hidden")
-    console.log(divClassName, "DIVCLASSNAME")
+
 
     ///////////////////////////////////////////////////////////////////
 
@@ -120,7 +112,7 @@ function GroupDetail() {
     }
 
     const EditGroup = (group) => {
-   
+
         history.push(`/groups/${group.id}/edit`)
         return (
             <>
@@ -138,10 +130,6 @@ function GroupDetail() {
         )
     }
 
-    // const confirmDelete = (groupId) => {
-    //     return dispatch(sessionGroup.groupRemover(groupId))
-    //     .then(history.push('/groups'))
-    // }
 
     const sendAlert = () => {
         return window.alert("Feature Coming Soon")

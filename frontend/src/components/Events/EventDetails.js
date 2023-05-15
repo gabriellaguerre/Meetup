@@ -18,6 +18,39 @@ function EventDetail() {
 
     const event = useSelector(state => state.event[eventId])
     const user = useSelector(state => state.session.user)
+    const groupId = event.groupId
+
+    const group = useSelector(state => state.group[groupId])
+
+
+
+    const [theUser, setTheUser] = useState(false)
+    const [typeButton, setTypeButton] = useState('')
+
+
+
+    useEffect(() => {
+      //  console.log(group, "IN USE EFFECT GROUP ORGANIZER ID")
+        if(group) {
+              if (user && user.id !== group.organizerId) {
+            setTypeButton('joinButton')
+            setTheUser(false)
+        }
+
+          if (user && user.id === group.organizerId) {
+            setTheUser(true)
+        }
+        }
+        if(user) {
+            setTypeButton('joinButton')
+        }
+
+        if (!user) {
+            setTypeButton('noJoinButton')
+
+        }
+
+    }, [user, typeButton])
 
 
 
@@ -49,7 +82,7 @@ const stopTime = endingDate.toString().slice(16,21)
 
      if (showMenu) return;
 
-    
+
  }
 
  const closeMenu = (e) => {
@@ -77,16 +110,21 @@ const stopTime = endingDate.toString().slice(16,21)
  }, [showMenu])
 
  const divClassName = "delete-dropdown" + (showMenu ? "" : "hidden")
- console.log(divClassName, "DIVCLASSNAME")
 
 ///////////////////////////////////////////////////////////////////
 
-    return (
+
+return (
         <>
             <div className='eventTopContainer'>
                 <div className='backLink'><Link to='/events'> Events</Link>
                 <div className='eventName'>{event.name}</div>
-                <div className='organizer'>Hosted by: {user.firstName} {user.lastName}</div>
+                {theUser ? (
+                    <div className='organizer'>Hosted by: {user.firstName} {user.lastName}</div>
+                ) : (
+                    <div></div>
+                )}
+
                 </div>
             </div>
 
@@ -119,11 +157,24 @@ const stopTime = endingDate.toString().slice(16,21)
             <div className='eventbottomContainer'>
             <div className='eventDetails'>Details:
                 <div className='eventDescription'>{event.description}</div>
+            <div>
+            {theUser && (
+                <>
                 <div className='deleteButton'><button onClick={openMenu}>Delete</button></div>
                 <div className='updateButton'><button>Update</button></div>
                 <div className={divClassName} ref={ulRef}>
                         <EventDeleteModal eventId={event.id} groupId={event.groupId}/>
                 </div>
+                </>
+
+            )}
+            {user ? (
+                <button className={typeButton}>Join Event</button>
+            ): (
+                <button className={typeButton}>Create an account to Join the Group and Event</button>
+            )}
+            </div>
+
             </div>
 
 

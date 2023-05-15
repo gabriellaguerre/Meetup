@@ -35,10 +35,10 @@ function App() {
            <Route exact path='/groups/new' component={CreateGroup} />
            <Route exact path='/groups/:groupId/edit' component={EditGroup} />
           <Route  exact path='/groups/:groupId' component={GroupDetail} />
-
+          <Route exact path='/events' component={Events} />
           <Route exact path='/groups/:groupId/events/new' component={CreateEvent} />
 
-          <Route exact path='/events' component={Events} />
+
           <Route exact path='/events/:eventId' component={EventDetail} />
 
         </Switch>
