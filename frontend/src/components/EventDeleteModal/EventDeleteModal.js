@@ -16,8 +16,7 @@ function EventDeleteModal({eventId, groupId}) {
 
     const removeEvent = (eventId) => {
         dispatch(sessionEvent.eventRemover(eventId))
-        console.log(groupId, "IN REMOVE EVENT")
-            .then(history.push(`/groups/${groupId}`))
+            .then(history.push(`/events`))
 
     }
 

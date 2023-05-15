@@ -45,7 +45,7 @@ router.get('/', validateQuery, async (req, res) => {
     }
 
     if (!size || size > 20) {
-        size = 20
+        size = 1000
     } else {
         size = Number.parseInt(size)
     }

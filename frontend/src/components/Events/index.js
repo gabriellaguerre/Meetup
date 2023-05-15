@@ -14,11 +14,11 @@ function Events() {
 
      const [eventD, setEventD] = useState(false)
 
-  
 
-    // useEffect(() => {
-    //     dispatch(eventActions.fetchEvents())
-    // }, [dispatch])
+
+    useEffect(() => {
+        dispatch(eventActions.fetchEvents())
+    }, [dispatch])
 
 
 

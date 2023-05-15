@@ -54,7 +54,9 @@ export const fetchEvents = () => async (dispatch) => {
     const response = await csrfFetch('/api/events')
 
     if (response.ok) {
+
         const data = await response.json()
+        console.log(data, "IN FETCH EVENTS THUNK")
         dispatch(loadEvents(data))
         return data
     }
@@ -69,7 +71,6 @@ export const creatingEvent = (payload, groupId) => async (dispatch) => {
     })
     if(response.ok) {
         const data = await response.json()
-
         dispatch(createEvent(data))
         return data
     }
@@ -109,6 +110,7 @@ const eventReducer = (state = {}, action) => {
             return newState[action.data];
         case CREATE_EVENT:
             newState = {...state, [action.event.id]: action.event}
+            console.log(newState, 'IN EVENT REDUCER')
             return newState
         case UPDATE_EVENT:
             newState = {...state, [action.event.id]: action.event}

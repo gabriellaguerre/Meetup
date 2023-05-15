@@ -598,11 +598,11 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             startDate,
             endDate
          })
-            await Attendee.create({
-            eventId: createEvent.id,
-            userId: user,
-            status: "host"
-         })
+            // await Attendee.create({
+            // eventId: createEvent.id,
+            // userId: user,
+            // status: "host"
+       //  })
 
          let data = {}
          data.id = createEvent.id,
