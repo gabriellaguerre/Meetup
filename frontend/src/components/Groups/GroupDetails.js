@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
+import * as groupActions from '../../store/group'
 import CreateEvent from '../Events/CreateEvent'
 import DeleteModal from '../DeleteModal'
 import './groupDetail.css'
@@ -9,9 +10,13 @@ import './groupDetail.css'
 function GroupDetail() {
     const { groupId } = useParams();
 
+
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const group = useSelector(state => state.group[groupId])
+    console.log(group, "GROUP IN GROUP DETAIL")
+
     const user = useSelector(state => state.session.user)
     const event = useSelector(state => Object.values(state.event))
 
@@ -19,6 +24,12 @@ function GroupDetail() {
     const [numEvents, setNumEvents] = useState(0)
     const [pastEvents, setPastEvents] = useState(0)
     const [typeButton, setTypeButton] = useState('')
+
+    // console.log(groupId)
+    useEffect(()=> {
+       dispatch(groupActions.fetchGroup(groupId))
+    }, [dispatch])
+
 
 
     useEffect(() => {
@@ -30,12 +41,13 @@ function GroupDetail() {
 
     useEffect(() => {
 
-        if (user && user.id !== group.organizerId) {
+        if (user && user.id !== group?.organizerId) {
             setTypeButton('joinButton')
             setTheUser(false)
         }
-        if (user && user.id === group.organizerId) {
+        if (user && user.id === group?.organizerId) {
             setTheUser(true)
+            setTypeButton('noJoinButton')
         }
         if (!user) {
             setTypeButton('noJoinButton')
@@ -146,7 +158,10 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    {/* <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div> */}
+                    {user && (
+                         <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
+                    )}
+
 
                     <div>
                         {theUser ? (
@@ -170,11 +185,14 @@ function GroupDetail() {
 
         <div className='bottomContainer'>
             <div className='organizer'> Organizer </div>
-            {/* <div className='name'>{user.firstName} {user.lastName}</div> */}
-            <div className='about'>What We're About:</div>
-            <div className='description'>{group.about}</div>
+            {user && (
+                <div className='name'>{user.firstName} {user.lastName}</div>
+            )}
 
-            <div className='upcomingEvents'>{allEvents(group.id)}Upcoming Events ({numEvents})</div>
+            <div className='about'>What We're About:</div>
+            <div className='description'>{group?.about}</div>
+
+            <div className='upcomingEvents'>{allEvents(group?.id)}Upcoming Events ({numEvents})</div>
             {upcoming.map(event => (
                 <ul key={event.id}>
 
@@ -189,7 +207,7 @@ function GroupDetail() {
                 </ul>
             ))}
 
-            <div className='pastEvents'>{allEvents(group.id)}Past Events ({pastEvents})</div>
+            <div className='pastEvents'>{allEvents(group?.id)}Past Events ({pastEvents})</div>
             {past.map(event => (
                 <ul key={event.id}>
 

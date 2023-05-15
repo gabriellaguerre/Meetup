@@ -69,7 +69,7 @@ function CreateGroup() {
             private: boolVal,
             previewImage: url
         }
-        
+
 
         return dispatch(sessionGroup.creatingGroup(form2))
             .then(history.push('/groups'))

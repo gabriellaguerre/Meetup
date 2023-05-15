@@ -5,6 +5,15 @@ const GET_GROUPS = 'group/getGroups'
 const REMOVE_GROUP = 'group/removeGroup'
 const CREATE_GROUP = 'group/createGroup'
 const UPDATE_GROUP = 'group/updateGroup'
+const GET_GROUP = 'group/getGroup'
+
+const loadGroup = (group) => {
+    console.log(group, "IN LOAD GROUP")
+    return{
+        type: GET_GROUP,
+        group
+    }
+}
 
 const loadUsers = (data) => {
     return {
@@ -52,6 +61,18 @@ export const fetchUsers = () => async (dispatch) => {
     }
 }
 
+export const fetchGroup = (groupId) => async (dispatch) => {
+    console.log("IN THUNK FETCH GROUP")
+    const response = await csrfFetch(`/api/groups/${groupId}`)
+
+    if(response.ok) {
+        const data = await response.json()
+        console.log(data, "DATA IN FETCH GROUP THUNK")
+        dispatch(loadGroup(data))
+        return data
+    }
+}
+
 export const fetchGroups = () => async (dispatch) => {
     const response = await csrfFetch('/api/groups')
 
@@ -62,6 +83,8 @@ export const fetchGroups = () => async (dispatch) => {
     }
 }
 
+
+
 export const creatingGroup = (payload) => async (dispatch) => {
 
     const response = await csrfFetch('/api/groups', {
@@ -71,7 +94,7 @@ export const creatingGroup = (payload) => async (dispatch) => {
     })
     if(response.ok) {
         const data = await response.json()
-      
+
         dispatch(createGroup(data))
         return data
     }
@@ -108,6 +131,10 @@ const groupReducer = (state = {}, action) => {
         case GET_GROUPS:
             newState = {}
             action.data.Groups.map((Group) => newState[Group.id] = Group)
+            return newState;
+        case GET_GROUP:
+            newState = {...state, [action.group.id]: action.group}
+            console.log(newState, "IN GROUP REDUCER")
             return newState;
         case CREATE_GROUP:
             newState = {...state, [action.group.id]: action.group}
