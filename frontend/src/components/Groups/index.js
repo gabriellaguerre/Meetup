@@ -66,22 +66,22 @@ function Groups() {
     let publicPrivate
 
 
-    groupList.map(group => {
-        if(group.previewImage === "No Image posted"){
-            pic = noImage
-        } else {
-            pic = group.previewImage
-        }
+    // groupList.map(group => {
+    //     if(group.previewImage === "No Image posted"){
+    //         pic = noImage
+    //     } else {
+    //         pic = group.previewImage
+    //     }
 
-        if(group.private === true) {
-            publicPrivate = 'Private'
-        } else if (group.private === null) {
-            publicPrivate = 'Public'
-        } else {
-            publicPrivate = 'Public'
-        }
+    //     if(group.private === true) {
+    //         publicPrivate = 'Private'
+    //     } else if (group.private === null) {
+    //         publicPrivate = 'Public'
+    //     } else {
+    //         publicPrivate = 'Public'
+    //     }
 
-    })
+    //})
     // let images = [boatImage, carCollector, hunterImage, skyDive]
     // let randomNum = Math.floor(Math.random() * images.length);
     // const pic = images[randomNum]

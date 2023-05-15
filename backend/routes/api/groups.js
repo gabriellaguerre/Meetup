@@ -15,7 +15,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 
    const organizerId = userId
 
-   const { name, about, type, private, city, state } = req.body
+   const { name, about, type, private, city, state} = req.body
 
    const newGroup = await Group.create({
       organizerId,
@@ -24,7 +24,8 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       type,
       private,
       city,
-      state
+      state,
+
    })
 
    await Membership.create({
@@ -42,7 +43,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       data.type = newGroup.type,
       data.private = newGroup.private,
       data.city = newGroup.city,
-      data.state = newGroup.state
+      data.state = newGroup.state,
    data.createdAt = newGroup.createdAt,
       data.updatedAt = newGroup.updatedAt
 

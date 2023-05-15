@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Organizer'
       })
       Group.hasMany(models.Event, {
-        foreignKey: 'groupId'
+        foreignKey: 'groupId',
+        onDelete: 'CASCADE'
       })
       Group.hasMany(models.Venue, {
         foreignKey: 'groupId'
