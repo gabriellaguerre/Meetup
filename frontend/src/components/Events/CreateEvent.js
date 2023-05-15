@@ -124,7 +124,7 @@ function CreateEvent() {
 
 
             <p>When does your event start?</p>
-            <input
+            <input className='start'
                 placeholder='MM/DD/YYYY HHmm AM'
                 type='date'
                 value={startDate}
@@ -134,7 +134,7 @@ function CreateEvent() {
             </div>
 
             <p>When does your event end?</p>
-            <input
+            <input className='end' width='100px'
                 placeholder='MM/DD/YYYY HHmm PM'
                 type='date'
                 value={endDate}

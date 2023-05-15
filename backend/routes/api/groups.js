@@ -54,12 +54,21 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 router.get('/', async (req, res) => {
    let Groups = []
 
-   const group = await Group.findAll(
-      {
-      order: [['id', 'DESC']]}
-      );
+   const group = await Group.findAll({
+      include: [
+         {
+            model: GroupImage,
+            attributes: ['id', 'url', 'preview']
+         },
+         {
+            model: User, as: 'Organizer',
+            attributes: ['id', 'firstName', 'lastName']
+         },
+         { model: Venue },
+      ],
+   });
 
-
+console.log(group, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
 
    for (let i = 0; i < group.length; i++) {
       let data = {};
@@ -93,7 +102,10 @@ router.get('/', async (req, res) => {
          data.createdAt = eachGroup.createdAt,
          data.updatedAt = eachGroup.updatedAt,
          data.numMembers = members,
-         data.previewImage = urlImage
+         data.previewImage = urlImage,
+         data.GroupImages = eachGroup.GroupImages,
+         data.Organizer = eachGroup.Organizer,
+         data.Venues = eachGroup.Venues
 
       Groups.push(data)
    }
