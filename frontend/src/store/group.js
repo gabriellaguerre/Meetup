@@ -133,8 +133,7 @@ const groupReducer = (state = {}, action) => {
             action.data.Groups.map((Group) => newState[Group.id] = Group)
             return newState;
         case GET_GROUP:
-            newState = {...state, [action.group.id]: action.group}
-            console.log(newState, "IN GROUP REDUCER")
+            newState = {...state, [action.group.id]: action.group.id}
             return newState;
         case CREATE_GROUP:
             newState = {...state, [action.group.id]: action.group}

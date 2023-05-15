@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import * as groupActions from '../../store/group'
+import GroupDetail from './GroupDetails'
 //import * as eventActions from '../../store/event'
 // import boatImage from '../HomePage/HomePageImages/boatImage.png'
 // import carCollector from '../HomePage/HomePageImages/carCollectorsImage.png'
@@ -59,9 +60,12 @@ function Groups() {
     // console.log(arr)
 
 
-    if (groupD === true) {
-        history.push('/groups/:groupId')
-    }
+        if (groupD === true) {
+            history.push(`/groups/:groupId`)
+        }
+
+
+
     let pic;
     let publicPrivate
 

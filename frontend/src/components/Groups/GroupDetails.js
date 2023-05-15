@@ -8,11 +8,9 @@ import DeleteModal from '../DeleteModal'
 import './groupDetail.css'
 
 function GroupDetail() {
-    const { groupId } = useParams();
 
-
-    const history = useHistory()
     const dispatch = useDispatch()
+    const { groupId } = useParams();
 
     const group = useSelector(state => state.group[groupId])
     console.log(group, "GROUP IN GROUP DETAIL")
@@ -20,15 +18,24 @@ function GroupDetail() {
     const user = useSelector(state => state.session.user)
     const event = useSelector(state => Object.values(state.event))
 
+
+
+    useEffect(()=> {
+        dispatch(groupActions.fetchGroups())
+        dispatch(groupActions.fetchGroup(groupId))
+   }, [dispatch])
+
+    const history = useHistory()
+
+
+
+
+
     const [theUser, setTheUser] = useState(false)
     const [numEvents, setNumEvents] = useState(0)
     const [pastEvents, setPastEvents] = useState(0)
     const [typeButton, setTypeButton] = useState('')
 
-    // console.log(groupId)
-    useEffect(()=> {
-       dispatch(groupActions.fetchGroup(groupId))
-    }, [dispatch])
 
 
 
@@ -158,8 +165,8 @@ function GroupDetail() {
                         <span className='events'>{numEvents} events</span>
                         <span className='public'>public</span>
                     </div>
-                    {user && (
-                         <div className='organizer'>Organized by: {user.firstName} {user.lastName}</div>
+                    {user && group && (
+                         <div className='organizer'>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
                     )}
 
 
@@ -171,7 +178,7 @@ function GroupDetail() {
                                 <button onClick={openMenu}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                                 <div className={divClassName} ref={ulRef}>
-                                  <DeleteModal groupId={group.id}/>
+                                  <DeleteModal groupId={group?.id}/>
                                 </div>
 
                             </>
@@ -185,8 +192,8 @@ function GroupDetail() {
 
         <div className='bottomContainer'>
             <div className='organizer'> Organizer </div>
-            {user && (
-                <div className='name'>{user.firstName} {user.lastName}</div>
+            {user && group && (
+                <div className='name'>{group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
             )}
 
             <div className='about'>What We're About:</div>
