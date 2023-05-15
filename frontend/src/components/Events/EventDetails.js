@@ -168,9 +168,10 @@ return (
                 </>
 
             )}
-            {user ? (
+            {user && !theUser && (
                 <button className={typeButton}>Join Event</button>
-            ): (
+            )}
+            {!user && !theUser && (
                 <button className={typeButton}>Create an account to Join the Group and Event</button>
             )}
             </div>
