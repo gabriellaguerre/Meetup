@@ -15,7 +15,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 
    const organizerId = userId
 
-   const { name, about, type, private, city, state} = req.body
+   const { name, about, type, private, city, state, groupImg} = req.body
 
    const newGroup = await Group.create({
       organizerId,
@@ -25,7 +25,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       private,
       city,
       state,
-
+      groupImg
    })
 
    await Membership.create({
@@ -68,23 +68,23 @@ router.get('/', async (req, res) => {
       ],
    });
 
-console.log(group, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+
 
    for (let i = 0; i < group.length; i++) {
       let data = {};
 
       let eachGroup = group[i];
 
-      let previewimage = await GroupImage.findOne({
-         where: {
-            groupId: eachGroup.id
-         }
-      })
-      if (previewimage) {
-         urlImage = previewimage.url
-      } else {
-         urlImage = "No Image posted"
-      }
+      // let previewimage = await GroupImage.findOne({
+      //    where: {
+      //       groupId: eachGroup.id
+      //    }
+      // })
+      // if (previewimage) {
+      //    urlImage = previewimage.url
+      // } else {
+      //    urlImage = "No Image posted"
+      // }
       let members = await Membership.count({
          where: {
             groupId: eachGroup.id
@@ -99,17 +99,18 @@ console.log(group, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
          data.private = eachGroup.private,
          data.city = eachGroup.city,
          data.state = eachGroup.state,
+         data.groupImg = eachGroup.groupImg,
          data.createdAt = eachGroup.createdAt,
          data.updatedAt = eachGroup.updatedAt,
          data.numMembers = members,
-         data.previewImage = urlImage,
+        // data.previewImage = urlImage,
          data.GroupImages = eachGroup.GroupImages,
          data.Organizer = eachGroup.Organizer,
          data.Venues = eachGroup.Venues
 
-      Groups.push(data)
+      Groups.unshift(data)
    }
-
+   
    res.json({ Groups })
 })
 

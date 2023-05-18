@@ -15,6 +15,11 @@ import noImage from './GroupImages/noImageAvailable.png'
 function Groups() {
     const history = useHistory()
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(groupActions.fetchGroups());
+    }, [dispatch])
+
     const groupList = useSelector(state => Object.values(state.group))
     //const eventList = useSelector(state => Object.values(state.event))
 
@@ -23,9 +28,15 @@ function Groups() {
     // const [groupId, setGroupId] = useState()
 
 
-    useEffect(() => {
-        dispatch(groupActions.fetchGroups());
-    }, [dispatch])
+    console.log(groupList, "GROUP LIST IN GROUPS")
+
+    let orderGroup = []
+    for(let i = 0; i < groupList.length; i++) {
+        let group = groupList[i]
+        orderGroup.unshift(group)
+    }
+
+    console.log(orderGroup, "UNSHIFTED GROUP LIST")
 
     // useEffect(() => {
     //     dispatch(eventActions.fetchEvents())
@@ -60,14 +71,14 @@ function Groups() {
     // console.log(arr)
 
 
-        if (groupD === true) {
-            history.push(`/groups/:groupId`)
-        }
+    if (groupD === true) {
+        history.push(`/groups/:groupId`)
+    }
 
 
 
-    let pic;
-    let publicPrivate
+    // let pic;
+    // let publicPrivate
 
 
     // groupList.map(group => {
@@ -77,18 +88,15 @@ function Groups() {
     //         pic = group.previewImage
     //     }
 
-    //     if(group.private === true) {
-    //         publicPrivate = 'Private'
-    //     } else if (group.private === null) {
-    //         publicPrivate = 'Public'
-    //     } else {
-    //         publicPrivate = 'Public'
-    //     }
+    // if(group.private === true) {
+    //     publicPrivate = 'Private'
+    // } else if (group.private === null) {
+    //     publicPrivate = 'Public'
+    // } else {
+    //     publicPrivate = 'Public'
+    // }
 
-    //})
-    // let images = [boatImage, carCollector, hunterImage, skyDive]
-    // let randomNum = Math.floor(Math.random() * images.length);
-    // const pic = images[randomNum]
+
 
     return (
         <>
@@ -96,18 +104,23 @@ function Groups() {
             <span className='groupGroup'>Groups</span>
             <div className='smallHeader'>Groups in get2gether</div>
 
-            {groupList.map(group => (
+            {orderGroup.map(group => (
                 <div key={group.id} className='groupListContainer'>
                     <NavLink className='groupListLink' to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
                         <ul className='groupList' >
-                            <span><img src={pic} alt='random pic' width="100" height="100" /></span>
+                            <span><img src={group.groupImg} alt='random pic' width="100" height="100" /></span>
                             <div className='groupInfo'>{group.name}
                                 <div className='location'>{group.city},{group.state}</div>
                                 <div className='about'>{group.about}</div>
                                 <div>
-                                    <span className='event' > events </span>
+                                    <span className='event' > Events </span>
                                     <span className='dot'>.</span>
-                                    <span className='private'>{publicPrivate}</span>
+                                    {group.private ? (
+                                        <span className='private'>Private</span>
+                                    ) : (
+                                        <span className='private'>Public</span>
+                                    )}
+
                                 </div>
                             </div>
                         </ul>

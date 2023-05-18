@@ -103,6 +103,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    groupImg: {
+      type: DataTypes.STRING
+    },
 
   }, {
     sequelize,

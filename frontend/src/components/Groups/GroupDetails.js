@@ -12,6 +12,11 @@ function GroupDetail() {
     const dispatch = useDispatch()
     const { groupId } = useParams();
 
+     useEffect(()=> {
+        dispatch(groupActions.fetchGroups())
+      //  dispatch(groupActions.fetchGroup(groupId))
+   }, [dispatch])
+
     const group = useSelector(state => state.group[groupId])
     console.log(group, "GROUP IN GROUP DETAIL")
 
@@ -19,17 +24,7 @@ function GroupDetail() {
     const event = useSelector(state => Object.values(state.event))
 
 
-
-    useEffect(()=> {
-        dispatch(groupActions.fetchGroups())
-        dispatch(groupActions.fetchGroup(groupId))
-   }, [dispatch])
-
     const history = useHistory()
-
-
-
-
 
     const [theUser, setTheUser] = useState(false)
     const [numEvents, setNumEvents] = useState(0)
@@ -158,17 +153,20 @@ function GroupDetail() {
         <>
             <div className='backLink'><Link to='/groups'> Groups</Link></div>
             <div className='topContainer'>
-                <span className='groupImage'><img src='' alt='' width='200' height='200' /></span>
+                <span className='groupImage'><img src={group?.groupImg} alt='' width='200' height='200' /></span>
                 <span className='name'>{group?.name}
                     <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
-                        <span className='events'>{numEvents} events</span>
-                        <span className='public'>public</span>
-                    </div>
-                    {user && group && (
-                         <div className='organizer'>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
+                        <span className='events'>{numEvents} Events</span>
+                        <span className='dot'>.</span>
+                    {group?.private ? (
+                        <span className='public'>Private</span>
+                    ) : (
+                        <span className='public'>Public</span>
                     )}
 
+                    </div>
+                         <div className='organizer'>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
 
                     <div>
                         {theUser ? (
@@ -192,9 +190,9 @@ function GroupDetail() {
 
         <div className='bottomContainer'>
             <div className='organizer'> Organizer </div>
-            {user && group && (
+
                 <div className='name'>{group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
-            )}
+
 
             <div className='about'>What We're About:</div>
             <div className='description'>{group?.about}</div>

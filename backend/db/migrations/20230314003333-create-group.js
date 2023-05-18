@@ -36,7 +36,7 @@ module.exports = {
       state: {
         type: Sequelize.STRING,
       },
-      img: {
+      groupImg: {
         type: Sequelize.STRING
       },
 

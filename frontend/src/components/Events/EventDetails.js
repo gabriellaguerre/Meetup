@@ -155,7 +155,7 @@ return (
         </div>
 
             <div className='eventbottomContainer'>
-            <div className='eventDetails'>Details:
+            <div className='eventDetails'>Description:
                 <div className='eventDescription'>{event.description}</div>
             <div>
             {theUser && (

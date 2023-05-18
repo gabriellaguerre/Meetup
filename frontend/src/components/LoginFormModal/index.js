@@ -64,7 +64,7 @@ function LoginFormModal() {
 
                                 <input className='input'
                                     placeholder='password'
-                                    type='text'
+                                    type='password'
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     />
@@ -81,7 +81,7 @@ function LoginFormModal() {
                             ) : (
                                 <button disabled={disable} >Log In</button>
                             )}
-                            
+
                             <button id='cancelButton' onClick={closeModal}>Cancel</button>
                         </div>
                     </div>

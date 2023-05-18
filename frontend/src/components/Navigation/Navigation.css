@@ -19,16 +19,22 @@
 
 .createGroup {
     position: relative;
-    right: 300px;
 }
 
 .profileButton {
-    position: absolute;
+    position: static;
     padding-right: 10px;
     left: 1100px;
     background-color: rgb(176, 176, 231);
     text-align: left;
 }
+
+/* @media screen and (min-width: 480px) {
+    .profileButton {
+      width: auto;
+    }
+  } */
+
 
 .noUser {
     display: none;
