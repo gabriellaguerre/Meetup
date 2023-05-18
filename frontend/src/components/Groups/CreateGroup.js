@@ -70,8 +70,15 @@ function CreateGroup() {
             previewImage: url
         }
 
+        dispatch(sessionGroup.creatingGroup(form2))
+        const image = {
+                groupId: theGroup.id,
+                url,
+                preview: true
+            }
+        console.log(image, "IMAGE IN CREATE GROUP")
 
-        return dispatch(sessionGroup.creatingGroup(form2))
+        return  dispatch(sessionGroup.addImage(image, theGroup.id))
             .then(history.push('/groups'))
             .catch(async (res) => {
                 const data = await res.json()
@@ -80,6 +87,8 @@ function CreateGroup() {
                     setDisable(true)
                 }
             })
+
+
     }
 
     return (

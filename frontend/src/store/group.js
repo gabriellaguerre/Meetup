@@ -8,7 +8,7 @@ const UPDATE_GROUP = 'group/updateGroup'
 const GET_GROUP = 'group/getGroup'
 
 const loadGroup = (group) => {
-    console.log(group, "IN LOAD GROUP")
+
     return{
         type: GET_GROUP,
         group
@@ -24,6 +24,7 @@ const loadUsers = (data) => {
 
 
 const loadGroups = (data) => {
+    // console.log(data, "IN LOAD GROUPS")
     return {
         type: GET_GROUPS,
         data
@@ -74,10 +75,12 @@ export const fetchGroup = (groupId) => async (dispatch) => {
 }
 
 export const fetchGroups = () => async (dispatch) => {
+
     const response = await csrfFetch('/api/groups')
 
     if (response.ok) {
         const data = await response.json()
+        console.log(data)
         dispatch(loadGroups(data))
         return data
     }
@@ -96,6 +99,17 @@ export const creatingGroup = (payload) => async (dispatch) => {
         const data = await response.json()
 
         dispatch(createGroup(data))
+        return data
+    }
+}
+export const addImage = (payload, groupId) => async (dispatch) => {
+    const response = await csrfFetch(`api/groups/${groupId}/images`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    if(response.ok) {
+        const data = await response.json()
         return data
     }
 }
@@ -129,7 +143,8 @@ const groupReducer = (state = {}, action) => {
             action.data.Users.map((User) => newState[User.id] = User)
             return newState;
         case GET_GROUPS:
-            newState = {}
+            newState = {...state}
+            console.log(action.data, "IN GROUP REDUCER OF GET GROUPS")
             action.data.Groups.map((Group) => newState[Group.id] = Group)
             return newState;
         case GET_GROUP:
