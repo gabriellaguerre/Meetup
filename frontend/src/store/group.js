@@ -63,12 +63,12 @@ export const fetchUsers = () => async (dispatch) => {
 }
 
 export const fetchGroup = (groupId) => async (dispatch) => {
-    console.log("IN THUNK FETCH GROUP")
+    // console.log("IN THUNK FETCH GROUP")
     const response = await csrfFetch(`/api/groups/${groupId}`)
 
     if(response.ok) {
         const data = await response.json()
-        console.log(data, "DATA IN FETCH GROUP THUNK")
+      //  console.log(data, "DATA IN FETCH GROUP THUNK")
         dispatch(loadGroup(data))
         return data
     }
@@ -80,7 +80,7 @@ export const fetchGroups = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-        console.log(data)
+      //  console.log(data)
         dispatch(loadGroups(data))
         return data
     }
@@ -144,7 +144,7 @@ const groupReducer = (state = {}, action) => {
             return newState;
         case GET_GROUPS:
             newState = {...state}
-            console.log(action.data, "IN GROUP REDUCER OF GET GROUPS")
+          //  console.log(action.data, "IN GROUP REDUCER OF GET GROUPS")
             action.data.Groups.map((Group) => newState[Group.id] = Group)
             return newState;
         case GET_GROUP:

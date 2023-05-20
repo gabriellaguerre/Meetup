@@ -38,7 +38,7 @@ function Events() {
             <div key={event.id} className='eventListContainer'>
                 <NavLink className='eventListLink'to={`/events/${event.id}`} onClick={() => setEventD(true)}>
                 <ul className='eventList' key={event.id}>
-                    <span><img src='' alt='random pic' width="100" height="100" /></span>
+                    <span><img src={event.eventImg} alt='random pic' width="100" height="100" /></span>
                     <div className='eventDate'>{event.startDate}
                     <div className='eventName'>{event.name}</div>
                     <div className='eventLocation'>New York, NY</div>

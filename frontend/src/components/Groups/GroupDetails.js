@@ -3,6 +3,7 @@ import { Link, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import * as groupActions from '../../store/group'
+import * as sessionUser from '../../store/session'
 import CreateEvent from '../Events/CreateEvent'
 import DeleteModal from '../DeleteModal'
 import './groupDetail.css'
@@ -12,17 +13,18 @@ function GroupDetail() {
     const dispatch = useDispatch()
     const { groupId } = useParams();
 
-     useEffect(()=> {
+    useEffect(() => {
         dispatch(groupActions.fetchGroups())
-      //  dispatch(groupActions.fetchGroup(groupId))
-   }, [dispatch])
+        dispatch(sessionUser.restoreUser())
+
+    }, [dispatch])
 
     const group = useSelector(state => state.group[groupId])
-    console.log(group, "GROUP IN GROUP DETAIL")
+
 
     const user = useSelector(state => state.session.user)
-    const event = useSelector(state => Object.values(state.event))
-
+    // const event = useSelector(state => Object.values(state.event))
+    // console.log(event, "EVENT IN GROUP DETAIL")
 
     const history = useHistory()
 
@@ -43,14 +45,16 @@ function GroupDetail() {
 
     useEffect(() => {
 
-        if (user && user.id !== group?.organizerId) {
-            setTypeButton('joinButton')
-            setTheUser(false)
-        }
         if (user && user.id === group?.organizerId) {
             setTheUser(true)
             setTypeButton('noJoinButton')
         }
+
+        if (user && user.id !== group?.organizerId) {
+            setTypeButton('joinButton')
+            setTheUser(false)
+        }
+
         if (!user) {
             setTypeButton('noJoinButton')
 
@@ -74,7 +78,7 @@ function GroupDetail() {
     const closeMenu = (e) => {
         //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
         // if (!ulRef.current.contains(e.target) ) {
-            setShowMenu(false)
+        setShowMenu(false)
 
         // }
     }
@@ -89,7 +93,7 @@ function GroupDetail() {
         //     if (!ulRef.current.contains(e.target) ) {
         //         setShowMenu(false)
         //     }
-      //  }
+        //  }
 
         document.addEventListener('click', closeMenu)
 
@@ -103,24 +107,18 @@ function GroupDetail() {
 
     let upcoming = []
     let past = []
-    const allEvents = (groupId) => {
-        for (let i = 0; i < event.length; i++) {
-            let oneEvent = event[i]
+    const allEvents = () => {
+        for (let i = 0; i < group.Events.length; i++) {
+            let oneEvent = group.Events[i]
 
-            if (oneEvent.groupId === groupId) {
-                if (oneEvent.name !== null) {
+            let date = Date.now()
+            let startDate = Date.parse(oneEvent.startDate)
 
-                    let date = Date.now()
-                    let startDate = Date.parse(oneEvent.startDate)
-
-                    if (startDate > date) {
-                        upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
-                    } else {
-                        past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.Venue.city, oneEvent.Venue.state])
-                    }
-                }
+            if (startDate > date) {
+                upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
+            } else {
+                past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
             }
-
         }
 
     }
@@ -130,7 +128,7 @@ function GroupDetail() {
         history.push(`/groups/${group.id}/edit`)
         return (
             <>
-              <EditGroup group={group} />
+                <EditGroup group={group} />
             </>
         )
     }
@@ -159,14 +157,14 @@ function GroupDetail() {
                     <div>
                         <span className='events'>{numEvents} Events</span>
                         <span className='dot'>.</span>
-                    {group?.private ? (
-                        <span className='public'>Private</span>
-                    ) : (
-                        <span className='public'>Public</span>
-                    )}
+                        {group?.private ? (
+                            <span className='public'>Private</span>
+                        ) : (
+                            <span className='public'>Public</span>
+                        )}
 
                     </div>
-                         <div className='organizer'>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
+                    <div className='organizer'>Organized by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
 
                     <div>
                         {theUser ? (
@@ -176,57 +174,57 @@ function GroupDetail() {
                                 <button onClick={openMenu}>Delete</button>
                                 <button onClick={() => history.push('/groups')}>back</button>
                                 <div className={divClassName} ref={ulRef}>
-                                  <DeleteModal groupId={group?.id}/>
+                                    <DeleteModal groupId={group?.id} />
                                 </div>
 
                             </>
-                    ) : (
-                    <button onClick={() => sendAlert()} className={typeButton}>Join This Group</button>
+                        ) : (
+                            <button onClick={() => sendAlert()} className={typeButton}>Join This Group</button>
                         )}
 
-            </div>
-        </span >
+                    </div>
+                </span >
             </div >
 
-        <div className='bottomContainer'>
-            <div className='organizer'> Organizer </div>
+            <div className='bottomContainer'>
+                <div className='organizer'> Organizer </div>
 
                 <div className='name'>{group?.Organizer?.firstName} {group?.Organizer?.lastName}</div>
 
 
-            <div className='about'>What We're About:</div>
-            <div className='description'>{group?.about}</div>
+                <div className='about'>What We're About:</div>
+                <div className='description'>{group?.about}</div>
 
-            <div className='upcomingEvents'>{allEvents(group?.id)}Upcoming Events ({numEvents})</div>
-            {upcoming.map(event => (
-                <ul key={event.id}>
+                <div className='upcomingEvents'>{allEvents()}Upcoming Events ({numEvents})</div>
+                {upcoming.map(event => (
+                    <ul key={event.id}>
 
-                    <div className='upcomingEventsListContainer'>
-                        <span><img src='' alt='' height='100px' width='100px' /></span>
-                        <span>{event[3]}
-                            <div className='eventName'>{event[0]}</div>
-                            <div className='eventLocation'>{event[4]}, {event[5]} </div>
-                        </span>
-                    </div>
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src={event[4]} alt='' height='100px' width='100px' /></span>
+                            <span>
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
+                            </span>
+                        </div>
 
-                </ul>
-            ))}
+                    </ul>
+                ))}
 
-            <div className='pastEvents'>{allEvents(group?.id)}Past Events ({pastEvents})</div>
-            {past.map(event => (
-                <ul key={event.id}>
+                <div className='pastEvents'>{allEvents()}Past Events ({pastEvents})</div>
+                {past.map(event => (
+                    <ul key={event.id}>
 
-                    <div className='upcomingEventsListContainer'>
-                        <span><img src='' alt='' height='100px' width='100px' /></span>
-                        <span>{event[3]}
-                            <div className='eventName'>{event[0]}</div>
-                            <div className='eventLocation'>{event[4]}, {event[5]} </div>
-                        </span>
-                    </div>
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src={event[4]} alt='' height='100px' width='100px' /></span>
+                            <span>
+                                <div className='eventName'>{event[0]}</div>
+                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
+                            </span>
+                        </div>
 
-                </ul>
-            ))}
-        </div>
+                    </ul>
+                ))}
+            </div>
 
 
         </>

@@ -28,7 +28,7 @@ function Groups() {
     // const [groupId, setGroupId] = useState()
 
 
-    console.log(groupList, "GROUP LIST IN GROUPS")
+  //  console.log(groupList, "GROUP LIST IN GROUPS")
 
     let orderGroup = []
     for(let i = 0; i < groupList.length; i++) {
@@ -36,7 +36,7 @@ function Groups() {
         orderGroup.unshift(group)
     }
 
-    console.log(orderGroup, "UNSHIFTED GROUP LIST")
+  //  console.log(orderGroup, "UNSHIFTED GROUP LIST")
 
     // useEffect(() => {
     //     dispatch(eventActions.fetchEvents())

@@ -64,6 +64,7 @@ router.get('/', async (req, res) => {
             model: User, as: 'Organizer',
             attributes: ['id', 'firstName', 'lastName']
          },
+         { model: Event },
          { model: Venue },
       ],
    });
@@ -106,11 +107,12 @@ router.get('/', async (req, res) => {
         // data.previewImage = urlImage,
          data.GroupImages = eachGroup.GroupImages,
          data.Organizer = eachGroup.Organizer,
+         data.Events = eachGroup.Events
          data.Venues = eachGroup.Venues
 
       Groups.unshift(data)
    }
-   
+
    res.json({ Groups })
 })
 
@@ -576,7 +578,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
 
    const user = req.user.id
 
-   const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+   const { venueId, name, type, capacity, price, description, startDate, endDate, startTime, endTime, eventImg } = req.body
 
    // if(!venueId) {
    //    const err = new Error("Validation Error")
@@ -610,7 +612,10 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             price,
             description,
             startDate,
-            endDate
+            endDate,
+            startTime,
+            endTime,
+            eventImg
          })
             // await Attendee.create({
             // eventId: createEvent.id,
@@ -628,7 +633,10 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             data.price = createEvent.price,
             data.description = createEvent.description,
             data.startDate = createEvent.startDate,
-            data.endDate = createEvent.endDate
+            data.endDate = createEvent.endDate,
+            data.startTime = createEvent.startTime,
+            data.endTime = createEvent.endTime,
+            data.eventImg = createEvent.eventImg
 
          res.status(200).json(data)
 
