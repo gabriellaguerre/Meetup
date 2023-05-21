@@ -53,7 +53,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 /*************GET All Groups*******************/
 router.get('/', async (req, res) => {
    let Groups = []
-
+//console.log('IN GROUPS HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
    const group = await Group.findAll({
       include: [
          {
@@ -64,6 +64,7 @@ router.get('/', async (req, res) => {
             model: User, as: 'Organizer',
             attributes: ['id', 'firstName', 'lastName']
          },
+         { model: Event },
          { model: Venue },
       ],
    });
@@ -106,11 +107,12 @@ router.get('/', async (req, res) => {
         // data.previewImage = urlImage,
          data.GroupImages = eachGroup.GroupImages,
          data.Organizer = eachGroup.Organizer,
+         data.Events = eachGroup.Events,
          data.Venues = eachGroup.Venues
 
       Groups.unshift(data)
    }
-   
+
    res.json({ Groups })
 })
 
@@ -576,7 +578,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
 
    const user = req.user.id
 
-   const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+   const { venueId, name, type, capacity, price, description, startDate, endDate, startTime, endTime, eventImg } = req.body
 
    // if(!venueId) {
    //    const err = new Error("Validation Error")
@@ -610,16 +612,31 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             price,
             description,
             startDate,
-            endDate
+            endDate,
+            startTime,
+            endTime,
+            eventImg
          })
             // await Attendee.create({
             // eventId: createEvent.id,
             // userId: user,
             // status: "host"
        //  })
+       let countUpcoming = 0;
+       let countPast = 0;
+       let startingDate = Date.parse(startDate)
+
+       if(startingDate < Date.now()) {
+         countPast++
+       }
+
+       if(startingDate > Date.now()) {
+         countUpcoming++
+       }
+
 
          let data = {}
-         data.id = createEvent.id,
+            data.id = createEvent.id,
             data.groupId = createEvent.groupId,
             data.venueId = createEvent.venueId,
             data.name = createEvent.name,
@@ -628,7 +645,14 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             data.price = createEvent.price,
             data.description = createEvent.description,
             data.startDate = createEvent.startDate,
-            data.endDate = createEvent.endDate
+            data.endDate = createEvent.endDate,
+            data.startTime = createEvent.startTime,
+            data.endTime = createEvent.endTime,
+            data.eventImg = createEvent.eventImg,
+            data.countUpcoming = countUpcoming,
+            data.countPast = countPast,
+
+         console.log(data.countUpcoming, "OOOOOOOOOOOOOOOOOOOOO")
 
          res.status(200).json(data)
 

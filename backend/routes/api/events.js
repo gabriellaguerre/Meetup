@@ -73,11 +73,11 @@ router.get('/', validateQuery, async (req, res) => {
 
     const events = await Event.findAll({
         where,
-        attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate', 'price', 'description'],
+        attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate', 'price', 'description', 'eventImg', 'startTime', 'endTime'],
         include: [
             {
                 model: Group,
-                attributes: ['id', 'name', 'city', 'state']
+                attributes: ['id', 'name', 'city', 'state', 'groupImg', 'organizerId']
             },
             {
                 model: Venue,
@@ -102,20 +102,42 @@ router.get('/', validateQuery, async (req, res) => {
                 preview: true
             }
         })
-        if (!previewimage) {
-            eventOne.previewImage = "No image posted"
-        } else {
-            eventOne.previewImage = previewimage.url
+        let countUp = 0;
+        let countPast = 0
+
+        if (Date.parse(eventOne.startDate) > Date.now()) {
+            countUp++
+        }
+        if (Date.parse(eventOne.startDate) < Date.now()) {
+            countPast++
         }
 
         if (!eventOne.venueId) eventOne.venueId = null
         if (!eventOne.Venue) eventOne.Venue = null
 
-        eventOne.numAttending = attending
+        result.id = eventOne.id,
+        result.groupId = eventOne.groupId,
+        result.venueId = eventOne.venueId,
+        result.name = eventOne.name,
+        result.type = eventOne.type,
+        result.startDate = eventOne.startDate,
+        result.endDate = eventOne.endDate,
+        result.price = eventOne.price,
+        result.description = eventOne.description,
+        result.eventImg = eventOne.eventImg,
+        result.startTime = eventOne.startTime,
+        result.endTime = eventOne.endTime,
+        result.countUp = countUp,
+        result.countPast = countPast
 
-        activities.push(eventOne)
+        // eventOne.numAttending = attending
+        // eventOne.countUp = countUp
+        // eventOne.countPast = countPast
+
+        activities.push(result)
     }
-    result.Events = activities,
+    //console.log(result, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+ //   result.Events = activities,
         result.page = page,
         result.size = limit
 

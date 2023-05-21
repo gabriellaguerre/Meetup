@@ -121,6 +121,19 @@ module.exports = (sequelize, DataTypes) => {
       }
 
     },
+
+    startTime: {
+      type: DataTypes.TIME,
+    },
+
+    endTime: {
+      type: DataTypes.TIME,
+    },
+    
+    eventImg: {
+      type: DataTypes.STRING,
+    },
+
   }, {
     sequelize,
     modelName: 'Event',
