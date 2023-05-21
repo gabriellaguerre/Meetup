@@ -29,17 +29,23 @@ function GroupDetail() {
     const history = useHistory()
 
     const [theUser, setTheUser] = useState(false)
-    const [numEvents, setNumEvents] = useState(0)
-    const [pastEvents, setPastEvents] = useState(0)
     const [typeButton, setTypeButton] = useState('')
 
 
+    const countUpcoming = group?.Events?.filter(event =>
+        Date.parse(event?.startDate) > Date.now()
+   )
+
+   const countPast = group?.Events?.filter(event =>
+        Date.parse(event?.startDate) < Date.now()
+    )
 
 
-    useEffect(() => {
-        setNumEvents(upcoming.length / 2)
-        setPastEvents(past.length)
-    }, [numEvents, pastEvents])
+
+    // useEffect(() => {
+    //     setNumEvents(upcoming.length / 2)
+    //     setPastEvents(past.length/2)
+    // }, [numEvents, pastEvents])
 
 
 
@@ -105,23 +111,25 @@ function GroupDetail() {
 
     ///////////////////////////////////////////////////////////////////
 
-    let upcoming = []
-    let past = []
-    const allEvents = () => {
-        for (let i = 0; i < group.Events.length; i++) {
-            let oneEvent = group.Events[i]
+    //     let upcoming = []
+    //     let past = []
+    //     const allEvents = () => {
+    //         for (let i = 0; i < group.Events.length; i++) {
+    //  //           console.log(group.Events.length, "EVENTS LENGTH")
+    //             let oneEvent = group.Events[i]
+    // //console.log(oneEvent, "ONE EVENT IN FOR LOOP")
+    //             let date = Date.now()
+    //             let startDate = Date.parse(oneEvent.startDate)
+    // //console.log( "START DATE LOGIC")
+    //             if (startDate > date && upcoming[0] !== oneEvent.name) {
+    //                 upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
+    //             } else if (startDate < date && past[0] !== oneEvent.name) {
+    //                 past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
+    //             }
+    //         }
+    //         console.log(group.Events, "PAST IN FOR LOOP")
 
-            let date = Date.now()
-            let startDate = Date.parse(oneEvent.startDate)
-
-            if (startDate > date) {
-                upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
-            } else {
-                past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
-            }
-        }
-
-    }
+    //     }
 
     const EditGroup = (group) => {
 
@@ -147,6 +155,7 @@ function GroupDetail() {
         return window.alert("Feature Coming Soon")
     }
 
+
     return (
         <>
             <div className='backLink'><Link to='/groups'> Groups</Link></div>
@@ -155,7 +164,7 @@ function GroupDetail() {
                 <span className='name'>{group?.name}
                     <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
-                        <span className='events'>{numEvents} Events</span>
+                        <span className='events'>{countUpcoming.length} Events</span>
                         <span className='dot'>.</span>
                         {group?.private ? (
                             <span className='public'>Private</span>
@@ -194,39 +203,49 @@ function GroupDetail() {
 
                 <div className='about'>What We're About:</div>
                 <div className='description'>{group?.about}</div>
-
-                <div className='upcomingEvents'>{allEvents()}Upcoming Events ({numEvents})</div>
-                {upcoming.map(event => (
-                    <ul key={event.id}>
-
-                        <div className='upcomingEventsListContainer'>
-                            <span><img src={event[4]} alt='' height='100px' width='100px' /></span>
-                            <span>
-                                <div className='eventName'>{event[0]}</div>
-                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
-                            </span>
-                        </div>
-
-                    </ul>
-                ))}
-
-                <div className='pastEvents'>{allEvents()}Past Events ({pastEvents})</div>
-                {past.map(event => (
-                    <ul key={event.id}>
-
-                        <div className='upcomingEventsListContainer'>
-                            <span><img src={event[4]} alt='' height='100px' width='100px' /></span>
-                            <span>
-                                <div className='eventName'>{event[0]}</div>
-                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
-                            </span>
-                        </div>
-
-                    </ul>
-                ))}
             </div>
 
+            <div className='upcomingEvents'>Upcoming Events ({countUpcoming.length})</div>
+            {group?.Events?.map(event => (
+                <ul key={event.id}>
+                    {(Date.parse(event?.startDate) > Date.now()) ?  (
+                        <div className='upcomingEventsListContainer'>
 
+                            <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
+
+                            <span>
+                                <div className='eventName'>{event?.name}</div>
+                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
+                                <div className='eventDescription'>{event?.description}</div>
+                            </span>
+
+                        </div>
+                    ) : (
+                        <div>No Upcoming Events</div>
+                    )}
+
+                </ul>
+            ))}
+
+            <div className='upcomingEvents'>Past Events ({countPast.length})</div>
+            {group?.Events?.map(event => (
+                <ul key={event.id}>
+                    {(Date.parse(event?.startDate) < Date.now()) ? (
+                        <div className='upcomingEventsListContainer'>
+                            <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
+                            <span>
+                                <div className='eventName'>{event?.name}</div>
+                                <div className='eventLocation'>{group?.city}, {group?.state} </div>
+                                <div className='eventDescription'>{event?.description}</div>
+                            </span>
+
+                        </div>
+                    ) : (
+                        <div>No Past Events</div>
+                    )}
+
+                </ul>
+            ))}
         </>
     )
 }

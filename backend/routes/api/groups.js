@@ -53,7 +53,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 /*************GET All Groups*******************/
 router.get('/', async (req, res) => {
    let Groups = []
-
+//console.log('IN GROUPS HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
    const group = await Group.findAll({
       include: [
          {
@@ -107,7 +107,7 @@ router.get('/', async (req, res) => {
         // data.previewImage = urlImage,
          data.GroupImages = eachGroup.GroupImages,
          data.Organizer = eachGroup.Organizer,
-         data.Events = eachGroup.Events
+         data.Events = eachGroup.Events,
          data.Venues = eachGroup.Venues
 
       Groups.unshift(data)
@@ -622,9 +622,21 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             // userId: user,
             // status: "host"
        //  })
+       let countUpcoming = 0;
+       let countPast = 0;
+       let startingDate = Date.parse(startDate)
+
+       if(startingDate < Date.now()) {
+         countPast++
+       }
+
+       if(startingDate > Date.now()) {
+         countUpcoming++
+       }
+
 
          let data = {}
-         data.id = createEvent.id,
+            data.id = createEvent.id,
             data.groupId = createEvent.groupId,
             data.venueId = createEvent.venueId,
             data.name = createEvent.name,
@@ -636,7 +648,11 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             data.endDate = createEvent.endDate,
             data.startTime = createEvent.startTime,
             data.endTime = createEvent.endTime,
-            data.eventImg = createEvent.eventImg
+            data.eventImg = createEvent.eventImg,
+            data.countUpcoming = countUpcoming,
+            data.countPast = countPast,
+
+         console.log(data.countUpcoming, "OOOOOOOOOOOOOOOOOOOOO")
 
          res.status(200).json(data)
 
