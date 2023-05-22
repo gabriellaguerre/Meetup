@@ -16,7 +16,7 @@ useEffect(() => {
     }, [dispatch])
 
     const eventList = useSelector(state => Object.values(state.event))
-    console.log(eventList)
+  //  console.log(eventList)
 
     const [eventD, setEventD] = useState(false)
 
@@ -49,14 +49,8 @@ useEffect(() => {
 
                             </div>
 
-
-
-
-
                         </ul>
-                        {/* <li>Organizer ID: {group.organizerId}</li>
-                <li>Name: {group.name}</li>/home/gabriel/appacademy-2022-meetup-project/Meetup/frontend/src/context
-                <li>About: {group.about}</li> */}
+
                     </NavLink>
                 </div>
             ))}

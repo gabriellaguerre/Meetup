@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { Link, NavLink, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import * as groupActions from '../../store/group'
@@ -209,6 +209,7 @@ function GroupDetail() {
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) > Date.now()) ?  (
+                        <NavLink to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
 
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
@@ -218,8 +219,8 @@ function GroupDetail() {
                                 <div className='eventLocation'>{group?.city}, {group?.state} </div>
                                 <div className='eventDescription'>{event?.description}</div>
                             </span>
-
                         </div>
+                        </NavLink>
                     ) : (
                         <div>No Upcoming Events</div>
                     )}
@@ -231,6 +232,7 @@ function GroupDetail() {
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (
+                        <NavLink to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
                             <span>
@@ -240,6 +242,7 @@ function GroupDetail() {
                             </span>
 
                         </div>
+                        </NavLink>
                     ) : (
                         <div>No Past Events</div>
                     )}

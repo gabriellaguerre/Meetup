@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { NavLink, Link, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionEvent from '../../store/event'
 import * as groupActions from '../../store/group'
@@ -31,7 +31,7 @@ function EventDetail() {
     const event = useSelector(state => state.event[eventId])
     const user = useSelector(state => state.session.user)
 
-    const groupId = event.groupId
+    const groupId = event?.groupId
    // console.log(groupId, "GROUP ID IN EVENT DETAILS")
 
     const group = useSelector(state => state.group[groupId])
@@ -48,12 +48,12 @@ function EventDetail() {
     useEffect(() => {
 //event?.Group.organizerId
 
-        if (user && user.id !== group.organizerId) {
+        if (user && user.id !== group?.organizerId) {
             setTypeButton('joinButton')
             setTheUser(false)
         }
 
-        if (user && user.id === group.organizerId) {
+        if (user && user.id === group?.organizerId) {
             setTheUser(true)
         }
 
@@ -146,8 +146,23 @@ function EventDetail() {
 
             <div className='wrapperMiddleContainer'>
                 <div className='image1Box'> <img src={event?.eventImg} alt='event1' height='250' width='290' /></div>
+                <div>
 
-                <div className='image2Box'><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
+                <NavLink className='eventDetailsGroupLink' to={`/groups/${group?.id}`}>
+                <div className='image2Box'>
+                <img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' />
+                <span>{group?.name}
+                {group?.private ? (
+                            <span className='public'>Private</span>
+                        ) : (
+                            <span className='public'>Public</span>
+                        )}
+                </span>
+
+                </div>
+                </NavLink>
+                </div>
+
 
                 <div className='clock'>
                     <div className='wrapperClock'>
