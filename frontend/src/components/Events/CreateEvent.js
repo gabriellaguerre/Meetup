@@ -15,9 +15,7 @@ function CreateEvent() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    console.log("IN CREATE EVENT LINE 18")
-
-
+    
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
@@ -123,6 +121,7 @@ function CreateEvent() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setValidationErrors({})
         setDisable(false)
 
 
@@ -155,7 +154,7 @@ function CreateEvent() {
             eventImg
         }
 
-        setValidationErrors({})
+
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
             .then(() => history.push(`/events`))
                .catch(async (res) => {

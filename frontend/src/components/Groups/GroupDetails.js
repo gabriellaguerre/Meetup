@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { Link, NavLink, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import * as groupActions from '../../store/group'
@@ -164,7 +164,7 @@ function GroupDetail() {
                 <span className='name'>{group?.name}
                     <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
-                        <span className='events'>{countUpcoming.length} Events</span>
+                        <span className='events'>{countUpcoming?.length} Events</span>
                         <span className='dot'>.</span>
                         {group?.private ? (
                             <span className='public'>Private</span>
@@ -205,10 +205,11 @@ function GroupDetail() {
                 <div className='description'>{group?.about}</div>
             </div>
 
-            <div className='upcomingEvents'>Upcoming Events ({countUpcoming.length})</div>
+            <div className='upcomingEvents'>Upcoming Events ({countUpcoming?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) > Date.now()) ?  (
+                        <NavLink to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
 
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
@@ -218,8 +219,8 @@ function GroupDetail() {
                                 <div className='eventLocation'>{group?.city}, {group?.state} </div>
                                 <div className='eventDescription'>{event?.description}</div>
                             </span>
-
                         </div>
+                        </NavLink>
                     ) : (
                         <div>No Upcoming Events</div>
                     )}
@@ -227,10 +228,11 @@ function GroupDetail() {
                 </ul>
             ))}
 
-            <div className='upcomingEvents'>Past Events ({countPast.length})</div>
+            <div className='upcomingEvents'>Past Events ({countPast?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (
+                        <NavLink to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
                             <span>
@@ -240,6 +242,7 @@ function GroupDetail() {
                             </span>
 
                         </div>
+                        </NavLink>
                     ) : (
                         <div>No Past Events</div>
                     )}
