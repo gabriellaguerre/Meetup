@@ -123,6 +123,7 @@ function CreateEvent() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setValidationErrors({})
         setDisable(false)
 
 
@@ -155,7 +156,7 @@ function CreateEvent() {
             eventImg
         }
 
-        setValidationErrors({})
+
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
             .then(() => history.push(`/events`))
                .catch(async (res) => {

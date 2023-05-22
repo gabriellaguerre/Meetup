@@ -164,7 +164,7 @@ function GroupDetail() {
                 <span className='name'>{group?.name}
                     <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
-                        <span className='events'>{countUpcoming.length} Events</span>
+                        <span className='events'>{countUpcoming?.length} Events</span>
                         <span className='dot'>.</span>
                         {group?.private ? (
                             <span className='public'>Private</span>
@@ -205,7 +205,7 @@ function GroupDetail() {
                 <div className='description'>{group?.about}</div>
             </div>
 
-            <div className='upcomingEvents'>Upcoming Events ({countUpcoming.length})</div>
+            <div className='upcomingEvents'>Upcoming Events ({countUpcoming?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) > Date.now()) ?  (
@@ -227,7 +227,7 @@ function GroupDetail() {
                 </ul>
             ))}
 
-            <div className='upcomingEvents'>Past Events ({countPast.length})</div>
+            <div className='upcomingEvents'>Past Events ({countPast?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (

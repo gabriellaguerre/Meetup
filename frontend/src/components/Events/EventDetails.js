@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionEvent from '../../store/event'
+import * as groupActions from '../../store/group'
 import * as sessionUser from '../../store/session'
 import DeleteModal from '../DeleteModal'
 import { useState } from 'react'
@@ -18,16 +19,25 @@ function EventDetail() {
     const { eventId } = useParams();
 
     useEffect(() => {
+        dispatch(groupActions.fetchGroups())
+    },[dispatch])
+
+    useEffect(() => {
         dispatch(sessionEvent.fetchEvents())
         dispatch(sessionUser.restoreUser())
     }, [dispatch])
 
+   // const group = useSelector(state => Object.values(state.group))
     const event = useSelector(state => state.event[eventId])
     const user = useSelector(state => state.session.user)
-    // const groupId = event.groupId
 
-    // const group = useSelector(state => state.group[groupId])
+    const groupId = event.groupId
+   // console.log(groupId, "GROUP ID IN EVENT DETAILS")
 
+    const group = useSelector(state => state.group[groupId])
+ //   console.log(group, "GROUP IN EVENT DETAILS")
+
+  // console.log(event, "EVENT IN EVENT DETAILS LINE 33")
 
 
     const [theUser, setTheUser] = useState(false)
@@ -36,14 +46,14 @@ function EventDetail() {
 
 
     useEffect(() => {
-        
+//event?.Group.organizerId
 
-        if (user && user.id !== event?.Group.organizerId) {
+        if (user && user.id !== group.organizerId) {
             setTypeButton('joinButton')
             setTheUser(false)
         }
 
-        if (user && user.id === event?.Group.organizerId) {
+        if (user && user.id === group.organizerId) {
             setTheUser(true)
         }
 
@@ -137,7 +147,7 @@ function EventDetail() {
             <div className='wrapperMiddleContainer'>
                 <div className='image1Box'> <img src={event?.eventImg} alt='event1' height='250' width='290' /></div>
 
-                <div className='image2Box'><img className='insideImage2' src={event?.Group.groupImg} height='100' width='100' alt='event2' /></div>
+                <div className='image2Box'><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
 
                 <div className='clock'>
                     <div className='wrapperClock'>

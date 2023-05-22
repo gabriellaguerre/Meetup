@@ -56,7 +56,7 @@ export const fetchEvents = () => async (dispatch) => {
     if (response.ok) {
 
         const data = await response.json()
-    //    console.log(data, "IN FETCH EVENTS THUNK")
+    console.log(data, "IN FETCH EVENTS THUNK")
         dispatch(loadEvents(data))
         return data
     }
@@ -103,7 +103,8 @@ const eventReducer = (state = {}, action) => {
     switch (action.type) {
         case GET_EVENTS:
             newState = {}
-            action.data.Events.map((Event) => newState[Event.id] = Event)
+        //  console.log(action.data, "IN THUNK REDUCER FOR GET EVENTS")
+            action.data.map((Event) => newState[Event.id] = Event)
             return newState
         case FIND_EVENT_GROUP:
             newState={}

@@ -141,7 +141,7 @@ router.get('/', validateQuery, async (req, res) => {
         result.page = page,
         result.size = limit
 
-    res.json(result)
+    res.json(activities)
 })
 
 /*****Get Details of an Event by Id***************/
