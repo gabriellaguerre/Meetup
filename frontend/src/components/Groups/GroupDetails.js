@@ -12,6 +12,8 @@ function GroupDetail() {
 
     const dispatch = useDispatch()
     const { groupId } = useParams();
+    const history = useHistory()
+
 
     useEffect(() => {
         dispatch(groupActions.fetchGroups())
@@ -20,13 +22,30 @@ function GroupDetail() {
     }, [dispatch])
 
     const group = useSelector(state => state.group[groupId])
-
-
     const user = useSelector(state => state.session.user)
-    // const event = useSelector(state => Object.values(state.event))
-    // console.log(event, "EVENT IN GROUP DETAIL")
 
-    const history = useHistory()
+
+
+    useEffect(() => {
+
+        if (user && user?.id === group?.organizerId) {
+            setTheUser(true)
+            setTypeButton('noJoinButton')
+        }
+
+        if (user && user?.id !== group?.organizerId) {
+            setTypeButton('joinButton')
+            setTheUser(false)
+        }
+
+        if (!user) {
+            setTypeButton('noJoinButton')
+            setTheUser(false)
+
+        }
+//console.log(user, theUser, "USER IN GROUP DETAIL LINE 45")
+    }, [user, group])
+
 
     const [theUser, setTheUser] = useState(false)
     const [typeButton, setTypeButton] = useState('')
@@ -49,24 +68,7 @@ function GroupDetail() {
 
 
 
-    useEffect(() => {
 
-        if (user && user.id === group?.organizerId) {
-            setTheUser(true)
-            setTypeButton('noJoinButton')
-        }
-
-        if (user && user.id !== group?.organizerId) {
-            setTypeButton('joinButton')
-            setTheUser(false)
-        }
-
-        if (!user) {
-            setTypeButton('noJoinButton')
-
-        }
-
-    }, [user, typeButton])
 
     ////////////////////////////////////////////////////////
     const [showMenu, setShowMenu] = useState(false)
@@ -111,25 +113,6 @@ function GroupDetail() {
 
     ///////////////////////////////////////////////////////////////////
 
-    //     let upcoming = []
-    //     let past = []
-    //     const allEvents = () => {
-    //         for (let i = 0; i < group.Events.length; i++) {
-    //  //           console.log(group.Events.length, "EVENTS LENGTH")
-    //             let oneEvent = group.Events[i]
-    // //console.log(oneEvent, "ONE EVENT IN FOR LOOP")
-    //             let date = Date.now()
-    //             let startDate = Date.parse(oneEvent.startDate)
-    // //console.log( "START DATE LOGIC")
-    //             if (startDate > date && upcoming[0] !== oneEvent.name) {
-    //                 upcoming.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
-    //             } else if (startDate < date && past[0] !== oneEvent.name) {
-    //                 past.push([oneEvent.name, oneEvent.type, oneEvent.startDate, oneEvent.endDate, oneEvent.eventImg])
-    //             }
-    //         }
-    //         console.log(group.Events, "PAST IN FOR LOOP")
-
-    //     }
 
     const EditGroup = (group) => {
 

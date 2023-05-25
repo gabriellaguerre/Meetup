@@ -20,7 +20,11 @@ useEffect(() => {
 
     const [eventD, setEventD] = useState(false)
 
-
+    let orderList = []
+    for(let i = 0; i < eventList.length; i++) {
+        let event = eventList[i]
+        orderList.unshift(event)
+    }
 
 
 
@@ -38,7 +42,7 @@ useEffect(() => {
             <span><NavLink className='eventGroup' to='/groups'> Groups</NavLink></span>
             <div className='smallHeader'>Events in get2gether</div>
 
-            {eventList.map(event => (
+            {orderList.map(event => (
                 <div key={event.id} className='eventListContainer'>
                     <NavLink className='eventListLink' to={`/events/${event.id}`} onClick={() => setEventD(true)}>
                         <ul className='eventList' key={event.id}>
