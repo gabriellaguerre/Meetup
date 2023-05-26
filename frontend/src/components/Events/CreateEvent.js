@@ -15,7 +15,7 @@ function CreateEvent() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    
+
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
@@ -29,98 +29,70 @@ function CreateEvent() {
     const [validationErrors, setValidationErrors] = useState({})
     const [disable, setDisable] = useState(true)
 
+
+
      useEffect(() => {
         let errors = {}
-        if(name.length === 0) {
-            errors.name = "Name is required"
 
-        }
-        if(description.length === 0) {
-            errors.description = "Description is required"
-        }
+            if(name.length === 0) {
+                errors.name = "Name is required"
 
-        if(type.length === 0) {
-            errors.type = "Type is required"
-        }
+            }
+            if(description.length === 0) {
+                errors.description = "Description is required"
+            }
 
-        if(privatePublic.length === 0) {
-            errors.privatePublic = "Choose between Private or Public"
-        }
+            if(type.length === 0) {
+                errors.type = "Type is required"
+            }
 
-        if(price.length === 0) {
-            errors.price = "Price is required"
-        }
+            if(privatePublic.length === 0) {
+                errors.privatePublic = "Choose between Private or Public"
+            }
 
-        if(startDate.length === 0 || startTime.length === 0) {
-            errors.startDate = "Starting Date and Starting Time are required"
-        }
+            if(price.length === 0) {
+                errors.price = "Price is required"
+            }
 
-        if(endDate.length === 0 || endTime.length === 0) {
-            errors.endDate = "Ending Date and Ending Time are required"
-        }
+            if(startDate.length === 0 || startTime.length === 0) {
+                errors.startDate = "Starting Date and Starting Time are required"
+            }
 
-        if(eventImg.length === 0) {
-            errors.eventImg = "Please add an image url for your event"
-        }
+            if(endDate.length === 0 || endTime.length === 0) {
+                errors.endDate = "Ending Date and Ending Time are required"
+            }
 
-        if(name.length > 0 && name.length < 5) {
-            errors.name = "Name must be at least 5 characters"
-        }
+            if(eventImg.length === 0) {
+                errors.eventImg = "Please add an image url for your event"
+            }
 
-        if(description.length < 30) {
-            errors.description = "Description must be at least 30 characters"
-        }
+
+
+
+        // if(name.length > 0 && name.length < 5) {
+        //     errors.name = "Name must be at least 5 characters"
+        // }
+
+        // if(description.length < 30) {
+        //     errors.description = "Description must be at least 30 characters"
+        // }
 
         if(Object.values(errors).length) {
             setValidationErrors(errors)
             setDisable(true)
         } else {
             setDisable(false)
+            // setValidationErrors({})
         }
+
 
      }, [name, description, type, privatePublic, price, startDate, startTime, endDate, endTime, eventImg])
 
-    //  const firstErrors = () => {
 
-    //         let errors = {}
-    //         if(name.length === 0) {
-    //             errors.name = "Name is required"
-
-    //         }
-    //         if(description.length === 0) {
-    //             errors.description = "Description is required"
-    //         }
-
-    //         if(type.length === 0) {
-    //             errors.type = "Type is required"
-    //         }
-
-    //         if(privatePublic.length === 0) {
-    //             errors.privatePublic = "Choose between Private or Public"
-    //         }
-
-    //         if(price.length === 0) {
-    //             errors.price = "Price is required"
-    //         }
-
-    //         if(startDate.length === 0 || startTime.length === 0) {
-    //             errors.startDate = "Starting Date and Starting Time are required"
-    //         }
-
-    //         if(endDate.length === 0 || endTime.length === 0) {
-    //             errors.endDate = "Ending Date and Ending Time are required"
-    //         }
-
-    //         if(eventImg.length === 0) {
-    //             errors.eventImg = "Please add an image url for your event"
-    //         }
-
-    //         setValidationErrors(errors)
-
-    //  }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
         setValidationErrors({})
         setDisable(false)
 
@@ -178,6 +150,7 @@ function CreateEvent() {
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+
                 />
 
             <div className='errors'>

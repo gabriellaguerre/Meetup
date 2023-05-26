@@ -63,6 +63,7 @@ function EventDetail() {
 
         if (!user) {
             setTypeButton('noJoinButton')
+            setTheUser(false)
 
         }
 

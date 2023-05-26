@@ -22,11 +22,12 @@
 }
 
 .profileButton {
-    position: static;
+    position: absolute;
     padding-right: 10px;
     left: 1100px;
     background-color: rgb(176, 176, 231);
     text-align: left;
+    z-index: 1;
 }
 
 /* @media screen and (min-width: 480px) {

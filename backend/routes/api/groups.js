@@ -306,7 +306,7 @@ router.put('/:groupId', requireAuth, async (req, res) => {
 
    const user = req.user.id
 
-   const { name, about, type, private, city, state } = req.body
+   const { name, about, type, private, city, state, groupImg } = req.body
 
    const group = await Group.findOne({
       where: { id: groupId }
@@ -320,7 +320,8 @@ router.put('/:groupId', requireAuth, async (req, res) => {
             type,
             private,
             city,
-            state
+            state,
+            groupImg
          })
          update.save()
          res.json(group)

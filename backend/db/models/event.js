@@ -88,8 +88,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         checkDescription(value) {
-          if(value.length === 0) {
-            throw new Error("Description is required")
+          if(value.length < 30) {
+            throw new Error("Description needs to have a minimum of 30 characters")
           }
         }
       }
@@ -129,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
     endTime: {
       type: DataTypes.TIME,
     },
-    
+
     eventImg: {
       type: DataTypes.STRING,
     },

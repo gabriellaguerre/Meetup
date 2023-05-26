@@ -72,7 +72,7 @@ router.get('/', validateQuery, async (req, res) => {
     let activities = []
 
     const events = await Event.findAll({
-        where,
+        // where,
         attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate', 'price', 'description', 'eventImg', 'startTime', 'endTime'],
         include: [
             {
@@ -88,9 +88,12 @@ router.get('/', validateQuery, async (req, res) => {
         offset
     })
 
+//console.log(events, "EVENTS IN EVENT ROUTE")
+
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
         let eventOne = event.toJSON()
+   //     console.log(eventOne, "oooooooooooooooooooooooooooooooooooooooooooooooo")
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -102,15 +105,15 @@ router.get('/', validateQuery, async (req, res) => {
                 preview: true
             }
         })
-        let countUp = 0;
-        let countPast = 0
+        // let countUp = 0;
+        // let countPast = 0
 
-        if (Date.parse(eventOne.startDate) > Date.now()) {
-            countUp++
-        }
-        if (Date.parse(eventOne.startDate) < Date.now()) {
-            countPast++
-        }
+        // if (Date.parse(eventOne.startDate) > Date.now()) {
+        //     countUp++
+        // }
+        // if (Date.parse(eventOne.startDate) < Date.now()) {
+        //     countPast++
+        // }
 
         if (!eventOne.venueId) eventOne.venueId = null
         if (!eventOne.Venue) eventOne.Venue = null
@@ -127,21 +130,22 @@ router.get('/', validateQuery, async (req, res) => {
         result.eventImg = eventOne.eventImg,
         result.startTime = eventOne.startTime,
         result.endTime = eventOne.endTime,
-        result.countUp = countUp,
-        result.countPast = countPast
+        // result.countUp = countUp,
+        // result.countPast = countPast
 
         // eventOne.numAttending = attending
         // eventOne.countUp = countUp
         // eventOne.countPast = countPast
 
         activities.push(result)
+    //    console.log(activities, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     }
     //console.log(result, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
  //   result.Events = activities,
-        result.page = page,
-        result.size = limit
-
-    res.json(activities)
+        // result.page = page,
+        // result.size = limit
+  //  console.log(events, "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+    return res.json(events)
 })
 
 /*****Get Details of an Event by Id***************/

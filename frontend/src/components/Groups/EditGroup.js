@@ -23,12 +23,12 @@ function EditGroup() {
 
     const [city, setCity] = useState(group.city)
     const [state, setState] = useState(group.state)
-    const [oneLocation, setOneLocation] = useState([group.city, group.state].join(''))
+    const [oneLocation, setOneLocation] = useState([group.city, group.state].join(', '))
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
     const [type, setType] = useState(group.type)
     const [privatePublic, setPrivatePublic] = useState(group.privatePublic)
-    const [url, setUrl] = useState(group.previewImage)
+    const [url, setUrl] = useState(group.groupImg)
     const [errors, setErrors] = useState([])
 
     const [disable, setDisable] = useState(true)
@@ -36,7 +36,7 @@ function EditGroup() {
 
     useEffect(() => {
 
-        if (oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || url.length === 0) {
+        if (oneLocation?.length === 0 || name?.length === 0 || about?.length === 0 || type?.length === 0 || url?.length === 0) {
             setDisable(true)
         } else {
             setDisable(false)
@@ -78,11 +78,11 @@ let boolVal
             about,
             type,
             private: boolVal,
-            previewImage: url
+            groupImg: url
         }
-       
+
         return dispatch(sessionGroup.editingGroup(form2, groupId))
-            .then(() => history.push('/groups'))
+            .then(() => history.push(`/groups/${groupId}`))
             .catch(async (res) => {
                 const data = await res.json()
                 if (data && data.errors) {
