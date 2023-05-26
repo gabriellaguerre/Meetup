@@ -4,18 +4,14 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
-import boat from './GroupImages/boatImage.png'
-import carCollectors from './GroupImages/carCollectorsImage.png'
-import hunter from './GroupImages/hunterImage.png'
-import noImage from './GroupImages/noImageAvailable.png'
-import skyDive from './GroupImages/skyDiveImage.png'
-
 
 function CreateGroup() {
+
     const user = useSelector(state => state.session.user)
-    const theGroup = useSelector(state => state.group)
+    const theGroup = useSelector(state => Object.values(state.group))
     const dispatch = useDispatch()
     const history = useHistory()
+
 
     const [oneLocation, setOneLocation] = useState('')
     const [name, setName] = useState('')
@@ -24,6 +20,7 @@ function CreateGroup() {
     const [privatePublic, setPrivatePublic] = useState('')
     const [url, setUrl] = useState('')
     const [errors, setErrors] = useState([])
+    const [goToPage, setGoToPage] = useState(false)
 
     const [disable, setDisable] = useState(true)
 
@@ -41,6 +38,7 @@ function CreateGroup() {
     if (user === null) {
         return history.push('/')
     }
+
 
 
     const handleSubmit = (e) => {
@@ -67,19 +65,15 @@ function CreateGroup() {
             about,
             type,
             private: boolVal,
-            previewImage: url
+            groupImg: url
         }
 
-        dispatch(sessionGroup.creatingGroup(form2))
-        const image = {
-                groupId: theGroup.id,
-                url,
-                preview: true
-            }
-        console.log(image, "IMAGE IN CREATE GROUP")
 
-        return  dispatch(sessionGroup.addImage(image, theGroup.id))
-            .then(history.push('/groups'))
+
+        return dispatch(sessionGroup.creatingGroup(form2))
+            .then(dispatch(sessionGroup.fetchGroups()))
+            .then(() => setGoToPage(true))
+
             .catch(async (res) => {
                 const data = await res.json()
                 if (data && data.errors) {
@@ -87,8 +81,10 @@ function CreateGroup() {
                     setDisable(true)
                 }
             })
+    }
 
-
+    if (goToPage) {
+        history.push(`/groups/${theGroup[theGroup.length - 1].id}`)
     }
 
     return (
@@ -155,12 +151,6 @@ function CreateGroup() {
             </div>
 
             <p>Please add an image url for your group below</p>
-            <span onClick={() => setUrl(boat)}><img src={boat} height='100' width='150' margin='50' /></span>
-            <span onClick={() => setUrl(carCollectors)}><img src={carCollectors} height='100' width='150' /></span>
-            <span onClick={() => setUrl(hunter)}><img src={hunter} height='100' width='150' /></span>
-            <span onClick={() => setUrl(skyDive)}><img src={skyDive} height='100' width='150' /></span>
-            <span onClick={() => setUrl(noImage)}><img src={noImage} height='100' width='150' /></span>
-
 
             <div><input
                 placeholder='Image Url'
