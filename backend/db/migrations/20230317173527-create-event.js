@@ -37,12 +37,27 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+
       startDate: {
         type: Sequelize.DATE
       },
+
+      startTime: {
+        type: Sequelize.TIME
+      },
+
       endDate: {
         type: Sequelize.DATE
       },
+
+      endTime: {
+        type: Sequelize.TIME
+      },
+
+      eventImg: {
+        type: Sequelize.STRING
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
