@@ -9,7 +9,7 @@ import * as sessionEvent from '../../store/event'
 function CreateEvent() {
     const { groupId } = useParams()
     const group = useSelector(state => state.group[groupId])
-    const event = useSelector(state => state.event)
+    const event = useSelector(state => Object.values(state.event))
 
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch()
@@ -28,67 +28,63 @@ function CreateEvent() {
     const [eventImg, setEventImg] = useState('')
     const [validationErrors, setValidationErrors] = useState({})
     const [disable, setDisable] = useState(true)
+    const [goToPage, setGoToPage] = useState(false)
 
 
 
      useEffect(() => {
         let errors = {}
 
-            if(name.length === 0) {
-                errors.name = "Name is required"
-
-            }
-            if(description.length === 0) {
-                errors.description = "Description is required"
-            }
-
-            if(type.length === 0) {
-                errors.type = "Type is required"
+            if(name.length === 0 || description.length === 0 || type.length === 0 || privatePublic.length === 0 || price.length === 0 ||
+                startDate.length === 0 || startTime.length === 0 || endDate.length === 0 || endTime.length === 0 || eventImg.length === 0) {
+                setDisable(true)
+            } else {
+                setDisable(false)
             }
 
-            if(privatePublic.length === 0) {
-                errors.privatePublic = "Choose between Private or Public"
-            }
+            // if(description.length === 0) {
+            //     errors.description = "Description is required"
+            // }
 
-            if(price.length === 0) {
-                errors.price = "Price is required"
-            }
+            // if(type.length === 0) {
+            //     errors.type = "Type is required"
+            // }
 
-            if(startDate.length === 0 || startTime.length === 0) {
-                errors.startDate = "Starting Date and Starting Time are required"
-            }
+            // if(privatePublic.length === 0) {
+            //     errors.privatePublic = "Choose between Private or Public"
+            // }
 
-            if(endDate.length === 0 || endTime.length === 0) {
-                errors.endDate = "Ending Date and Ending Time are required"
-            }
+            // if(price.length === 0) {
+            //     errors.price = "Price is required"
+            // }
 
-            if(eventImg.length === 0) {
-                errors.eventImg = "Please add an image url for your event"
-            }
+            // if(startDate.length === 0 || startTime.length === 0) {
+            //     errors.startDate = "Starting Date and Starting Time are required"
+            // }
+
+            // if(endDate.length === 0 || endTime.length === 0) {
+            //     errors.endDate = "Ending Date and Ending Time are required"
+            // }
+
+            // if(eventImg.length === 0) {
+            //     errors.eventImg = "Please add an image url for your event"
+            // }
 
 
-
-
-        // if(name.length > 0 && name.length < 5) {
-        //     errors.name = "Name must be at least 5 characters"
+        // if(Object.values(errors).length) {
+        //     setValidationErrors(errors)
+        //     setDisable(true)
+        // } else {
+        //     setDisable(false)
+        //     // setValidationErrors({})
         // }
-
-        // if(description.length < 30) {
-        //     errors.description = "Description must be at least 30 characters"
-        // }
-
-        if(Object.values(errors).length) {
-            setValidationErrors(errors)
-            setDisable(true)
-        } else {
-            setDisable(false)
-            // setValidationErrors({})
-        }
 
 
      }, [name, description, type, privatePublic, price, startDate, startTime, endDate, endTime, eventImg])
 
-
+     if (user === null) {
+        return history.push('/')
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -128,7 +124,8 @@ function CreateEvent() {
 
 
         return dispatch(sessionEvent.creatingEvent(form2, groupId))
-            .then(() => history.push(`/events`))
+               //.then(dispatch(sessionEvent.fetchEvents()))
+               .then(() => setGoToPage(true))
                .catch(async (res) => {
                 const data = await res.json()
                 if(data && data.errors) {
@@ -137,6 +134,11 @@ function CreateEvent() {
                 }
                })
 
+    }
+
+    if (goToPage) {
+        console.log(event, "IN HISTORY PUSH CODE LINE 140")
+        history.push(`/events/${event[event.length - 1].id}`)
     }
 
 

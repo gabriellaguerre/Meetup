@@ -56,7 +56,7 @@ export const fetchEvents = () => async (dispatch) => {
     if (response.ok) {
 
         const data = await response.json()
-    console.log(data, "IN FETCH EVENTS THUNK")
+ //   console.log(data, "IN FETCH EVENTS THUNK")
         dispatch(loadEvents(data))
         return data
     }
