@@ -1,16 +1,16 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import * as groupActions from '../../store/group'
-import GroupDetail from './GroupDetails'
+//import GroupDetail from './GroupDetails'
 //import * as eventActions from '../../store/event'
 // import boatImage from '../HomePage/HomePageImages/boatImage.png'
 // import carCollector from '../HomePage/HomePageImages/carCollectorsImage.png'
 // import hunterImage from '../HomePage/HomePageImages/hunterImage.png'
 // import skyDive from '../HomePage/HomePageImages/skyDiveImage.png'
 import './index.css'
-import noImage from './GroupImages/noImageAvailable.png'
+//import noImage from './GroupImages/noImageAvailable.png'
 
 function Groups() {
     const history = useHistory()

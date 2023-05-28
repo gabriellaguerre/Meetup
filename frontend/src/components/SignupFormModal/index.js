@@ -27,15 +27,15 @@ function SignupFormModal() {
   } else {
     setDisabled(false)
   }
-  
+
  },[firstName, lastName, email, username, password, errors])
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if(firstName.length === 0) {
-      errors = 'First Name is required'
-    }
+    // if(firstName.length === 0) {
+    //   errors = 'First Name is required'
+    // }
 
     if (password === confirmPassword) {
       setErrors([]);

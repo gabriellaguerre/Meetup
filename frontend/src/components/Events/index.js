@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 import * as eventActions from '../../store/event'
-import EventDetail from './EventDetails'
-import Navigation from '../Navigation'
+// import EventDetail from './EventDetails'
+// import Navigation from '../Navigation'
 import './index.css'
 
 function Events() {

@@ -6,12 +6,12 @@ const CREATE_EVENT = 'event/createEvent'
 const FIND_EVENT_GROUP = 'event/findEventGroup'
 const UPDATE_EVENT = 'event/updateEvent'
 
-const findEvent = (data) => {
-    return {
-        type: FIND_EVENT_GROUP,
-        data
-    }
-}
+// const findEvent = (data) => {
+//     return {
+//         type: FIND_EVENT_GROUP,
+//         data
+//     }
+// }
 
 const loadEvents = (data) => {
     return {
@@ -111,7 +111,7 @@ const eventReducer = (state = {}, action) => {
             return newState[action.data];
         case CREATE_EVENT:
             newState = {...state, [action.event.id]: action.event}
-            console.log(newState, 'IN EVENT REDUCER')
+           // console.log(newState, 'IN EVENT REDUCER')
             return newState
         case UPDATE_EVENT:
             newState = {...state, [action.event.id]: action.event}

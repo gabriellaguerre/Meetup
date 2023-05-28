@@ -33,7 +33,7 @@ function CreateEvent() {
 
 
      useEffect(() => {
-        let errors = {}
+        // let errors = {}
 
             if(name.length === 0 || description.length === 0 || type.length === 0 || privatePublic.length === 0 || price.length === 0 ||
                 startDate.length === 0 || startTime.length === 0 || endDate.length === 0 || endTime.length === 0 || eventImg.length === 0) {

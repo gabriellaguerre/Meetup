@@ -1,5 +1,5 @@
 import React from 'react'
-import {NavLink, Route} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import './HomePage.css'
 import groupImage from './HomePageImages/groupImage.png'
@@ -7,8 +7,8 @@ import groupImage2 from './HomePageImages/groupImage2.png'
 import eventPic from './HomePageImages/eventsPic.png'
 import newGroup from './HomePageImages/newGroupPic.png'
 
-import Groups from '../Groups'
-import CreateGroup from '../Groups/CreateGroup'
+// import Groups from '../Groups'
+// import CreateGroup from '../Groups/CreateGroup'
 
 function HomePage() {
     const user = useSelector(state => state.session.user)

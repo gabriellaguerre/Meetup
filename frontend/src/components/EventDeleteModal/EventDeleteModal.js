@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
-import * as sessionGroup from '../../store/group'
+import React from 'react'
+//import * as sessionGroup from '../../store/group'
 import * as sessionEvent from '../../store/event'
-import { useDispatch, useSelector, } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
-import OpenModalButton from '../OpenModalButton';
+//import OpenModalButton from '../OpenModalButton';
 import './eventDeleteModal.css'
 
 function EventDeleteModal({eventId, groupId}) {
