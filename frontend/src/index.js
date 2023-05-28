@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import {ModalProvider, Modal} from './context/Modal'
-import DeleteModal from './components/DeleteModal'
+//import DeleteModal from './components/DeleteModal'
 import './index.css';
 import App from './App';
 import configureStore from './store';

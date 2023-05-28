@@ -4,12 +4,12 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
-import GroupDetail from './GroupDetails'
-import boat from './GroupImages/boatImage.png'
-import carCollectors from './GroupImages/carCollectorsImage.png'
-import hunter from './GroupImages/hunterImage.png'
-import noImage from './GroupImages/noImageAvailable.png'
-import skyDive from './GroupImages/skyDiveImage.png'
+//import GroupDetail from './GroupDetails'
+// import boat from './GroupImages/boatImage.png'
+// import carCollectors from './GroupImages/carCollectorsImage.png'
+// import hunter from './GroupImages/hunterImage.png'
+// import noImage from './GroupImages/noImageAvailable.png'
+// import skyDive from './GroupImages/skyDiveImage.png'
 
 
 function EditGroup() {
@@ -21,8 +21,8 @@ function EditGroup() {
     const history = useHistory()
 
 
-    const [city, setCity] = useState(group.city)
-    const [state, setState] = useState(group.state)
+    // const [city, setCity] = useState(group.city)
+    // const [state, setState] = useState(group.state)
     const [oneLocation, setOneLocation] = useState([group.city, group.state].join(', '))
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
@@ -157,11 +157,11 @@ let boolVal
             </div>
 
             <p>Please add an image url for your group below</p>
-            <span onClick={() => setUrl(boat)}><img src={boat} height='100' width='150' margin='50' /></span>
+            {/* <span onClick={() => setUrl(boat)}><img src={boat} height='100' width='150' margin='50' /></span>
             <span onClick={() => setUrl(carCollectors)}><img src={carCollectors} height='100' width='150' /></span>
             <span onClick={() => setUrl(hunter)}><img src={hunter} height='100' width='150' /></span>
             <span onClick={() => setUrl(skyDive)}><img src={skyDive} height='100' width='150' /></span>
-            <span onClick={() => setUrl(noImage)}><img src={noImage} height='100' width='150' /></span>
+            <span onClick={() => setUrl(noImage)}><img src={noImage} height='100' width='150' /></span> */}
 
 
             <div><input

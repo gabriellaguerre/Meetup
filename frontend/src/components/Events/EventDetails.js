@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as sessionEvent from '../../store/event'
 import * as groupActions from '../../store/group'
 import * as sessionUser from '../../store/session'
-import DeleteModal from '../DeleteModal'
+//import DeleteModal from '../DeleteModal'
 import { useState } from 'react'
 import EventDeleteModal from '../EventDeleteModal/EventDeleteModal'
-import Events from './index'
+//import Events from './index'
 import './EventDetail.css'
 import clockIcon from './EventImages/clockIcon.png'
 import moneyIcon from './EventImages/moneyIcon.png'
@@ -15,7 +15,7 @@ import pinIcon from './EventImages/pinIcon.png'
 
 function EventDetail() {
     const dispatch = useDispatch()
-    const history = useHistory()
+   // const history = useHistory()
     const { eventId } = useParams();
 
     useEffect(() => {
@@ -67,7 +67,7 @@ function EventDetail() {
 
         }
 
-    }, [user, typeButton])
+    }, [user, typeButton, group?.organizerId ])
 
 
 

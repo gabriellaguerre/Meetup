@@ -1,34 +1,33 @@
-import React, {useState} from 'react'
-import { NavLink, Route, Link } from 'react-router-dom'
+import React from 'react'
+import { NavLink} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ProfileButton from './ProfileButton'
-import HomePage from '../HomePage'
-import Groups from '../Groups'
+//import HomePage from '../HomePage'
+//import Groups from '../Groups'
 // import OpenModalButton from '../OpenModalButton'
 // import LoginFormModal from '../LoginFormModal'
-
-import SignupFormModal from '../SignupFormModal'
+//import SignupFormModal from '../SignupFormModal'
 import './Navigation.css'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user)
 
-    const [groups, setGroups] = useState(false)
-    const [signUp, setSignUp] = useState(false)
+    // const [groups, setGroups] = useState(false)
+    // const [signUp, setSignUp] = useState(false)
 
-    if(groups === true) {
-         return(
-            <>
-             <Groups />
-            </>
-        )
-    }
+    // if(groups === true) {
+    //      return(
+    //         <>
+    //          <Groups />
+    //         </>
+    //     )
+    // }
 
-    if(signUp === true) {
-        return (
-            <SignupFormModal />
-        )
-    }
+    // if(signUp === true) {
+    //     return (
+    //         <SignupFormModal />
+    //     )
+    // }
 
     // let sessionLinks;
 
