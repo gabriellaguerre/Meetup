@@ -19,22 +19,60 @@ function CreateGroup() {
     const [type, setType] = useState('')
     const [privatePublic, setPrivatePublic] = useState('')
     const [url, setUrl] = useState('')
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
+    const [hasFilled, setHasFilled] = useState(false)
 
     const [disable, setDisable] = useState(true)
 
+////////////////////////////////////ORIGINAL////////////////////////////////////////////////
+    // useEffect(() => {
+    //     if (oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0) {
+    //         setDisable(true)
+    //     } else {
+    //         setDisable(false)
+    //     }
 
-    useEffect(() => {
-        if (oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0) {
-            setDisable(true)
-        } else {
-            setDisable(false)
-        }
+    // }, [oneLocation, name, about, type, privatePublic, url])
+//////////////////////////////////MODIFFIED VERSION////////////////////////////////////////
+useEffect(() => {
+    let validationErrors = {}
 
-    }, [oneLocation, name, about, type, privatePublic, url])
+    if (oneLocation.length === 0 && hasFilled) {
+        validationErrors.oneLocation = "*City and State are required. Use a comma (,) to separate them."
+    }
 
+    if (name.length === 0 && hasFilled) {
+        validationErrors.name = "*Name is required"
+    }
 
+    if (about.length === 0 && hasFilled) {
+        validationErrors.about = "*Description is required"
+    }
+
+    if (type.length === 0 && hasFilled) {
+        validationErrors.type = "*Choose between Online or In Person"
+    }
+
+    if (privatePublic.length === 0 && hasFilled) {
+        validationErrors.privatePublic = "*Choose between Private or Public"
+    }
+
+    if(url.length === 0 && hasFilled) {
+        validationErrors.url = "*Image is required"
+    }
+
+    if(validationErrors) {
+        setDisable(true)
+        setErrors(validationErrors)
+    } else {
+        setErrors({})
+        setDisable(false)
+    }
+
+}, [hasFilled, oneLocation, name, about, type, privatePublic, url])
+
+///////////////////////////////////////////////////////////////////////////////////////////////
     if (user === null) {
         return history.push('/')
     }
@@ -45,7 +83,8 @@ function CreateGroup() {
 
         e.preventDefault()
         setDisable(false)
-        setErrors([])
+        setErrors({})
+        setHasFilled(false)
 
         const form = {
             oneLocation,
@@ -97,13 +136,14 @@ function CreateGroup() {
                 placeholder='City,STATE'
                 type='text'
                 value={oneLocation}
-                onChange={(e) => setOneLocation(e.target.value)} />
+                onChange={(e) => setOneLocation(e.target.value)}
+                onClick={()=> setHasFilled(true)}/>
             <div className='errors'>
-                {errors.city && (<p>{errors.city}</p>)}
+                {errors.oneLocation && (<p>{errors.oneLocation}</p>)}
             </div>
-            <div className='errors'>
+            {/* <div className='errors'>
                 {errors.state && (<p>{errors.state}</p>)}
-            </div>
+            </div> */}
 
 
             <h3>What will your group's name be?</h3>
@@ -112,7 +152,8 @@ function CreateGroup() {
                 placeholder='What is your group name?'
                 type='text'
                 value={name}
-                onChange={(e) => setName(e.target.value)} />
+                onChange={(e) => setName(e.target.value)}
+                onClick={()=> setHasFilled(true)} />
             <div className='errors'>
                 {errors.name && (<p>{errors.name}</p>)}
             </div>
@@ -125,14 +166,16 @@ function CreateGroup() {
             <textarea
                 placeholder='Please write at least 50 characters'
                 value={about}
-                onChange={(e) => setAbout(e.target.value)} />
+                onChange={(e) => setAbout(e.target.value)}
+                onClick={()=> setHasFilled(true)} />
             <div className='errors'>
                 {errors.about && (<p>{errors.about}</p>)}
             </div>
 
             <h3>Final steps...</h3>
             <p>Is this an in person or online group?</p>
-            <select value={type} onChange={(e) => setType(e.target.value)}>
+            <select value={type} onChange={(e) => setType(e.target.value)}
+            onClick={()=> setHasFilled(true)}>
                 <option value='' disabled>(select one)</option>
                 <option>In Person</option>
                 <option>Online</option>
@@ -141,13 +184,14 @@ function CreateGroup() {
                 {errors.type && (<p>{errors.type}</p>)}
             </div>
             <p>Is this group private or public?</p>
-            <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}>
+            <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
+            onClick={()=> setHasFilled(true)}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
             </select>
             <div className='errors'>
-                {errors.private && (<p>{errors.private}</p>)}
+                {errors.privatePublic && (<p>{errors.privatePublic}</p>)}
             </div>
 
             <p>Please add an image url for your group below</p>
@@ -155,11 +199,15 @@ function CreateGroup() {
             <div><input
                 placeholder='Image Url'
                 value={url}
-                onChange={(e) => setUrl(e.target.value)} /></div>
-
+                onChange={(e) => setUrl(e.target.value)}
+                onClick={()=> setHasFilled(true)} /></div>
+            <div className='errors'>
+                {errors.url && (<p>{errors.url}</p>)}
+            </div>
+            <div>
             <button type='submit' disabled={disable} >Create Group</button>
             <button onClick={() => history.push('/')}>Cancel</button>
-
+            </div>
         </form>
     )
 }
