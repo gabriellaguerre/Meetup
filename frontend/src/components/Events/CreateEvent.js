@@ -35,44 +35,61 @@ useEffect(()=> {
     const [disable, setDisable] = useState(true)
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-    const [fieldBackground, setFieldBackground] = useState('blueFields')
-
-
+    const [nameBackground, setNameBackground] = useState('blueFields')
+    const [descriptionBackground, setDescriptionBackground] = useState('blueFields')
+    const [typeBackground, setTypeBackground] = useState('blueFields')
+    const [pPBackground, setPPBackground] = useState('blueFields')
+    const [priceBackground, setPriceBackground] = useState('blueFields')
+    const [startDateBackground, setStartDateBackground] = useState('blueFields')
+    const [startTimeBackground, setStartTimeBackground] = useState('blueFields')
+    const [endDateBackground, setEndDateBackground] = useState('blueFields')
+    const [endTimeBackground, setEndTimeBackground] = useState('blueFields')
+    const [urlBackground, setUrlBackground] = useState('blueFields')
 
      useEffect(() => {
          let errors = {}
 
-    console.log(name.length, hasFilled)
+
             if (name.length === 0 && hasFilled) {
                 errors.name = "*Name is required"
+                setNameBackground('blueFields')
             }
 
             if(description.length === 0 && hasFilled) {
                 errors.description = "*Description is required"
+                setDescriptionBackground('blueFields')
             }
 
             if(type.length === 0 && hasFilled) {
-                errors.type = "*Type is required"
+                errors.type = "*Choose between In Person or Online"
+                setTypeBackground('blueFields')
             }
 
             if(privatePublic.length === 0 && hasFilled) {
                 errors.privatePublic = "*Choose between Private or Public"
+                setPPBackground('blueFields')
             }
 
             if(price.length === 0 && hasFilled) {
                 errors.price = "*Price is required"
+                setPriceBackground('blueFields')
             }
 
             if(hasFilled && (startDate.length === 0 || startTime.length === 0)) {
                 errors.startDate = "*Starting Date and Starting Time are required"
+                setStartDateBackground('blueFields')
+                setStartTimeBackground('blueFields')
             }
 
             if(hasFilled && (endDate.length === 0 || endTime.length === 0)) {
                 errors.endDate = "*Ending Date and Ending Time are required"
+                setEndDateBackground('blueFields')
+                setEndTimeBackground('blueFields')
             }
 
             if(eventImg.length === 0 && hasFilled) {
                 errors.eventImg = "*Please add an image url for your event"
+                setUrlBackground('blueFields')
             }
 
 
@@ -150,116 +167,130 @@ useEffect(()=> {
 
     return (
         <form onSubmit={handleSubmit}>
-
+          <div className='gridContainer'>
             <h3>Create an event for {group?.name}</h3>
-            <p>What is the name of your event?</p>
-            <input className={fieldBackground}
+            <p id='eventNameQuestion'>What is the name of your event?</p>
+            <input className={nameBackground}
+                id='eventName'
                 placeholder='Event Name'
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onClick={()=> {setHasFilled(true);setFieldBackground('whiteFields')}}/>
+                onClick={()=> {setHasFilled(true);setNameBackground('whiteFields')}}/>
 
-            <div className='errors'>
+            <div className='errorName'>
             {validationErrors.name && (
             <p>{validationErrors.name}</p>
             )}
             </div>
 
 
-            <p>Is this an in person or online event?</p>
-            <select value={type} onChange={(e) => setType(e.target.value)}
-            onClick={()=> setHasFilled(true)}>
+            <p id='inPersonQuestion'>Is this an in person or online event?</p>
+            <select id='inPerson'className={typeBackground}value={type} onChange={(e) => setType(e.target.value)}
+            onClick={()=> {setHasFilled(true); setTypeBackground('whiteFields')}}>
                 <option value='' disabled>(select one)</option>
                 <option>In person</option>
                 <option>Online</option>
             </select>
-            <div className='errors'>
+            <div className='errorPerson'>
             {validationErrors.type && (<p>{validationErrors.type}</p>)}
             </div>
 
-            <p>Is this group private or public?</p>
-            <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
-            onClick={()=> setHasFilled(true)}>
+            <p id='typeQuestion'>Is this group private or public?</p>
+            <select id='typeAnswer'className={pPBackground} value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
+            onClick={()=> {setHasFilled(true); setPPBackground('whiteFields')}}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
             </select>
-            <div className='errors'>
+            <div className='errorType'>
             {validationErrors.privatePublic && (<p>{validationErrors.privatePublic}</p>)}
             </div>
 
-            <p>What is the price for you event? </p>
-            <input
+            <p id='priceQuestion'>What is the price for your event? </p>
+            <input id='priceAnswer' className={priceBackground}
                 placeholder='$'
                 type='number'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                onClick={()=> setHasFilled(true)}/>
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setPriceBackground('whiteFields')}}/>
+            <div className='errorPrice'>
             {validationErrors.price && (<p>{validationErrors.price}</p>)}
             </div>
 
 
-            <p>When does your event start?</p>
-            <input className='start'
+            <p id='startQuestion'>When does your event start?</p>
+            <div id='eventStartContainer'>
+            <input id='startAnswer1'  className={startDateBackground}
                 placeholder='MM/DD/YYYY HHmm AM'
                 type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <input className='startTime'
+                onClick={()=> {setHasFilled(true); setStartDateBackground('whiteFields')}} />
+            <input id='startAnswer2' className={startTimeBackground}
                    placeholder='Event Start Time'
                    type='time'
                    value={startTime}
                    onChange={(e) => setStartTime(e.target.value)}
+                   onClick={()=> {setHasFilled(true); setStartTimeBackground('whiteFields')}}
             />
-            <div className='errors'>
+            </div>
+            <div className='errorStartTime'>
             {validationErrors.startDate && (<p>{validationErrors.startDate}</p>)}
             </div>
 
-            <p>When does your event end?</p>
-            <input className='end' width='100px'
+            <p id='eventEnd'>When does your event end?</p>
+            <div id='eventEndContainer'>
+            <input id='endAnswer1' className={endDateBackground} width='100px'
                 placeholder='MM/DD/YYYY HHmm PM'
                 type='date'
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <input className='endTime'
+                onClick={()=> {setHasFilled(true); setEndDateBackground('whiteFields')}} />
+
+            <input  id='endAnswer2' className={endTimeBackground}
                    placeholder='Event End Time'
                    type='time'
                    value={endTime}
                    onChange={(e) => setEndTime(e.target.value)}
+                   onClick={()=> {setHasFilled(true); setEndTimeBackground('whiteFields')}}
             />
-            <div className='errors'>
+            </div>
+
+            <div className='errorEndTime'>
             {validationErrors.endDate && (<p>{validationErrors.endDate}</p>)}
             </div>
 
-            <p>Please add an image url for your event below</p>
-            <input
+            <p id='imageQuestion'>Please add an image url for your event below</p>
+            <input id='imageAnswer' className={urlBackground}
                 placeholder='Image Url'
                 type='text'
                 value={eventImg}
                 onChange={(e) => setEventImg(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setUrlBackground('whiteFields')}} />
+            <div className='errorImg'>
             {validationErrors.eventImg && (<p>{validationErrors.eventImg}</p>)}
             </div>
 
-            <p>Please describe your event</p>
-            <textarea
+            <p id='descriptionQuestion'>Please describe your event</p>
+            <textarea id='descriptonAnswer'className={descriptionBackground}
                 placeholder='Please include at least 30 characters'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setDescriptionBackground('whiteFields')}} />
+            <div className='errorDescription'>
             {validationErrors.description && (<p>{validationErrors.description}</p>)}
             </div>
 
-            <p>
-                <button disabled={disable} onClick={handleSubmit}>Create Event</button>
-                <button onClick={()=> history.push('/events')}>Cancel</button>
-            </p>
+
+                <div id='eventCreateButton'>
+                <button id='eventCreate'disabled={disable} onClick={handleSubmit}>Create Event</button>
+                </div>
+                <div id='eventCancelButton'>
+                <button id='eventCancel'onClick={()=> history.push('/events')}>Cancel</button>
+                </div>
+            </div>
+
         </form>
     )
 }

@@ -5,3 +5,229 @@
 .whiteFields {
     background-color: white;
 }
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(20, 100px);
+    justify-items: center;
+    margin-left: 200px;
+    width: 800px;
+    height: 800px;
+    border: 1px black solid;
+}
+
+.gridContainer h3 {
+    grid-area: 1/1/2/3;
+}
+
+/************** EVENT NAME **********************/
+.gridContainer #eventNameQuestion {
+    grid-area: 2/1/3/2;
+}
+
+.gridContainer #eventName {
+    grid-area: 2/1/3/2;
+    height: 20px;
+    margin-top: 40px;
+}
+
+.gridContainer .errorName {
+    grid-area: 2/1/3/2;
+    color: red;
+    margin-top: 55px;
+}
+
+/***************** IN PERSON OR ONLINE *******************/
+.gridContainer #inPersonQuestion {
+    grid-area: 2/2/3/3;
+}
+
+.gridContainer #inPerson {
+    grid-area: 2/2/3/3;
+}
+#inPerson {
+    height: 25px;
+    width: 200px;
+    margin-top: 40px;
+    text-align: center;
+}
+.gridContainer .errorPerson {
+    grid-area: 2/2/3/3;
+    color: red;
+    margin-top: 55px;
+}
+
+/************* TYPE (Private/Public) ***********************/
+
+.gridContainer #typeQuestion {
+    grid-area: 3/1/4/2;
+}
+
+.gridContainer #typeAnswer {
+    grid-area: 3/1/4/2;
+    height: 20px;
+}
+
+#typeAnswer {
+    height: 40px;
+    width: 200px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.gridContainer .errorType {
+    grid-area: 3/1/4/2;
+    color: red;
+    margin-top: 55px;
+}
+
+/****************** PRICE ******************************/
+
+.gridContainer #priceQuestion {
+    grid-area: 3/2/4/3;
+}
+
+.gridContainer #priceAnswer {
+    grid-area: 3/2/4/3;
+    height: 20px;
+}
+#priceAnswer {
+    height: 40px;
+    width: 200px;
+    margin-top: 40px;
+}
+.gridContainer .errorPrice {
+    grid-area: 3/2/4/3;
+    color: red;
+    margin-top: 55px;
+}
+
+/****************** START DATE/TIME************************/
+
+.gridContainer #startQuestion {
+    grid-area: 4/1/5/2;
+}
+
+.gridContainer #eventStartContainer {
+    grid-area: 4/1/5/2;
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    grid-template-rows: 1fr;
+    height: 25px;
+}
+#eventStartContainer #startAnswer1 {
+    grid-area: 1/1/2/2;
+    margin-top: 40px;
+    height: 20px;
+}
+
+#eventStartContainer #startAnswer2 {
+    grid-area: 1/2/1/3;
+    margin-top: 40px;
+    height: 20px;
+}
+
+.gridContainer .errorStartTime{
+    grid-area: 4/1/5/2;
+    color: red;
+    margin-top: 55px;
+}
+
+/****************** END DATE/TIME************************/
+
+.gridContainer #eventEnd {
+    grid-area: 4/2/5/3;
+}
+
+.gridContainer #eventEndContainer {
+    grid-area: 4/2/5/3;
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    grid-template-rows: 1fr;
+    height: 25px;
+}
+#eventEndContainer #endAnswer1{
+    grid-area: 1/1/2/2;
+    margin-top: 40px;
+    height: 20px;
+}
+
+#eventEndContainer #endAnswer2{
+    grid-area: 1/2/1/3;
+    margin-top: 40px;
+    height: 20px;
+}
+.gridContainer .errorEndTime{
+    grid-area: 4/2/5/3;
+    color: red;
+    margin-top: 55px;
+}
+
+
+/****************** IMAGE ***********************/
+
+.gridContainer #imageQuestion {
+    grid-area: 5/1/6/2;
+}
+
+.gridContainer #imageAnswer {
+    grid-area: 5/1/5/2;
+    height: 20px;
+    margin-top: 40px;
+}
+
+.gridContainer .errorImg {
+    grid-area: 5/1/6/2;
+    color: red;
+    margin-top: 55px;
+}
+
+/****************** DESCRIPTION ************************/
+
+.gridContainer #descriptionQuestion {
+    grid-area: 6/1/7/3;
+}
+
+.gridContainer #descriptonAnswer {
+    grid-area: 6/1/8/3;
+    width: 400px;
+}
+
+#descriptonAnswer {
+    margin-top: 60px;
+}
+
+.gridContainer .errorDescription {
+    grid-area: 6/1/7/3;
+    color: red;
+    margin-top: 20px;
+}
+
+
+/****************** CREATE AND CANCEL BUTTONS ************************/
+
+.gridContainer #eventCancelButton {
+    grid-area: 8/2/9/3;
+}
+
+.gridContainer #eventCreateButton {
+    grid-area: 8/1/9/2;
+}
+#eventCreate {
+    color: green;
+    margin-top: 20px;
+    margin-left: 200px;
+    cursor: pointer;
+}
+
+#eventCancel {
+    color: white;
+    background-color: red;
+    margin-top: 20px;
+    margin-right: 200px;
+    width: 90px;
+    height: 22px;
+    border: none;
+    cursor: pointer;
+}
