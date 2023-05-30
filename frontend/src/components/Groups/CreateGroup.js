@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import * as sessionGroup from '../../store/group'
+import './CreateGroup.css'
 
 function CreateGroup() {
 
@@ -22,8 +23,14 @@ function CreateGroup() {
     const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-
     const [disable, setDisable] = useState(true)
+    const [locationBackground, setLocationBackground] = useState('blueFields')
+    const [nameGroupBackground, setNameGroupBackground] = useState('blueFields')
+    const [aboutBackground, setAboutBackground] = useState('blueFields')
+    const [groupTypeBackground, setGroupTypeBackground] = useState('blueFields')
+    const [privatePBackground, setPrivatePBackground] = useState('blueFields')
+    const [imageUrlBackground, setImageUrlBackground] = useState('blueFields')
+
 
 ////////////////////////////////////ORIGINAL////////////////////////////////////////////////
     // useEffect(() => {
@@ -40,26 +47,33 @@ useEffect(() => {
 
     if (oneLocation.length === 0 && hasFilled) {
         validationErrors.oneLocation = "*City and State are required. Use a comma (,) to separate them."
+        setLocationBackground('blueFields')
     }
 
     if (name.length === 0 && hasFilled) {
         validationErrors.name = "*Name is required"
+        setNameGroupBackground('blueFields')
     }
 
     if (about.length === 0 && hasFilled) {
-        validationErrors.about = "*Description is required"
+        validationErrors.about = "*An event description is required"
+        setAboutBackground('blueFields')
+
     }
 
     if (type.length === 0 && hasFilled) {
         validationErrors.type = "*Choose between Online or In Person"
+        setGroupTypeBackground('blueFields')
     }
 
     if (privatePublic.length === 0 && hasFilled) {
         validationErrors.privatePublic = "*Choose between Private or Public"
+        setPrivatePBackground('blueFields')
     }
 
     if(url.length === 0 && hasFilled) {
         validationErrors.url = "*Image is required"
+        setImageUrlBackground('blueFields')
     }
 
     if(validationErrors) {
@@ -128,49 +142,49 @@ useEffect(() => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h1>Start a New Group</h1>
+          <div className='groupGridContainer'>
+            <h1>{user.firstName}, Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>
-            <h2>First, set your group's location</h2>
-            <p>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</p>
-            <input
+            <div id='title3'>First, set your group's location.</div>
+            <div id='title4'>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</div>
+            <input id='locationAnswer' className={locationBackground}
                 placeholder='City,STATE'
                 type='text'
                 value={oneLocation}
                 onChange={(e) => setOneLocation(e.target.value)}
-                onClick={()=> setHasFilled(true)}/>
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setLocationBackground('whiteFields')}}/>
+            <div className='errorLocation'>
                 {errors.oneLocation && (<p>{errors.oneLocation}</p>)}
             </div>
-            {/* <div className='errors'>
-                {errors.state && (<p>{errors.state}</p>)}
-            </div> */}
 
-
-            <h3>What will your group's name be?</h3>
-            <p>Choose a name that will give people a clear idea of what the group is about.  Feel free to get creative! You can edi this later if you change your mind</p>
-            <input
+            <h3 id='groupName'>What will your group's name be?</h3>
+            <p id='groupNameText'>Choose a name that will give people a clear idea of what the group is about.  Feel free to get creative! You can edi this later if you change your mind</p>
+            <input id='groupNameAnswer' className={nameGroupBackground}
                 placeholder='What is your group name?'
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setNameGroupBackground('whiteFields')}} />
+            <div className='errorGroupName'>
                 {errors.name && (<p>{errors.name}</p>)}
             </div>
 
-            <h3>Now describe what your group will be about</h3>
-            <p>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
-            <ul>1. What's the purpose of the group?</ul>
-            <ul>2. Who should join?</ul>
-            <ul>3. What will you do at your events?</ul>
-            <textarea
-                placeholder='Please write at least 50 characters'
+            <div id='groupDescriptionBox'>
+            <h3 id='groupDescription1'>Now describe what your group will be about</h3>
+            <p id='groupDescription2'>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
+            <ul id='ul1'>1. What's the purpose of the group?</ul>
+            <ul id='ul2'>2. Who should join?</ul>
+            <ul id='ul3'>3. What will you do at your events?</ul>
+            </div>
+            <textarea id='groupDescriptionAnswer' className={aboutBackground}
+                placeholder='    Please write at least 50 characters'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
-                onClick={()=> setHasFilled(true)} />
-            <div className='errors'>
+                onClick={()=> {setHasFilled(true); setAboutBackground('whiteFields')}} />
+            <div className='errorAbout'>
                 {errors.about && (<p>{errors.about}</p>)}
             </div>
+
 
             <h3>Final steps...</h3>
             <p>Is this an in person or online group?</p>
@@ -180,7 +194,7 @@ useEffect(() => {
                 <option>In Person</option>
                 <option>Online</option>
             </select>
-            <div className='errors'>
+            <div className='errorTypePerson'>
                 {errors.type && (<p>{errors.type}</p>)}
             </div>
             <p>Is this group private or public?</p>
@@ -190,7 +204,7 @@ useEffect(() => {
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
             </select>
-            <div className='errors'>
+            <div className='errorPrivatePublic'>
                 {errors.privatePublic && (<p>{errors.privatePublic}</p>)}
             </div>
 
@@ -201,13 +215,14 @@ useEffect(() => {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 onClick={()=> setHasFilled(true)} /></div>
-            <div className='errors'>
+            <div className='errorImageUrl'>
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
             <div>
             <button type='submit' disabled={disable} >Create Group</button>
             <button onClick={() => history.push('/')}>Cancel</button>
             </div>
+         </div>
         </form>
     )
 }

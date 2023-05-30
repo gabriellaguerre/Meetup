@@ -15,6 +15,8 @@
     width: 800px;
     height: 800px;
     border: 1px black solid;
+    border-radius: 20px;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
 }
 
 .gridContainer h3 {
@@ -29,7 +31,9 @@
 .gridContainer #eventName {
     grid-area: 2/1/3/2;
     height: 20px;
+    width: 200px;
     margin-top: 40px;
+    border-radius: 8px;
 }
 
 .gridContainer .errorName {
@@ -51,6 +55,7 @@
     width: 200px;
     margin-top: 40px;
     text-align: center;
+    border-radius: 8px;
 }
 .gridContainer .errorPerson {
     grid-area: 2/2/3/3;
@@ -70,10 +75,11 @@
 }
 
 #typeAnswer {
-    height: 40px;
+    height: 25px;
     width: 200px;
     margin-top: 40px;
     text-align: center;
+    border-radius: 8px;
 }
 
 .gridContainer .errorType {
@@ -96,6 +102,7 @@
     height: 40px;
     width: 200px;
     margin-top: 40px;
+    border-radius: 8px;
 }
 .gridContainer .errorPrice {
     grid-area: 3/2/4/3;
@@ -120,12 +127,14 @@
     grid-area: 1/1/2/2;
     margin-top: 40px;
     height: 20px;
+    border-radius: 8px;
 }
 
 #eventStartContainer #startAnswer2 {
     grid-area: 1/2/1/3;
     margin-top: 40px;
     height: 20px;
+    border-radius: 8px;
 }
 
 .gridContainer .errorStartTime{
@@ -151,12 +160,14 @@
     grid-area: 1/1/2/2;
     margin-top: 40px;
     height: 20px;
+    border-radius: 8px;
 }
 
 #eventEndContainer #endAnswer2{
     grid-area: 1/2/1/3;
     margin-top: 40px;
     height: 20px;
+    border-radius: 8px;
 }
 .gridContainer .errorEndTime{
     grid-area: 4/2/5/3;
@@ -174,7 +185,9 @@
 .gridContainer #imageAnswer {
     grid-area: 5/1/5/2;
     height: 20px;
+    width: 300px;
     margin-top: 40px;
+    border-radius: 8px;
 }
 
 .gridContainer .errorImg {
@@ -196,6 +209,7 @@
 
 #descriptonAnswer {
     margin-top: 60px;
+    border-radius: 8px;
 }
 
 .gridContainer .errorDescription {
@@ -219,6 +233,7 @@
     margin-top: 20px;
     margin-left: 200px;
     cursor: pointer;
+    border-radius: 8px;
 }
 
 #eventCancel {
@@ -230,4 +245,5 @@
     height: 22px;
     border: none;
     cursor: pointer;
+    border-radius: 8px;
 }

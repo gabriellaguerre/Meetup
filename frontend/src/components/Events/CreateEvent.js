@@ -49,7 +49,6 @@ useEffect(()=> {
      useEffect(() => {
          let errors = {}
 
-
             if (name.length === 0 && hasFilled) {
                 errors.name = "*Name is required"
                 setNameBackground('blueFields')
