@@ -1,0 +1,278 @@
+.blueFields {
+    background-color:rgba(0, 0, 255, 0.226);
+}
+
+.whiteFields {
+    background-color: white;
+}
+
+.editgroupGridContainer {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(20, 90px);
+    justify-items: center;
+    margin-left: 200px;
+    width: 800px;
+    height: 1400px;
+    border: 1px black solid;
+    border-radius: 20px;
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+}
+
+.editgroupGridContainer h1 {
+    grid-area: 1/1/2/3;
+}
+
+.editgroupGridContainer h2  {
+    grid-area: 2/1/3/3;
+}
+
+.editgroupGridContainer #edittitle3 {
+    grid-area: 3/1/4/3;
+}
+
+#edittitle3 {
+    font-weight: bold;
+    justify-self: start;
+    padding-left: 10px;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.editgroupGridContainer #edittitle4 {
+    grid-area: 3/1/4/3;
+}
+ #edittitle4 {
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 55px;
+ }
+/******************CITY STATE**************************/
+.editgroupGridContainer #editlocationAnswer {
+    grid-area: 4/1/5/3;
+}
+
+#editlocationAnswer {
+    height: 20px;
+    justify-self: start;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.editgroupGridContainer .errorLocation {
+    grid-area: 4/1/5/3;
+    color: red;
+    justify-self: start;
+    margin-top: 30px;
+    padding-left: 20px;
+}
+
+/******************GROUP NAME**************************/
+.editgroupGridContainer #editgroupName {
+    grid-area: 5/1/6/3;
+}
+
+#editgroupName {
+    justify-self: start;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.editgroupGridContainer #groupNameText {
+    grid-area: 5/1/6/3;
+}
+
+#groupNameText {
+    margin-top: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.editgroupGridContainer #editgroupNameAnswer {
+    grid-area: 6/1/7/3;
+}
+
+#editgroupNameAnswer {
+    height: 20px;
+    justify-self: start;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.editgroupGridContainer .errorGroupName {
+    grid-area: 6/1/7/3;
+    color: red;
+    justify-self: start;
+    margin-top: 30px;
+    padding-left: 20px;
+}
+
+/************** DESCRIPTION ******************************/
+.editgroupGridContainer #editgroupDescriptionBox {
+    grid-area: 7/1/9/3;
+    justify-self: start;
+
+}
+
+#editgroupDescription1 {
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+#editgroupDescription2 {
+    padding-left: 10px;
+    margin-top: -15px;
+}
+
+.editgroupGridContainer #editgroupDescriptionAnswer {
+    grid-area: 9/1/11/3;
+}
+
+#editgroupDescriptionAnswer {
+    margin-top: 30px;
+    width: 600px;
+    border-radius: 10px;
+}
+
+.editgroupGridContainer .errorAbout {
+    grid-area: 9/1/10/3;
+    color: red;
+    margin-top: -10px;
+}
+
+/************** GROUP TYPE ******************************/
+.editgroupGridContainer #editfinalSteps {
+    grid-area: 11/1/12/2;
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 30px;
+}
+
+.editgroupGridContainer #groupType {
+    grid-area: 12/1/13/2;
+    justify-self: start;
+    padding-left: 10px;
+}
+
+.editgroupGridContainer #editgroupTypeAnswer {
+    grid-area: 12/1/13/2;
+}
+
+ #editgroupTypeAnswer {
+    height: 25px;
+    width: 200px;
+    margin-top: 25px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+ }
+
+ .editgroupGridContainer .errorTypePerson {
+    grid-area: 12/1/13/2;
+    color: red;
+    margin-top: 40px;
+    justify-self: start;
+    margin-left: 15px;
+ }
+
+/************** PRIVATE PUBLIC ******************************/
+
+.editgroupGridContainer #editprivatePub {
+    grid-area: 13/1/14/2;
+}
+
+#editprivatePub {
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.editgroupGridContainer #editprivatePubAnswer {
+    grid-area: 13/1/14/2;
+}
+
+#editprivatePubAnswer {
+    height: 25px;
+    width: 200px;
+    margin-top: 35px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+}
+
+.editgroupGridContainer .errorPrivatePublic {
+    grid-area: 13/1/14/2;
+    color: red;
+    margin-top: 45px;
+    justify-self: start;
+    margin-left: 15px;
+}
+
+/*********** IMAGE ******************************/
+
+.editgroupGridContainer #editgroupImgUrl {
+    grid-area: 14/1/15/2;
+}
+
+#editgroupImgUrl {
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.editgroupGridContainer #editgroupImgUrlAnswer {
+    grid-area: 14/1/15/2;
+}
+
+#editgroupImgUrlAnswer {
+    height: 20px;
+    width: 300px;
+    margin-top: 35px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+}
+
+.editgroupGridContainer .errorImageUrl {
+    grid-area: 14/1/15/2;
+    color: red;
+    margin-top: 55px;
+    justify-self: start;
+    margin-left: 15px;
+}
+
+/*********** BUTTONS ******************************/
+
+.editgroupGridContainer #editUpdate {
+    grid-area: 15/1/16/2;
+}
+
+#editUpdate {
+    color: green;
+    margin-top: 20px;
+    margin-left: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 30px;
+}
+
+.editgroupGridContainer #editCancel {
+    grid-area: 15/2/16/3;
+}
+
+#editCancel {
+    color: white;
+    background-color: red;
+    margin-top: 20px;
+    margin-right: 250px;
+    width: 90px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}

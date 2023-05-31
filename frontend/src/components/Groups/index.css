@@ -23,11 +23,19 @@
 .groupList {
     display: flex;
     height: 150px;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+    width: 600px;
+    align-items: center;
+    /* border-top: 1px solid gray;
+    border-bottom: 1px solid gray; */
+    border: 1px solid gray;
+    border-radius: 20px;
 }
-.groupListLink {
 
+.groupList:hover {
+    box-shadow: 5px 5px rgba(0, 0, 255, 0.226);
+}
+
+.groupListLink {
     text-decoration: none;
 }
 
@@ -38,6 +46,7 @@
 
 .groupListContainer {
     display: block;
+    margin-left: 100px;
 }
 
 .location {

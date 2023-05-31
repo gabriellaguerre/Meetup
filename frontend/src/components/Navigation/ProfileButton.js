@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session'
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import './Navigation.css'
 
 
 
@@ -47,7 +48,7 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.login({credential, password}))
   }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden")
-
+//console.log(ulClassName, "IN PROFILE BUTTON LINE 51")
   return (
     <>
       <button onClick={openMenu}>

@@ -161,10 +161,10 @@ function GroupDetail() {
                     <div>
                         {theUser ? (
                             <>
-                                <button onClick={() => createEvent(group)}>Create Event</button>
-                                <button onClick={() => EditGroup(group)}>Update</button>
-                                <button onClick={openMenu}>Delete</button>
-                                <button onClick={() => history.push('/groups')}>back</button>
+                                <button id='groupCreateEvent' onClick={() => createEvent(group)}>Create Event</button>
+                                <button id='groupUpdateEvent' onClick={() => EditGroup(group)}>Update</button>
+                                <button id='groupDelete' onClick={openMenu}>Delete</button>
+                                <button id='groupBack' onClick={() => history.push('/groups')}>back</button>
                                 <div className={divClassName} ref={ulRef}>
                                     <DeleteModal groupId={group?.id} />
                                 </div>
