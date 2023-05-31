@@ -48,7 +48,7 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.login({credential, password}))
   }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden")
-console.log(ulClassName, "IN PROFILE BUTTON LINE 51")
+//console.log(ulClassName, "IN PROFILE BUTTON LINE 51")
   return (
     <>
       <button onClick={openMenu}>

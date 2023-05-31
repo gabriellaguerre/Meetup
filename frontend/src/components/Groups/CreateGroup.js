@@ -142,6 +142,7 @@ useEffect(() => {
 
     return (
         <form onSubmit={handleSubmit}>
+            
           <div className='groupGridContainer'>
             <h1>Hello {user.firstName}, Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>

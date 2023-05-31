@@ -4,7 +4,7 @@
 
 .profile-dropdown {
     position: absolute;
-    background-color: aqua;
+    background-color: rgba(0, 0, 255);
     z-index: 1;
     height: auto;
     width: auto;
@@ -26,8 +26,8 @@
 
 .homePage {
     font-weight: bold;
-    font-size: 30px;
-    color: red;
+    font-size: 20px;
+    color: rgba(0, 0, 255);
     text-decoration: none;
 }
 
