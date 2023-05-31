@@ -9,7 +9,7 @@
 .groupGridContainer {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: repeat(20, 80px);
+    grid-template-rows: repeat(20, 90px);
     justify-items: center;
     margin-left: 200px;
     width: 800px;
@@ -65,7 +65,7 @@
     color: red;
     justify-self: start;
     margin-top: 30px;
-    padding-left: 30px;
+    padding-left: 20px;
 }
 
 /******************GROUP NAME**************************/
@@ -106,7 +106,7 @@
     color: red;
     justify-self: start;
     margin-top: 30px;
-    padding-left: 30px;
+    padding-left: 20px;
 }
 
 /************** DESCRIPTION ******************************/
@@ -140,4 +140,139 @@
     grid-area: 9/1/10/3;
     color: red;
     margin-top: -10px;
+}
+
+/************** GROUP TYPE ******************************/
+.groupGridContainer #finalSteps {
+    grid-area: 11/1/12/2;
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 30px;
+}
+
+.groupGridContainer #groupType {
+    grid-area: 12/1/13/2;
+    justify-self: start;
+    padding-left: 10px;
+}
+
+.groupGridContainer #groupTypeAnswer {
+    grid-area: 12/1/13/2;
+}
+
+ #groupTypeAnswer {
+    height: 25px;
+    width: 200px;
+    margin-top: 25px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+ }
+
+ .groupGridContainer .errorTypePerson {
+    grid-area: 12/1/13/2;
+    color: red;
+    margin-top: 40px;
+    justify-self: start;
+    margin-left: 15px;
+ }
+
+/************** PRIVATE PUBLIC ******************************/
+
+.groupGridContainer #privatePub {
+    grid-area: 13/1/14/2;
+}
+
+#privatePub {
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.groupGridContainer #privatePubAnswer {
+    grid-area: 13/1/14/2;
+}
+
+#privatePubAnswer {
+    height: 25px;
+    width: 200px;
+    margin-top: 35px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+}
+
+.groupGridContainer .errorPrivatePublic {
+    grid-area: 13/1/14/2;
+    color: red;
+    margin-top: 45px;
+    justify-self: start;
+    margin-left: 15px;
+}
+
+/*********** IMAGE ******************************/
+
+.groupGridContainer #groupImgUrl {
+    grid-area: 14/1/15/2;
+}
+
+#groupImgUrl {
+    justify-self: start;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.groupGridContainer #groupImgUrlAnswer {
+    grid-area: 14/1/15/2;
+}
+
+#groupImgUrlAnswer {
+    height: 20px;
+    width: 300px;
+    margin-top: 35px;
+    text-align: center;
+    border-radius: 8px;
+    justify-self: start;
+    margin-left: 10px;
+}
+
+.groupGridContainer .errorImageUrl {
+    grid-area: 14/1/15/2;
+    color: red;
+    margin-top: 55px;
+    justify-self: start;
+    margin-left: 15px;
+}
+
+/*********** BUTTONS ******************************/
+
+.groupGridContainer #groupCreate {
+    grid-area: 15/1/16/2;
+}
+
+#groupCreate {
+    color: green;
+    margin-top: 20px;
+    margin-left: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 30px;
+}
+
+.groupGridContainer #groupCancel {
+    grid-area: 15/2/16/3;
+}
+
+#groupCancel {
+    color: white;
+    background-color: red;
+    margin-top: 20px;
+    margin-right: 250px;
+    width: 90px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
 }

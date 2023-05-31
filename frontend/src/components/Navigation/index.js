@@ -63,14 +63,14 @@ function Navigation({ isLoaded }) {
 
     return (
         <>
-        <ul id='homepageContainer'>
-            <div className='homePage'>
-                <NavLink exact to='/'>get2gether</NavLink>
+        <ul className='homepageContainer'>
+            <div id='get2gether' >
+                <NavLink className='homePage' exact to='/'>get2gether</NavLink>
             </div>
             {isLoaded && (
                 <>
-                <div className={createLink}> <NavLink to='/groups/new'>Start a new group </NavLink></div>
-                <div className='profileButton'>
+                <div id='newGroup'className={createLink}> <NavLink className='startGroup' to='/groups/new'>Start a new group </NavLink></div>
+                <div id='profileButton' className='profileButton'>
                     <ProfileButton user={sessionUser} />
                 </div>
                 </>

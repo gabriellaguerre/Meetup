@@ -143,7 +143,7 @@ useEffect(() => {
     return (
         <form onSubmit={handleSubmit}>
           <div className='groupGridContainer'>
-            <h1>{user.firstName}, Start a New Group</h1>
+            <h1>Hello {user.firstName}, Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>
             <div id='title3'>First, set your group's location.</div>
             <div id='title4'>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</div>
@@ -186,10 +186,10 @@ useEffect(() => {
             </div>
 
 
-            <h3>Final steps...</h3>
-            <p>Is this an in person or online group?</p>
-            <select value={type} onChange={(e) => setType(e.target.value)}
-            onClick={()=> setHasFilled(true)}>
+            <h3 id='finalSteps'>Final steps...</h3>
+            <div id='groupType'>Is this an In Person or Online group?</div>
+            <select className={groupTypeBackground} id='groupTypeAnswer' value={type} onChange={(e) => setType(e.target.value)}
+            onClick={()=> {setHasFilled(true); setGroupTypeBackground('whiteFields')}}>
                 <option value='' disabled>(select one)</option>
                 <option>In Person</option>
                 <option>Online</option>
@@ -197,9 +197,10 @@ useEffect(() => {
             <div className='errorTypePerson'>
                 {errors.type && (<p>{errors.type}</p>)}
             </div>
-            <p>Is this group private or public?</p>
-            <select value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
-            onClick={()=> setHasFilled(true)}>
+
+            <div id='privatePub'>Is this group private or public?</div>
+            <select className={privatePBackground} id='privatePubAnswer' value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
+            onClick={()=> {setHasFilled(true); setPrivatePBackground('whiteFields')}}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
@@ -208,20 +209,19 @@ useEffect(() => {
                 {errors.privatePublic && (<p>{errors.privatePublic}</p>)}
             </div>
 
-            <p>Please add an image url for your group below</p>
-
-            <div><input
+            <div id='groupImgUrl'>Please add an image url for your group below</div>
+            <input className={imageUrlBackground} id='groupImgUrlAnswer'
                 placeholder='Image Url'
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                onClick={()=> setHasFilled(true)} /></div>
+                onClick={()=> {setHasFilled(true); setImageUrlBackground('whiteFields')}} />
             <div className='errorImageUrl'>
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
-            <div>
-            <button type='submit' disabled={disable} >Create Group</button>
-            <button onClick={() => history.push('/')}>Cancel</button>
-            </div>
+
+            <button id='groupCreate' type='submit' disabled={disable} >Create Group</button>
+            <button id='groupCancel' onClick={() => history.push('/')}>Cancel</button>
+
          </div>
         </form>
     )

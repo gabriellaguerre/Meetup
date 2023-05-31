@@ -231,18 +231,19 @@
 #eventCreate {
     color: green;
     margin-top: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
     cursor: pointer;
     border-radius: 8px;
+    height: 30px;
 }
 
 #eventCancel {
     color: white;
     background-color: red;
     margin-top: 20px;
-    margin-right: 200px;
+    margin-right: 250px;
     width: 90px;
-    height: 22px;
+    height: 30px;
     border: none;
     cursor: pointer;
     border-radius: 8px;
