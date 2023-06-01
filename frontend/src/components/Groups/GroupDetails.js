@@ -17,7 +17,7 @@ function GroupDetail() {
 
     useEffect(() => {
         dispatch(groupActions.fetchGroups())
-        dispatch(sessionUser.restoreUser())
+     //   dispatch(sessionUser.restoreUser())
 
     }, [dispatch])
 

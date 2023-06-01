@@ -19,6 +19,7 @@ const removeUser = () => {
 
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
+  console.log(user, "IN LOGIN THUNK LINE 21")
   const response = await csrfFetch('/api/session', {
     method: 'POST',
     body: JSON.stringify({
