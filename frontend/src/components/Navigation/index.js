@@ -65,7 +65,7 @@ function Navigation({ isLoaded }) {
         <>
         <ul className='homepageContainer'>
             <div id='get2gether' >
-                <NavLink className='homePage' exact to='/'>get2gethür</NavLink>
+                <NavLink className='homePage' exact to='/'>get2get(hür)</NavLink>
             </div>
             {isLoaded && (
                 <>

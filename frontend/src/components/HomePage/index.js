@@ -25,7 +25,7 @@ function HomePage() {
            Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
         </div>
             <img className='item-aPic' src={groupImage} alt='screen' height={250} width={400} />
-        <div className='item-b'><div className='head'>How get2gether works</div>
+        <div className='item-b'><div className='head'>How <span id='blue'>get2get(hür)</span> works</div>
         <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             Ut enim ad minim veniam, quis nostrud exercitation ullamco </div>
         </div>

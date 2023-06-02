@@ -29,6 +29,7 @@
     border-bottom: 1px solid gray; */
     border: 1px solid gray;
     border-radius: 20px;
+    word-wrap: break-word;
 }
 
 .groupList:hover {
@@ -47,6 +48,7 @@
 .groupListContainer {
     display: block;
     margin-left: 100px;
+
 }
 
 .location {
@@ -56,6 +58,7 @@
 .about {
     font-size: 12px;
     padding-top: 10px;
+    width: 400px;
 }
 
 .event {

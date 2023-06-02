@@ -85,3 +85,7 @@
     color: white;
     height: 40px;
 }
+
+#blue {
+    color: rgba(0, 0, 255);
+}

@@ -23,7 +23,7 @@ function CreateGroup() {
     const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-    const [disable, setDisable] = useState(true)
+   // const [disable, setDisable] = useState(true)
     const [locationBackground, setLocationBackground] = useState('blueFields')
     const [nameGroupBackground, setNameGroupBackground] = useState('blueFields')
     const [aboutBackground, setAboutBackground] = useState('blueFields')
@@ -34,13 +34,13 @@ function CreateGroup() {
 
 ////////////////////////////////////ORIGINAL////////////////////////////////////////////////
     // useEffect(() => {
-    //     if (oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0) {
-    //         setDisable(true)
-    //     } else {
+    //     console.log(disable, "DISABLE LINE 37")
+    //     if (oneLocation.length > 0 && name.length > 0 && about.length > 0  && type.length > 0 && privatePublic.length > 0 && url.length > 0) {
     //         setDisable(false)
+    //         console.log(disable, "USE EFFECT LINE 39")
     //     }
 
-    // }, [oneLocation, name, about, type, privatePublic, url])
+    // }, [disable, oneLocation, name, about, type, privatePublic, url])
 //////////////////////////////////MODIFFIED VERSION////////////////////////////////////////
 useEffect(() => {
     let validationErrors = {}
@@ -77,26 +77,27 @@ useEffect(() => {
     }
 
     if(validationErrors) {
-        setDisable(true)
+        //setDisable(true)
         setErrors(validationErrors)
     } else {
         setErrors({})
-        setDisable(false)
+        //setDisable(false)
     }
 
 }, [hasFilled, oneLocation, name, about, type, privatePublic, url])
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
     if (user === null) {
-        return history.push('/')
+        return history.push('/groups')
     }
 
+    //console.log(disable, "LINE 94")
 
 
     const handleSubmit = (e) => {
-
+//console.log(disable, "IN HANDLE SUBMIT LINE 97")
         e.preventDefault()
-        setDisable(false)
+        //setDisable(false)
         setErrors({})
         setHasFilled(false)
 
@@ -131,7 +132,7 @@ useEffect(() => {
                 const data = await res.json()
                 if (data && data.errors) {
                     setErrors(data.errors)
-                    setDisable(true)
+                    //setDisable(true)
                 }
             })
     }
@@ -142,7 +143,7 @@ useEffect(() => {
 
     return (
         <form onSubmit={handleSubmit}>
-            
+
           <div className='groupGridContainer'>
             <h1>Hello {user.firstName}, Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>
@@ -220,8 +221,8 @@ useEffect(() => {
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
 
-            <button id='groupCreate' type='submit' disabled={disable} >Create Group</button>
-            <button id='groupCancel' onClick={() => history.push('/')}>Cancel</button>
+            <button id='groupCreate' type='submit' disabled={oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0}>Create Group</button>
+            <button id='groupCancel' onClick={() => history.push('/groups')}>Cancel</button>
 
          </div>
         </form>
