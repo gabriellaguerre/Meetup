@@ -55,7 +55,7 @@
 #locationAnswer {
     height: 20px;
     justify-self: start;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 10px;
     margin-top: 10px;
 }
@@ -96,7 +96,7 @@
 #groupNameAnswer {
     height: 20px;
     justify-self: start;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 10px;
     margin-top: 10px;
 }
@@ -165,7 +165,7 @@
     width: 200px;
     margin-top: 25px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 5px;
     justify-self: start;
     margin-left: 10px;
  }
@@ -199,7 +199,7 @@
     width: 200px;
     margin-top: 35px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 5px;
     justify-self: start;
     margin-left: 10px;
 }
@@ -233,7 +233,7 @@
     width: 300px;
     margin-top: 35px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 5px;
     justify-self: start;
     margin-left: 10px;
 }
@@ -253,13 +253,30 @@
 }
 
 #groupCreate {
-    color: green;
+    color: white;
     margin-top: 20px;
     margin-left: 250px;
     cursor: pointer;
     border-radius: 8px;
     height: 30px;
+    background-color: green;
 }
+
+
+.groupGridContainer #groupNoCreate {
+    grid-area: 15/1/16/2;
+}
+
+#groupNoCreate {
+    color: red;
+    margin-top: 20px;
+    margin-left: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 30px;
+    background-color: rgb(219, 208, 208);
+}
+
 
 .groupGridContainer #groupCancel {
     grid-area: 15/2/16/3;
