@@ -59,7 +59,7 @@ function GroupDetail() {
         Date.parse(event?.startDate) < Date.now()
     )
 
-
+//console.log(countPast, "LINE 62")
 
     // useEffect(() => {
     //     setNumEvents(upcoming.length / 2)
@@ -213,12 +213,13 @@ function GroupDetail() {
             ))}
         </div>
 
+        <div className='pastEventsContainer'>
             <div className='pastEvents'>Past Events ({countPast?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (
                         <NavLink to={`/events/${event.id}`}>
-                        <div className='upcomingEventsListContainer'>
+                        <div className='pastEventsListContainer'>
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
                             <span>
                                 <div className='eventName'>{event?.name}</div>
@@ -229,11 +230,11 @@ function GroupDetail() {
                         </div>
                         </NavLink>
                     ) : (
-                        <div>No Past Events</div>
+                        <div></div>
                     )}
-
                 </ul>
             ))}
+            </div>
         </>
     )
 }
