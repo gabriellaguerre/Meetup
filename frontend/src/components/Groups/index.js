@@ -108,12 +108,12 @@ function Groups() {
                 <div key={group.id} className='groupListContainer'>
                     <NavLink className='groupListLink' to={`/groups/${group.id}`} onClick={() => setGroupD(true)}>
                         <ul className='groupList' >
-                            <span><img src={group.groupImg} alt='random pic' width="100" height="100" /></span>
+                            <span><img className='imageImage' src={group.groupImg} alt='random pic'  /></span>
                             <div className='groupInfo'>{group.name}
                                 <div className='location'>{group.city},{group.state}</div>
                                 <div className='about'>{group.about}</div>
                                 <div>
-                                    <span className='event' > Events </span>
+                                    <span className='event' >{group.Events.length} Events </span>
                                     <span className='dot'>.</span>
                                     {group.private ? (
                                         <span className='private'>Private</span>

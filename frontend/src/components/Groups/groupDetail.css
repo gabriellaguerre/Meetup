@@ -43,6 +43,50 @@
     padding: 10px;
 }
 
+#groupCreateEvent {
+    background-color: rgb(1, 184, 1);
+    color: white;
+    font-weight: bold;
+    height: 30px;
+    width: 105px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#groupUpdateGroup {
+    background-color: rgb(1, 163, 184);
+    color: white;
+    font-weight: bold;
+    height: 30px;
+    width: 105px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#groupDelete {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    height: 30px;
+    width: 105px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#groupBack {
+   
+    font-weight: bold;
+    height: 30px;
+    width: 105px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/**************************************************/
 .bottomContainer {
     border: 1px solid black;
     margin-top: 10px;
@@ -76,6 +120,7 @@
 
 }
 
+/***************** UPCOMING EVENTS *****************************/
 .upcomingEventsContainer {
     border: 1px solid black;
     margin-top: 10px;
@@ -91,6 +136,8 @@
     color: gray;
     margin-left: 20px;
 }
+
+/***************** PAST EVENTS *****************************/
 
 .pastEventsContainer {
     border: 1px solid black;
@@ -152,4 +199,11 @@
 
 .noJoinButton {
     visibility: hidden;
+}
+
+.groupImageImage {
+    border: 1px solide blue;
+    border-radius: 20px;
+    width: 200px;
+    height: 200px;
 }
