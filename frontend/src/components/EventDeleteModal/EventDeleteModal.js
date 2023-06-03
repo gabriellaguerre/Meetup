@@ -1,22 +1,28 @@
 import React from 'react'
 //import * as sessionGroup from '../../store/group'
 import * as sessionEvent from '../../store/event'
-import { useDispatch} from 'react-redux'
+import * as groupActions from '../../store/group'
+import { useDispatch, useSelector} from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 //import OpenModalButton from '../OpenModalButton';
 import './eventDeleteModal.css'
 
 function EventDeleteModal({eventId, groupId}) {
+//console.log(eventId, groupId, "IN EVENT DELETE MODAL LINE 11")
 
+    const group = useSelector(state => state.group[groupId])
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
 
+console.log(group, "GROUP LINE 17")
 
     const removeEvent = (eventId) => {
         dispatch(sessionEvent.eventRemover(eventId))
-            .then(history.push(`/events`))
+        .then(dispatch(sessionEvent.fetchEvents()))
+        .then(dispatch(groupActions.fetchGroups()))
+        .then(history.push(`/groups/${group.id}`))
 
     }
 

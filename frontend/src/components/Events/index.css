@@ -32,10 +32,18 @@
 .eventList {
     display: flex;
     height: 150px;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+    width: 600px;
+    align-items: center;
+    /* border-top: 1px solid gray;
+    border-bottom: 1px solid gray; */
+    border: 1px solid gray;
+    border-radius: 20px;
+    word-wrap: break-word;
 }
 
+.eventList:hover {
+    box-shadow: 5px 5px rgba(0, 0, 255, 0.226);
+}
 
  .eventDate {
     color: teal;
@@ -55,4 +63,3 @@
     font-size: 13px;
     color: gray
 }
-

@@ -15,7 +15,7 @@ function EditGroup() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [oneLocation, setOneLocation] = useState([group.city, group.state].join(', '))
+    const [oneLocation, setOneLocation] = useState([group.city, group.state].join(','))
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
     const [type, setType] = useState(group.type)
@@ -218,7 +218,13 @@ let boolVal
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
 
-            <button id='editUpdate' disabled={disable} onSubmit={handleUpdate} >Update Group</button>
+            {oneLocation?.length === 0 || name?.length === 0 || about?.length === 0 || type?.length === 0 || privatePublic?.length === 0 || url?.length === 0 ? (
+            <button id='noEditUpdate' disabled={true}>Update Group</button>
+            ) : (
+            <button id='editUpdate' disabled={false}>Update Group</button>
+            )}
+
+
             <button id='editCancel' onClick={() => history.push(`/groups/${group.id}`)}>Cancel</button>
 
             </div>
