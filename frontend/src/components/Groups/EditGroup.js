@@ -23,13 +23,6 @@ function EditGroup() {
     const [url, setUrl] = useState(group.groupImg)
     const [errors, setErrors] = useState({})
     const [hasFilledEdit, setHasFilledEdit] = useState(false)
-    const [editLocationBackground, setEditLocationBackground] = useState('blueFields')
-    const [editNameBackground, setEditNameBackground] = useState('blueFields')
-    const [editAboutBackground, setEditAboutBackground] = useState('blueFields')
-    const [editTypeBackground, setEditTypeBackground] = useState('blueFields')
-    const [editPrivateBackground, setEditPrivateBackground] = useState('useFields')
-    const [editUrlBackground, setEditUrlBackground] = useState('blueFields')
-
     const [disable, setDisable] = useState(true)
 
 
@@ -39,44 +32,44 @@ function EditGroup() {
 
     if (oneLocation?.length === 0 && hasFilledEdit) {
         validationErrors.oneLocation = "*City and State are required. Use a comma (,) to separate them."
-        setEditLocationBackground('blueFields')
+       // setEditLocationBackground('blueFields')
     } else {
-        setEditLocationBackground('whiteFields')
+      //  setEditLocationBackground('whiteFields')
     }
 
     if (name?.length === 0 && hasFilledEdit) {
         validationErrors.name = "*Name is required"
-        setEditNameBackground('blueFields')
+       // setEditNameBackground('blueFields')
     } else {
-        setEditNameBackground('whiteFields')
+       // setEditNameBackground('whiteFields')
     }
 
     if (about?.length === 0 && hasFilledEdit) {
         validationErrors.about = "*An event description is required"
-        setEditAboutBackground('blueFields')
+       // setEditAboutBackground('blueFields')
     } else {
-        setEditAboutBackground('whiteFields')
+       // setEditAboutBackground('whiteFields')
     }
 
     if (type?.length === 0 && hasFilledEdit) {
         validationErrors.type = "*Choose between Online or In Person"
-        setEditTypeBackground('blueFields')
+      //  setEditTypeBackground('blueFields')
     } else {
-        setEditTypeBackground('whiteFields')
+       //setEditTypeBackground('whiteFields')
     }
 
     if (privatePublic?.length === 0 && hasFilledEdit) {
         validationErrors.privatePublic = "*Choose between Private or Public"
-        setEditPrivateBackground('blueFields')
+      //  setEditPrivateBackground('blueFields')
     } else {
-        setEditPrivateBackground('whiteFields')
+      //  setEditPrivateBackground('whiteFields')
     }
 
     if(url?.length === 0 && hasFilledEdit) {
         validationErrors.url = "*Image is required"
-        setEditUrlBackground('blueFields')
+      //  setEditUrlBackground('blueFields')
     } else {
-        setEditUrlBackground('whiteFields')
+      //  setEditUrlBackground('whiteFields')
     }
 
     if(validationErrors) {
@@ -154,12 +147,12 @@ let boolVal
             <h2>We'll walk you through a few steps to build your local community</h2>
             <div id='edittitle3'>First, set your group's location.</div>
             <div id='edittitle4'>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</div>
-            <input id='editlocationAnswer' className={editLocationBackground}
+            <input id='editlocationAnswer'
                 placeholder='City,STATE'
                 type='text'
                 value={oneLocation}
                 onChange={(e) => setOneLocation(e.target.value)}
-                onClick={()=> {setHasFilledEdit(true); setEditLocationBackground('whiteFields')}}/>
+                onClick={()=> {setHasFilledEdit(true)}}/>
             <div className='errorLocation'>
                  {errors.oneLocation && (<p>{errors.oneLocation}</p>)}
             </div>
@@ -167,12 +160,12 @@ let boolVal
 
             <h3 id='editgroupName'>What will your group's name be?</h3>
             <p id='groupNameText'>Choose a name that will give people a clear idea of what the group is about.  Feel free to get creative! You can edi this later if you change your mind</p>
-            <input id='editgroupNameAnswer' className={editNameBackground}
+            <input id='editgroupNameAnswer'
                 placeholder='What is your group name?'
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onClick={()=> {setHasFilledEdit(true); setEditNameBackground('whiteFields')}} />
+                onClick={()=> {setHasFilledEdit(true)}} />
             <div className='errorGroupName'>
                 {errors.name && (<p>{errors.name}</p>)}
             </div>
@@ -184,18 +177,18 @@ let boolVal
             <ul>2. Who should join?</ul>
             <ul>3. What will you do at your events?</ul>
             </div>
-            <textarea id='editgroupDescriptionAnswer' className={editAboutBackground}
+            <textarea id='editgroupDescriptionAnswer'
                 placeholder='Please write at least 50 characters'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
-                onClick={()=> {setHasFilledEdit(true); setEditAboutBackground('whiteFields')}}/>
+                onClick={()=> {setHasFilledEdit(true)}}/>
             <div className='errorAbout'>
                 {errors.about && (<p>{errors.about}</p>)}
             </div>
 
             <h3 id='editfinalSteps'>Final steps...</h3>
             <div id='groupType'>Is this an in person or online group?</div>
-            <select className={editTypeBackground} id='editgroupTypeAnswer' value={type} onChange={(e) => setType(e.target.value)}>
+            <select id='editgroupTypeAnswer' value={type} onChange={(e) => setType(e.target.value)}>
                 <option value='' disabled>(select one)</option>
                 <option>In Person</option>
                 <option>Online</option>
@@ -206,7 +199,7 @@ let boolVal
 
 
             <div id='editprivatePub'>Is this group private or public?</div>
-            <select className={editPrivateBackground} id='editprivatePubAnswer' value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}>
+            <select id='editprivatePubAnswer' value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
@@ -216,11 +209,11 @@ let boolVal
             </div>
 
             <div id='editgroupImgUrl'>Please add an image url for your group below</div>
-            <input className={editUrlBackground} id='editgroupImgUrlAnswer'
+            <input id='editgroupImgUrlAnswer'
                 placeholder='Image Url'
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                onClick={()=> {setHasFilledEdit(true); setEditUrlBackground('whiteFields')}} />
+                onClick={()=> {setHasFilledEdit(true)}} />
              <div className='errorImageUrl'>
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
@@ -234,40 +227,3 @@ let boolVal
  }
 
 export default EditGroup;
-
-
-
-
-
-
-
-//   const { groupId } = useParams();
-//   const group = useSelector((state) => state.group[groupId])
-
-//   let oneLocation;
-//   let group1;
-
-//   if(group) {
-
-//     oneLocation = [group.city, group.state]
-//     group1 = {
-//     groupId: group.id,
-//     oneLocation,
-//     name: group.name,
-//     about: group.about,
-//     type: group.type,
-//     privatePublic: group.private,
-//     url: group.previewImage
-//   }
-//   }
-
-//   return (
-//     <>
-//     {group &&
-//     <GroupForm group={group1} formType="Update Group" />
-//     }
-//     </>
-//   );
-// }
-
-// export default EditGroupForm;
