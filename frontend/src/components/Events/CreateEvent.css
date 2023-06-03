@@ -33,7 +33,7 @@
     height: 20px;
     width: 200px;
     margin-top: 40px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .gridContainer .errorName {
@@ -55,7 +55,7 @@
     width: 200px;
     margin-top: 40px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 .gridContainer .errorPerson {
     grid-area: 2/2/3/3;
@@ -79,7 +79,7 @@
     width: 200px;
     margin-top: 40px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .gridContainer .errorType {
@@ -102,7 +102,7 @@
     height: 40px;
     width: 200px;
     margin-top: 40px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 .gridContainer .errorPrice {
     grid-area: 3/2/4/3;
@@ -127,14 +127,15 @@
     grid-area: 1/1/2/2;
     margin-top: 40px;
     height: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 #eventStartContainer #startAnswer2 {
     grid-area: 1/2/1/3;
     margin-top: 40px;
     height: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
+    padding-left: 10px;
 }
 
 .gridContainer .errorStartTime{
@@ -160,14 +161,14 @@
     grid-area: 1/1/2/2;
     margin-top: 40px;
     height: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 #eventEndContainer #endAnswer2{
     grid-area: 1/2/1/3;
     margin-top: 40px;
     height: 20px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 .gridContainer .errorEndTime{
     grid-area: 4/2/5/3;
@@ -187,7 +188,7 @@
     height: 20px;
     width: 300px;
     margin-top: 40px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .gridContainer .errorImg {
@@ -225,17 +226,34 @@
     grid-area: 8/2/9/3;
 }
 
-.gridContainer #eventCreateButton {
+.gridContainer #eventCreate {
     grid-area: 8/1/9/2;
 }
 #eventCreate {
-    color: green;
+    color: white;
     margin-top: 20px;
     margin-left: 250px;
     cursor: pointer;
     border-radius: 8px;
     height: 30px;
+    background-color: green;
 }
+
+.gridContainer #eventNoCreate {
+    grid-area: 8/1/9/2;
+}
+
+#eventNoCreate {
+    color: red;
+    margin-top: 20px;
+    margin-left: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 30px;
+    background-color: rgb(219, 208, 208);
+}
+
+
 
 #eventCancel {
     color: white;

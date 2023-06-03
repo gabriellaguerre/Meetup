@@ -67,28 +67,66 @@
     margin-left: 10px;
 }
 
-.description {
+.bottomContainer .description {
     margin-left: 13px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    word-wrap: break-word;
+
+
+}
+
+.upcomingEventsContainer {
+    border: 1px solid black;
+    margin-top: 10px;
+    width: 700px;
+    border-radius: 20px;
+    margin-left: 30px;
+    box-shadow: 5px 5px rgba(0, 0, 255, 0.226);
 }
 
 .upcomingEvents {
     padding-top: 20px;
     font-size: 21px;
     color: gray;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .pastEvents {
-    padding: 20px;
+    padding-top: 20px;
+    font-size: 21px;
+    color: gray;
+    margin-left: 20px;
+    /* padding: 20px;
     font-size: 25px;
-    margin-left: 10px;
+    margin-left: 10px; */
 }
 
 .upcomingEventsListContainer {
     display: flex;
-    background-color: pink;
+    border-bottom: 1px dashed gray;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+
 }
+
+.eventDescription {
+    word-wrap: break-word;
+    width: 500px;
+    padding-left: 10px;
+    margin-right: 10px;
+}
+
+.eventLocation {
+    margin-left: 5px;
+}
+
+.links {
+    text-decoration: none;
+}
+
 
 .joinButton {
     background-color: red;

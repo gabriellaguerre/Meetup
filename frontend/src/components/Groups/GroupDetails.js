@@ -3,7 +3,7 @@ import { Link, NavLink, useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import * as groupActions from '../../store/group'
-import * as sessionUser from '../../store/session'
+//import * as sessionUser from '../../store/session'
 import CreateEvent from '../Events/CreateEvent'
 import DeleteModal from '../DeleteModal'
 import './groupDetail.css'
@@ -188,11 +188,12 @@ function GroupDetail() {
                 <div className='description'>{group?.about}</div>
             </div>
 
+            <div className='upcomingEventsContainer'>
             <div className='upcomingEvents'>Upcoming Events ({countUpcoming?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) > Date.now()) ?  (
-                        <NavLink to={`/events/${event.id}`}>
+                        <NavLink className='links'  to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
 
                             <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
@@ -210,8 +211,9 @@ function GroupDetail() {
 
                 </ul>
             ))}
+        </div>
 
-            <div className='upcomingEvents'>Past Events ({countPast?.length})</div>
+            <div className='pastEvents'>Past Events ({countPast?.length})</div>
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (

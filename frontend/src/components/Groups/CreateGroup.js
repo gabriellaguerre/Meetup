@@ -23,80 +23,86 @@ function CreateGroup() {
     const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-    const [disable, setDisable] = useState(true)
-    const [locationBackground, setLocationBackground] = useState('blueFields')
-    const [nameGroupBackground, setNameGroupBackground] = useState('blueFields')
-    const [aboutBackground, setAboutBackground] = useState('blueFields')
-    const [groupTypeBackground, setGroupTypeBackground] = useState('blueFields')
-    const [privatePBackground, setPrivatePBackground] = useState('blueFields')
-    const [imageUrlBackground, setImageUrlBackground] = useState('blueFields')
+  //  const [whichButton, setWhichButton] = useState('groupNoCreate')
+    // const [locationBackground, setLocationBackground] = useState('blueFields')
+    // const [nameGroupBackground, setNameGroupBackground] = useState('blueFields')
+    // const [aboutBackground, setAboutBackground] = useState('blueFields')
+    // const [groupTypeBackground, setGroupTypeBackground] = useState('blueFields')
+    // const [privatePBackground, setPrivatePBackground] = useState('blueFields')
+    // const [imageUrlBackground, setImageUrlBackground] = useState('blueFields')
 
 
 ////////////////////////////////////ORIGINAL////////////////////////////////////////////////
     // useEffect(() => {
-    //     if (oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0) {
-    //         setDisable(true)
-    //     } else {
+    //     console.log(disable, "DISABLE LINE 37")
+    //     if (oneLocation.length > 0 && name.length > 0 && about.length > 0  && type.length > 0 && privatePublic.length > 0 && url.length > 0) {
     //         setDisable(false)
+    //         console.log(disable, "USE EFFECT LINE 39")
     //     }
 
-    // }, [oneLocation, name, about, type, privatePublic, url])
+    // }, [disable, oneLocation, name, about, type, privatePublic, url])
 //////////////////////////////////MODIFFIED VERSION////////////////////////////////////////
 useEffect(() => {
     let validationErrors = {}
 
     if (oneLocation.length === 0 && hasFilled) {
         validationErrors.oneLocation = "*City and State are required. Use a comma (,) to separate them."
-        setLocationBackground('blueFields')
+      //  setLocationBackground('blueFields')
     }
 
     if (name.length === 0 && hasFilled) {
         validationErrors.name = "*Name is required"
-        setNameGroupBackground('blueFields')
+      //  setNameGroupBackground('blueFields')
     }
 
     if (about.length === 0 && hasFilled) {
         validationErrors.about = "*An event description is required"
-        setAboutBackground('blueFields')
+      //  setAboutBackground('blueFields')
 
     }
 
     if (type.length === 0 && hasFilled) {
         validationErrors.type = "*Choose between Online or In Person"
-        setGroupTypeBackground('blueFields')
+       // setGroupTypeBackground('blueFields')
     }
 
     if (privatePublic.length === 0 && hasFilled) {
         validationErrors.privatePublic = "*Choose between Private or Public"
-        setPrivatePBackground('blueFields')
+       // setPrivatePBackground('blueFields')
     }
 
     if(url.length === 0 && hasFilled) {
         validationErrors.url = "*Image is required"
-        setImageUrlBackground('blueFields')
+        //setWhichButton('groupCreate')
     }
 
     if(validationErrors) {
-        setDisable(true)
+        //setDisable(true)
+       // setWhichButton('groupNoCreate')
         setErrors(validationErrors)
+      //  console.log(whichButton, "LINE 83")
+
     } else {
         setErrors({})
-        setDisable(false)
+     //   setWhichButton('groupCreate')
+       // console.log(whichButton, "LINE 88")
+        //setDisable(false)
     }
 
 }, [hasFilled, oneLocation, name, about, type, privatePublic, url])
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
     if (user === null) {
-        return history.push('/')
+        return history.push('/groups')
     }
 
+    //console.log(disable, "LINE 94")
 
 
     const handleSubmit = (e) => {
-
+//console.log(disable, "IN HANDLE SUBMIT LINE 97")
         e.preventDefault()
-        setDisable(false)
+        //setDisable(false)
         setErrors({})
         setHasFilled(false)
 
@@ -131,10 +137,12 @@ useEffect(() => {
                 const data = await res.json()
                 if (data && data.errors) {
                     setErrors(data.errors)
-                    setDisable(true)
+                    //setDisable(true)
                 }
             })
     }
+
+
 
     if (goToPage) {
         history.push(`/groups/${theGroup[theGroup.length - 1].id}`)
@@ -142,30 +150,30 @@ useEffect(() => {
 
     return (
         <form onSubmit={handleSubmit}>
-            
+
           <div className='groupGridContainer'>
             <h1>Hello {user.firstName}, Start a New Group</h1>
             <h2>We'll walk you through a few steps to build your local community</h2>
             <div id='title3'>First, set your group's location.</div>
             <div id='title4'>Meetup groups meet locally, in person and online.  We'll connect you with people in your area, and more can you online</div>
-            <input id='locationAnswer' className={locationBackground}
+            <input id='locationAnswer'
                 placeholder='City,STATE'
                 type='text'
                 value={oneLocation}
                 onChange={(e) => setOneLocation(e.target.value)}
-                onClick={()=> {setHasFilled(true); setLocationBackground('whiteFields')}}/>
+                onClick={()=> {setHasFilled(true)}}/>
             <div className='errorLocation'>
                 {errors.oneLocation && (<p>{errors.oneLocation}</p>)}
             </div>
 
             <h3 id='groupName'>What will your group's name be?</h3>
             <p id='groupNameText'>Choose a name that will give people a clear idea of what the group is about.  Feel free to get creative! You can edi this later if you change your mind</p>
-            <input id='groupNameAnswer' className={nameGroupBackground}
+            <input id='groupNameAnswer'
                 placeholder='What is your group name?'
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                onClick={()=> {setHasFilled(true); setNameGroupBackground('whiteFields')}} />
+                onClick={()=> {setHasFilled(true)}} />
             <div className='errorGroupName'>
                 {errors.name && (<p>{errors.name}</p>)}
             </div>
@@ -177,11 +185,11 @@ useEffect(() => {
             <ul id='ul2'>2. Who should join?</ul>
             <ul id='ul3'>3. What will you do at your events?</ul>
             </div>
-            <textarea id='groupDescriptionAnswer' className={aboutBackground}
+            <textarea id='groupDescriptionAnswer'
                 placeholder='    Please write at least 50 characters'
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
-                onClick={()=> {setHasFilled(true); setAboutBackground('whiteFields')}} />
+                onClick={()=> {setHasFilled(true)}} />
             <div className='errorAbout'>
                 {errors.about && (<p>{errors.about}</p>)}
             </div>
@@ -189,8 +197,8 @@ useEffect(() => {
 
             <h3 id='finalSteps'>Final steps...</h3>
             <div id='groupType'>Is this an In Person or Online group?</div>
-            <select className={groupTypeBackground} id='groupTypeAnswer' value={type} onChange={(e) => setType(e.target.value)}
-            onClick={()=> {setHasFilled(true); setGroupTypeBackground('whiteFields')}}>
+            <select  id='groupTypeAnswer' value={type} onChange={(e) => setType(e.target.value)}
+            onClick={()=> {setHasFilled(true)}}>
                 <option value='' disabled>(select one)</option>
                 <option>In Person</option>
                 <option>Online</option>
@@ -200,8 +208,8 @@ useEffect(() => {
             </div>
 
             <div id='privatePub'>Is this group private or public?</div>
-            <select className={privatePBackground} id='privatePubAnswer' value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
-            onClick={()=> {setHasFilled(true); setPrivatePBackground('whiteFields')}}>
+            <select  id='privatePubAnswer' value={privatePublic} onChange={(e) => setPrivatePublic(e.target.value)}
+            onClick={()=> {setHasFilled(true)}}>
                 <option value='' disabled>(select one)</option>
                 <option value='true'>Private</option>
                 <option value='false'>Public</option>
@@ -211,17 +219,21 @@ useEffect(() => {
             </div>
 
             <div id='groupImgUrl'>Please add an image url for your group below</div>
-            <input className={imageUrlBackground} id='groupImgUrlAnswer'
+            <input  id='groupImgUrlAnswer'
                 placeholder='Image Url'
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                onClick={()=> {setHasFilled(true); setImageUrlBackground('whiteFields')}} />
+                onClick={()=> {setHasFilled(true)}} />
             <div className='errorImageUrl'>
                 {errors.url && (<p>{errors.url}</p>)}
             </div>
-
-            <button id='groupCreate' type='submit' disabled={disable} >Create Group</button>
-            <button id='groupCancel' onClick={() => history.push('/')}>Cancel</button>
+            {oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0 ? (
+                <button id='groupNoCreate' type='submit' disabled={true}>Create Group</button>
+            ) : (
+                <button id='groupCreate' type='submit' disabled={false}>Create Group</button>
+            )}
+            {/* <button id={whichButton} type='submit' disabled={oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0}>Create Group</button> */}
+            <button id='groupCancel' onClick={() => history.push('/groups')}>Cancel</button>
 
          </div>
         </form>
