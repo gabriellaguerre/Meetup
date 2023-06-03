@@ -253,13 +253,29 @@
 }
 
 #editUpdate {
-    color: green;
+    color: white;
     margin-top: 20px;
     margin-left: 250px;
     cursor: pointer;
     border-radius: 8px;
     height: 30px;
+    background-color: green;
 }
+
+.editgroupGridContainer #noEditUpdate {
+    grid-area: 15/1/16/2;
+}
+
+#noEditUpdate {
+    color: red;
+    margin-top: 20px;
+    margin-left: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    height: 30px;
+    background-color: rgb(219, 208, 208);
+}
+
 
 .editgroupGridContainer #editCancel {
     grid-area: 15/2/16/3;
