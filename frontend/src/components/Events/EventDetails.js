@@ -146,54 +146,43 @@ function EventDetail() {
             </div>
 
             <div className='wrapperMiddleContainer'>
-                <div className='image1Box'> <img src={event?.eventImg} alt='event1' height='250' width='290' /></div>
+                <div className='image1Box'> <img className='mainEventImage'src={event?.eventImg} alt='event1'  /></div>
                 <div>
 
                 <NavLink className='eventDetailsGroupLink' to={`/groups/${group?.id}`}>
-                <div className='image2Box'>
-                <img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' />
-                <span>{group?.name}
-                {group?.private ? (
-                            <span className='public'>Private</span>
-                        ) : (
-                            <span className='public'>Public</span>
-                        )}
-                </span>
 
-                </div>
+                <div><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
+                <div className='groupName'>{group?.name}</div>
+                {group?.private ? (
+                            <div className='public'>Private</div>
+                        ) : (
+                            <div className='public'>Public</div>
+                        )}
+
                 </NavLink>
                 </div>
 
 
-                <div className='clock'>
+
                     <div className='wrapperClock'>
-                        <div className='clockImg'><img src={clockIcon} alt='clock' height='20' width='20' /></div>
+                        <div className='clockImg'><img className='mainClockImg' src={clockIcon} alt='clock'  /></div>
                         <div className='start'>Start</div>
                         <div className='end'>End</div>
                         <div className='startDate'>{date} <span className='dotEventDet'>.</span> {event?.startTime}</div>
                         <div className='endDate'>{stopDate} <span className='dotEventDet'>.</span> {event?.endTime}</div>
-                        <div className='money'><img src={moneyIcon} alt='Money' height='20' width='20' /></div>
-                        <div className='free'>{event?.price}</div>
-                        <div className='pin'><img src={pinIcon} alt='pin' height='20' width='20' /></div>
+                        <div className='money'><img className='mainMoney'src={moneyIcon} alt='Money' height='20' width='20' /></div>
+                        <div className='free'>$ {event?.price}</div>
+                        <div className='pin'><img className='mainPin' src={pinIcon} alt='pin' height='20' width='20' /></div>
                         {event?.type ? (
                             <div className='inPerson'>{event?.type}</div>
                         ) : (
                             <div className='inPerson'>In person</div>
                         )}
-
-                    </div>
-                </div>
-
-            </div>
-
-            <div className='eventbottomContainer'>
-                <div className='eventDetails'>Description:
-                    <div className='eventDescription'>{event?.description}</div>
-                    <div>
+                        <div className='deleteEventButton'>
                         {theUser && (
                             <>
-                                <div className='deleteButton'><button onClick={openMenu}>Delete</button></div>
-                                <div className='updateButton'><button>Update</button></div>
+                                <div id='deleteEventButton'><button className='buttonDelete'onClick={openMenu}>Delete Event</button></div>
+                                {/* <div className='updateButton'><button>Update</button></div> */}
                                 <div className={divClassName} ref={ulRef}>
                                     <EventDeleteModal eventId={event.id} groupId={event.groupId} />
                                 </div>
@@ -207,6 +196,16 @@ function EventDetail() {
                             <button className={typeButton}>Create an account to Join the Group and Event</button>
                         )}
                     </div>
+
+
+                    </div>
+                    </div>
+
+
+            <div className='eventbottomContainer'>
+                <div className='eventDetails'>Details:
+                    <div className='eventDescription'>{event?.description}</div>
+
 
                 </div>
 

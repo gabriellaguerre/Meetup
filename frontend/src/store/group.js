@@ -80,7 +80,7 @@ export const fetchGroups = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-      //  console.log(data)
+        //console.log(data, "IN THUNK FOR FETCHING GROUPS LINE 83")
         dispatch(loadGroups(data))
         return data
     }
@@ -144,7 +144,7 @@ const groupReducer = (state = {}, action) => {
             return newState;
         case GET_GROUPS:
             newState = {...state}
-          //  console.log(action.data, "IN GROUP REDUCER OF GET GROUPS")
+           // console.log(action.data, "IN GROUP REDUCER OF GET GROUPS LINE 147")
             action.data.Groups.map((Group) => newState[Group.id] = Group)
             return newState;
         case GET_GROUP:

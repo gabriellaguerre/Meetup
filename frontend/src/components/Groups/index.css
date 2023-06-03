@@ -74,7 +74,13 @@
     padding-right: 5px;
     text-align: center;
 }
-.errors {
+/* .errors {
     display: block;
     text-align: left;
+} */
+
+.imageImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
 }

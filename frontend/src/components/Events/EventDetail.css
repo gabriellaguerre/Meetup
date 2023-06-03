@@ -4,8 +4,9 @@
 
 .eventTopContainer {
     display: flex;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     height: 100px;
+    width: 800px;
 }
 .backLink {
   font-size: 15px;
@@ -22,64 +23,138 @@
     color: gray;
 }
 
-/********************************/
+/**************** MAIN IMAGE ****************/
 
 .wrapperMiddleContainer {
     display: grid;
     grid-template-columns: (3, 1fr);
     gap: 10px;
     grid-template-rows: (3, 1fr);
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     background-color: rgb(236, 236, 236);
-    width: auto;
-
+    width: 800px;
+    margin-left: 40px;
+    border-radius: 10px;
 }
 
 .image1Box {
-    grid-column: 1/3;
-    grid-row: 1/4;
-    border: 1px solid green;
-    height: 250px;
+    grid-area: 1/1/3/3;
+    /* border: 1px solid green; */
+    height: 235px;
+    width: 320px;
+    background-color:  rgb(236, 236, 236);
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.mainEventImage {
+    height: 235px;
+    width: 320px;
+    margin-left: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    /* margin-left: 25px; */
+}
+
+/************** TOP RIGHT ******************/
+
+.eventDetailsGroupLink {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    width: 350px;
+    height: 125px;
     background-color: white;
+    margin-top: 10px;
+    text-decoration: none;
     border-radius: 10px;
 }
 
-.image2Box {
-    grid-column: 3/4;
-    grid-row: 1/2;
+.eventDetailsGroupLink .insideImage2 {
+    grid-area: 1/1/2/2;
     border: 1px solid gray;
-    height: 100px;
+    height: 125px;
+    width: 150px;
     background-color: white;
     border-radius: 10px;
 }
 
-.clock {
+/* .insideImage2 {
+    height: 10px;
+} */
+
+.eventDetailsGroupLink .groupName {
+    grid-area: 1/2/2/3;
+}
+
+.eventDetailsGroupLink .public {
+    grid-area: 1/2/2/3;
+}
+
+.public {
+    margin-top: 50px;
+}
+.groupName {
+    font-size: 20px;
+    margin-top: 25px;
+}
+
+/************* BOTTOM RIGHT **************************/
+
+.wrapperClock {
+    grid-area: 2/3/3/4;
+    display: grid;
+    grid-template-columns: (3, 1fr);
+    grid-template-rows: (4, 1fr);
+    background-color: white;
+    border-radius: 10px;
+    width: 350px;
+    margin-bottom: 10px;
+}
+
+/* .clock {
     grid-column: 3/4;
     grid-row: 3/4;
     border: 1px solid gray;
     border-radius: 10px;
     background-color: white;
+} */
+
+
+.wrapperClock .clockImg {
+    grid-area: 1/1/3/2;
+
 }
 
-.wrapperClock {
-    display: grid;
-    grid-template-columns: (3, 1fr);
-    gap: 10px;
-    grid-template-rows: (4, 1fr);
+.clockImg {
+    justify-self: center;
+    align-self: center;
 }
-.wrapperClock .clockImg {
-    grid-column: 1/2;
-    grid-row: 1/3;
+
+.mainClockImg {
+    height: 30px;
+    width: 40px;
 }
 
 .wrapperClock .start {
     grid-column: 2/3;
     grid-row: 1/2;
 }
+
+.start {
+    margin-top: 10px;
+}
+
 .wrapperClock .end {
     grid-column: 2/3;
     grid-row: 2/3;
 }
+
+.end {
+    margin-top: 10px;
+}
+
+
 .wrapperClock .startDate {
     grid-column: 3/4;
     grid-row: 1/2;
@@ -92,43 +167,100 @@
     grid-column: 1/2;
     grid-row: 3/4;
 }
+
+.money {
+    justify-self: center;
+    align-self: center;
+}
+
+.mainMoney {
+    height: 30px;
+    width: 35px;
+    /* margin-left: 30px; */
+
+}
+
 .wrapperClock .free {
     grid-column: 2/3;
     grid-row: 3/4;
 }
+
+.free {
+    align-self: center;
+    justify-self: start;
+    margin-left: 10px;
+}
+
 .wrapperClock .pin {
     grid-column: 1/2;
     grid-row: 4/5;
 }
+.pin {
+    justify-self: center;
+    align-self: center;
+}
+
 .wrapperClock .inPerson {
     grid-column: 2/3;
     grid-row: 4/5;
 }
 
-/******************************************/
-
-.middleBottomContainer {
-    display: grid;
-    border: 1px black solid;
-    margin-top: 65px;
-    width: 200px;
+.wrapperClock .deleteEventButton {
+    grid-column: 3/4;
+    grid-row: 4/5;
 }
 
+.deleteEventButton {
+    justify-self: center;
+}
+
+.buttonDelete {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    height: 25px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+/*************BOTTOM DESCRIPTION *****************************/
 
 .eventbottomContainer {
+    display: grid;
+    /* border: 1px black solid; */
+    margin-top: 20px;
+    width: 800px;
+    margin-left: 40px;
+    border-radius: 10px;
+    background-color: rgb(236, 236, 236);
+}
+
+.eventDetails {
+    font-size: 23px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.eventDescription {
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+/* .eventbottomContainer {
     display: flex;
     height: 200px;
-}
+} */
 
-.eventDetailImg {
-
+/* .eventDetailImg {
     background-color: pink;
     border: 1px solid blue;
-}
+} */
 
 .dotEventDet {
     display: inline-block;
-
     position: relative;
     font-size: 25px;
     bottom: 5px;
@@ -143,27 +275,3 @@
 .noJoinButton {
     visibility: hidden;
 }
-
-
-/* .container {  display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 0.6fr 0.6fr 1.8fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "Picture1 Picture2 ."
-      "Picture1 Info3 ."
-      ". . .";
-  }
-
-  .Picture1 {
-    grid-area: Picture1;
-    height: 50px;
-    width: 100px;
-}
-
-  .Picture2 {
-    grid-area: Picture2;
-}
-
-  .Info3 { grid-area: Info3; } */

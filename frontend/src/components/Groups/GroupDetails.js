@@ -143,7 +143,7 @@ function GroupDetail() {
         <>
             <div className='backLink'><Link to='/groups'> Groups</Link></div>
             <div className='topContainer'>
-                <span className='groupImage'><img src={group?.groupImg} alt='' width='200' height='200' /></span>
+                <span className='groupImage'><img className='groupImageImage' src={group?.groupImg} alt=''  /></span>
                 <span className='name'>{group?.name}
                     <div className='location'>{group?.city}, {group?.state}</div>
                     <div>
@@ -162,9 +162,9 @@ function GroupDetail() {
                         {theUser ? (
                             <>
                                 <button id='groupCreateEvent' onClick={() => createEvent(group)}>Create Event</button>
-                                <button id='groupUpdateEvent' onClick={() => EditGroup(group)}>Update</button>
-                                <button id='groupDelete' onClick={openMenu}>Delete</button>
-                                <button id='groupBack' onClick={() => history.push('/groups')}>back</button>
+                                <button id='groupUpdateGroup' onClick={() => EditGroup(group)}>Update Group</button>
+                                <button id='groupDelete' onClick={openMenu}>Delete Group</button>
+                                <button id='groupBack' onClick={() => history.push('/groups')}>Back</button>
                                 <div className={divClassName} ref={ulRef}>
                                     <DeleteModal groupId={group?.id} />
                                 </div>
