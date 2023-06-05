@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import * as sessionActions from '../../store/session'
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
@@ -53,48 +53,46 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu}>
         <i className="fa-solid fa-user" />
-
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+
+      <div onClick={()=>setShowMenu(false)} className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <ul><Link to='/groups'>View Groups</Link></ul>
-            <p></p>
-            <ul><Link to='/events'>View Events</Link></ul>
-            <p></p>
-            <ul>Hello, {user.firstName}</ul>
-            <p></p>
-            <ul>username:{user.username}</ul>
-            <ul>name: {user.firstName} {user.lastName}</ul>
-            <ul>email: {user.email}</ul>
-            <ul>
-              <button onClick={logout}>Log Out</button>
-            </ul>
+            <div id='viewGroups' ><NavLink className='viewGroups' to='/groups' >View Groups</NavLink></div>
+            <div id='viewEvents'><NavLink className='viewEvents' to='/events'>View Events</NavLink></div>
+            <div id='hello'>Hello, {user.firstName}</div>
+            <div id='username'>username:{user.username}</div>
+            <div id='name'>name: {user.firstName} {user.lastName}</div>
+            <div id='email'>email: {user.email}</div>
+            <div className='logoutButton'>
+              <button id='logoutButton' onClick={logout}>Log Out</button>
+            </div>
           </>
         ) : (
           <>
-            <ul><Link to='/groups'>View Groups</Link></ul>
-            <p></p>
-            <ul><Link to='/events'>View Events</Link></ul>
-            <p></p>
-            <ul>
+            <div id='viewGroups'><NavLink className='viewGroups' to='/groups'>View Groups</NavLink></div>
+            <div id='viewEvents'><NavLink className='viewEvents' to='/events'>View Events</NavLink></div>
+
+            <div id='loginButton' onClick={()=>setShowMenu(false)}>
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
-            </ul>
-            <ul>
+            </div>
+
+            <div id='signinButton' onClick={()=>setShowMenu(false)}>
               <OpenModalButton
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
-            </ul>
-            <ul>
-              <button onClick={demo}>Demo User</button>
-            </ul>
+            </div>
+
+            <div id='demoButton'>
+              <button className='demoButton' onClick={demo}>Demo User</button>
+            </div>
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }
