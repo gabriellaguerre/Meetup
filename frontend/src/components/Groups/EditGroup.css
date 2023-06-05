@@ -260,7 +260,14 @@
     border-radius: 8px;
     height: 30px;
     background-color: green;
+    border: 1px solid black;
 }
+
+#editUpdate:hover {
+    background-color: white;
+    color: green;
+}
+
 
 .editgroupGridContainer #noEditUpdate {
     grid-area: 15/1/16/2;
@@ -291,4 +298,10 @@
     border: none;
     cursor: pointer;
     border-radius: 8px;
+}
+
+#editCancel:hover {
+    background-color: white;
+    color: red;
+    border: 1px solid black;
 }

@@ -54,6 +54,11 @@
     cursor: pointer;
 }
 
+#groupCreateEvent:hover {
+    background-color: white;
+    color: rgb(1, 184, 1);
+}
+
 #groupUpdateGroup {
     background-color: rgb(1, 163, 184);
     color: white;
@@ -64,6 +69,12 @@
     margin-right: 10px;
     cursor: pointer;
 }
+
+#groupUpdateGroup:hover {
+    background-color: white;
+    color: rgb(1, 163, 184);
+}
+
 
 #groupDelete {
     background-color: red;
@@ -76,14 +87,23 @@
     cursor: pointer;
 }
 
+#groupDelete:hover {
+    background-color: white;
+    color: red;
+}
+
 #groupBack {
-   
     font-weight: bold;
     height: 30px;
     width: 105px;
     border-radius: 5px;
     margin-right: 10px;
     cursor: pointer;
+}
+
+#groupBack:hover {
+    background-color: black;
+    color: rgb(238, 235, 235);
 }
 
 /**************************************************/

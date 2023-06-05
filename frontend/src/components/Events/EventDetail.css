@@ -224,6 +224,11 @@
     margin-bottom: 10px;
 }
 
+.buttonDelete:hover {
+    background-color: white;
+    color: red;
+}
+
 /*************BOTTOM DESCRIPTION *****************************/
 
 .eventbottomContainer {

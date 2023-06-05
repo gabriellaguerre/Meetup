@@ -239,6 +239,11 @@
     background-color: green;
 }
 
+#eventCreate:hover {
+    background-color: white;
+    color: green;
+}
+
 .gridContainer #eventNoCreate {
     grid-area: 8/1/9/2;
 }
@@ -253,8 +258,6 @@
     background-color: rgb(219, 208, 208);
 }
 
-
-
 #eventCancel {
     color: white;
     background-color: red;
@@ -265,4 +268,10 @@
     border: none;
     cursor: pointer;
     border-radius: 8px;
+}
+
+#eventCancel:hover {
+    background-color: white;
+    color: red;
+    border: 1px solid black;
 }
