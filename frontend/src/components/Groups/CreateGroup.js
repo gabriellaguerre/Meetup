@@ -20,6 +20,7 @@ function CreateGroup() {
     const [type, setType] = useState('')
     const [privatePublic, setPrivatePublic] = useState('')
     const [url, setUrl] = useState('')
+   // const [groupImg, setGroupImg] = useState('')
     const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
@@ -75,6 +76,10 @@ useEffect(() => {
         validationErrors.url = "*Image is required"
         //setWhichButton('groupCreate')
     }
+
+    // if(url.length > 255 && hasFilled) {
+    //     validationErrors.url = "*Not a valid image address"
+    // }
 
     if(validationErrors) {
         //setDisable(true)
@@ -137,6 +142,7 @@ useEffect(() => {
                 const data = await res.json()
                 if (data && data.errors) {
                     setErrors(data.errors)
+                  //  console.log(data.errors, "LINE 144")
                     //setDisable(true)
                 }
             })
@@ -225,7 +231,7 @@ useEffect(() => {
                 onChange={(e) => setUrl(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />
             <div className='errorImageUrl'>
-                {errors.url && (<p>{errors.url}</p>)}
+                {(errors.groupImg || errors.url) && (<p>{errors.groupImg || errors.url}</p>)}
             </div>
             {oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0 ? (
                 <button id='groupNoCreate' type='submit' disabled={true}>Create Group</button>

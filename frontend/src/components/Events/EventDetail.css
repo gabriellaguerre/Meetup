@@ -62,7 +62,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
-    width: 350px;
+    width: 400px;
     height: 125px;
     background-color: white;
     margin-top: 10px;
@@ -70,7 +70,7 @@
     border-radius: 10px;
 }
 
-.eventDetailsGroupLink .insideImage2 {
+.eventDetailsGroupLink #insideImage2 {
     grid-area: 1/1/2/2;
     border: 1px solid gray;
     height: 125px;
@@ -79,12 +79,15 @@
     border-radius: 10px;
 }
 
-/* .insideImage2 {
-    height: 10px;
-} */
+.insideImage2 {
+    width: 150px;
+    height: 125px;
+    border-radius: 10px;
+}
 
 .eventDetailsGroupLink .groupName {
     grid-area: 1/2/2/3;
+    width: 250px;
 }
 
 .eventDetailsGroupLink .public {
@@ -92,11 +95,13 @@
 }
 
 .public {
-    margin-top: 50px;
+    margin-top: 80px;
+    margin-left: 10px;
 }
 .groupName {
     font-size: 20px;
     margin-top: 25px;
+    margin-left: 10px;
 }
 
 /************* BOTTOM RIGHT **************************/
@@ -108,7 +113,7 @@
     grid-template-rows: (4, 1fr);
     background-color: white;
     border-radius: 10px;
-    width: 350px;
+    width: 400px;
     margin-bottom: 10px;
 }
 

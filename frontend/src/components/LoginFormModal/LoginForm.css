@@ -49,6 +49,11 @@
     text-align: center;
   }
 
+  .input {
+    border-radius: 5px;
+    height: 25px;
+  }
+
   .modalContainer .footer {
     flex: 20%;
     display: flex;

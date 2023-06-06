@@ -59,9 +59,9 @@ function LoginFormModal() {
 
                             </label>
                         </div>
+                        
                         <div className='body'>
                             <label>
-
                                 <input className='input'
                                     placeholder='password'
                                     type='password'

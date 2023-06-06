@@ -22,7 +22,7 @@ function SignupFormModal() {
 
  useEffect(()=> {
 
-  if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length < 4 || password.length < 6 ) {
+  if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length === 0 || password.length === 0 ) {
       setDisabled(true)
   } else {
     setDisabled(false)
@@ -33,9 +33,6 @@ function SignupFormModal() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // if(firstName.length === 0) {
-    //   errors = 'First Name is required'
-    // }
 
     if (password === confirmPassword) {
       setErrors([]);
@@ -55,8 +52,8 @@ function SignupFormModal() {
         .catch(async (res) => {
           const data = await res.json();
 
-          if (data && data.errors.credential) {
-            setErrors(data.errors.credential);
+          if (data && data.errors) {
+            setErrors(data.errors);
           }
         });
     } else {
@@ -78,11 +75,13 @@ function SignupFormModal() {
 
       <div className="title1">Sign Up</div>
 
+      <div className='mainFormBody'>
         <label>
           <div className='errors'>
           {errors && <p>{errors}</p>}
           </div>
-          <div className='body1'>
+          <div>First Name</div>
+          <div className='bodyFName'>
             <input
               placeholder='First Name'
               type="text"
@@ -93,10 +92,10 @@ function SignupFormModal() {
         </label>
 
         <label>
-        <div className='body1'>
-          {/* <div>
+        <div className='bodyLName'>
+          <div>
           {errors.lastName && <p>{errors.lastName}</p>}
-          </div> */}
+          </div>
               <input
                 placeholder='Last Name'
                 type='text'
@@ -107,14 +106,14 @@ function SignupFormModal() {
           </label>
 
         <label>
-        {/* <div className='errors'>
+         <div className='errors'>
           {errors.username && <p>{errors.username}</p>}
-        </div> */}
-        {/* <div className='errors'>
+        </div>
+        <div className='errors'>
           {errors.email && <p>{errors.email}</p>}
-          </div> */}
+          </div>
 
-            <div className='body1'>
+            <div className='bodyEmail'>
               <input
                 placeholder='Email'
                 type='text'
@@ -125,7 +124,7 @@ function SignupFormModal() {
           </label>
 
           <label>
-          <div className='body1'>
+          <div className='bodyUsername'>
               <input
                 placeholder='User Name'
                 type='text'
@@ -137,7 +136,7 @@ function SignupFormModal() {
 
 
         <label>
-        <div className='body1'>
+        <div className='bodyPassword'>
               <input
                 placeholder='Password'
                 type='password'
@@ -148,7 +147,7 @@ function SignupFormModal() {
           </label>
 
           <label>
-         <div className='body1'>
+         <div className='bodyConfirm'>
               <input
                 placeholder='Confirm Password'
                 type="password"
@@ -158,9 +157,9 @@ function SignupFormModal() {
             </div>
           </label>
 
-          {/* <div className='body1'>
+          <div className='errors'>
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-          </div> */}
+          </div>
 
         <div className='footer1'>
         {disable ? (
@@ -169,6 +168,7 @@ function SignupFormModal() {
             <button disabled={disable}>Sign Up</button>
             )}
           <button id='cancelButton1' onClick={closeModal}>Cancel</button>
+        </div>
         </div>
         </div>
         </div>

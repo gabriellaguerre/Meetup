@@ -151,7 +151,7 @@ function EventDetail() {
 
                 <NavLink className='eventDetailsGroupLink' to={`/groups/${group?.id}`}>
 
-                <div><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
+                <div id='insideImage2'><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
                 <div className='groupName'>{group?.name}</div>
                 {group?.private ? (
                             <div className='public'>Private</div>

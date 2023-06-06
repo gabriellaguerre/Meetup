@@ -22,7 +22,7 @@
 }
 .eventListContainer {
     display: block;
-
+    margin-left: 100px;
 }
 
 .eventListLink {
@@ -62,4 +62,16 @@
     padding-left: 5px;
     font-size: 13px;
     color: gray
+}
+
+.eventDescription {
+    font-size: 12px;
+    padding-top: 10px;
+    width: 400px;
+}
+
+.eventimageImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
 }
