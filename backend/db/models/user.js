@@ -86,6 +86,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        checkUser(value) {
+          if(value.includes('@') || value.includes('.com')) {
+            throw new Error("Username cannot be an email")
+          }
+        }
+      }
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,

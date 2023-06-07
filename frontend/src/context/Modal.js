@@ -53,4 +53,21 @@ export function Modal() {
     );
 }
 
+// export function ModalDelete() {
+//     const { modalRef, modalContent, closeModal } = useContext(ModalContext)
+//     // If there is no div referenced by the modalRef or modalContent is not a
+//     // truthy value, render nothing:
+//     if (!modalRef || !modalRef.current || !modalContent) return null;
+
+//     // Render the following component to the div referenced by the modalRef
+//     return ReactDOM.createPortal(
+//         <div id="modalDelete">
+//             <div id="modal-backgroundDelete" onClick={closeModal} />
+//             <div id="modal-content">{modalContent}</div>
+//         </div>,
+//         modalRef.current
+//     );
+// }
+
+
 export const useModal = () => useContext(ModalContext)

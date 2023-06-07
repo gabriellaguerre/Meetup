@@ -30,7 +30,7 @@ console.log(group, "GROUP LINE 17")
     return (
         <>
 
-                <div className='modalBackground1'>
+                <div id='modal-background'>
                     <div className="modalContainer1">
                         <div className='titleCloseButton1'>
                             <button onClick={closeModal}>X</button>
