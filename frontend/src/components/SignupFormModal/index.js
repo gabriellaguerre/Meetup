@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import { useModal } from '../../context/Modal'
@@ -17,28 +17,16 @@ function SignupFormModal() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errors, setErrors] = useState([])
-  const [disable, setDisabled] = useState(true)
+
   const {closeModal} = useModal()
 
- useEffect(()=> {
-
-  if(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length < 4 || password.length < 6 ) {
-      setDisabled(true)
-  } else {
-    setDisabled(false)
-  }
-
- },[firstName, lastName, email, username, password, errors])
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // if(firstName.length === 0) {
-    //   errors = 'First Name is required'
-    // }
 
     if (password === confirmPassword) {
-      setErrors([]);
+      setErrors({});
       dispatch(sessionActions.signUpUser({
           email,
           username,
@@ -46,43 +34,41 @@ function SignupFormModal() {
           lastName,
           password,
         })
-
       )
-      const credential = email;
-      return dispatch(sessionActions.login({credential, password}))
       .then(closeModal)
        .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
 
-          if (data && data.errors.credential) {
-            setErrors(data.errors.credential);
+          if (data && data.errors) {
+            setErrors(data.errors);
           }
         });
     } else {
-      setErrors("Confirm Password field must be the same as the Password field")
+      setErrors({})
     }
 
-  };
+
+   };
 
 
   return (
     <>
    <form onSubmit={onSubmit}>
-      <div className='modalBackground1'>
-         <div className="modalContainer1">
+      <div id='modal-background'>
+         <div className="modalContainer2">
 
-      <div className='titleCloseButton1'>
-          <button onClick={closeModal}>X</button>
+      <div className='titleCloseButton2'>
+          <button id='titleCloseButton2' onClick={closeModal}>X</button>
         </div>
 
       <div className="title1">Sign Up</div>
+      {(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length === 0 || password.length === 0) ? (
+          <div id='allFields'>*All Fields Must Be Filled Out</div>
+        ) : (<div></div>)}
 
-        <label>
-          <div className='errors'>
-          {errors && <p>{errors}</p>}
-          </div>
-          <div className='body1'>
+      <div id='firstname'>First Name:</div>
+      <div className='bodyFName'>
             <input
               placeholder='First Name'
               type="text"
@@ -90,88 +76,109 @@ function SignupFormModal() {
               onChange={e => setFirstName(e.target.value)}
               />
           </div>
-        </label>
+          <div className='errorFName'>
+          {errors.firstName && <div>{errors.firstName}</div>}
+          </div>
 
-        <label>
-        <div className='body1'>
-          {/* <div>
-          {errors.lastName && <p>{errors.lastName}</p>}
-          </div> */}
+
+        <div id='bodyLName'>Last Name:</div>
+          <div className='bodyLName'>
               <input
                 placeholder='Last Name'
                 type='text'
                 value={lastName}
                 onChange={e => setLastName(e.target.value)}
+                // onClick={()=> setHasFilled(true)}
                 />
             </div>
-          </label>
+            <div className='errorLName'>
+            {errors.lastName && <div>{errors.lastName}</div>}</div>
 
-        <label>
-        {/* <div className='errors'>
-          {errors.username && <p>{errors.username}</p>}
-        </div> */}
-        {/* <div className='errors'>
-          {errors.email && <p>{errors.email}</p>}
-          </div> */}
 
-            <div className='body1'>
+
+            <div id='bodyEmail'>Email:</div>
+            <div className='bodyEmail'>
               <input
                 placeholder='Email'
                 type='text'
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                // onClick={()=> setHasFilled(true)}
                 />
             </div>
-          </label>
+            <div className='errorEmail'>
+          {errors.email && <div>{errors.email}</div>}
+          </div>
 
-          <label>
-          <div className='body1'>
-              <input
+
+
+          <div id='bodyUsername'>Username:</div>
+           <div className='bodyUsername'> <input
                 placeholder='User Name'
                 type='text'
                 value={username}
                 onChange={e => setUserName(e.target.value)}
+                // onClick={()=> setHasFilled(true)}
                 />
                 </div>
-                </label>
+         <div className='errorUsername'>
+         {errors.username && <div>{errors.username}</div>}
+          {/* {(username.includes('@') || username.includes('.com')) ? (
+            <div>*Username cannot be an email</div>
+          ): (
+             <div>{errors.username && <div>{errors.username}</div>}</div>
+          )} */}
+        </div>
 
 
-        <label>
-        <div className='body1'>
-              <input
+
+
+        <div id='bodyPassword'>Password:</div>
+         <div className='bodyPassword'><input
                 placeholder='Password'
                 type='password'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
+                // onClick={()=> setHasFilled(true)}
                 />
             </div>
-          </label>
+          <div className='errorPassword'>
+          {errors.password && <div>{errors.password}</div>}
+        </div>
 
-          <label>
-         <div className='body1'>
-              <input
+
+
+         <div id='bodyConfirm'>Confirm Password:</div>
+          <div className='bodyConfirm'> <input
                 placeholder='Confirm Password'
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                // onClick={()=> setHasFilled(true)}
               />
             </div>
-          </label>
+          <div className='errorConfirm'>
+          {(password !== confirmPassword) ? (
+            <div>*Confirm password does not match password</div>
+          ) : (
+            <div></div>
+          )}
+          {/* {errors && <div>{errors}</div>} */}
+          </div>
 
-          {/* <div className='body1'>
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-          </div> */}
+
 
         <div className='footer1'>
-        {disable ? (
-          <button id='isDisabled2' disabled={disable}>Sign Up</button>
+        {(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length === 0 || password.length === 0) ? (
+          <button id='isDisabled2' disabled={true}>Sign Up</button>
           ) : (
-            <button disabled={disable}>Sign Up</button>
+            <button disabled={false}>Sign Up</button>
             )}
           <button id='cancelButton1' onClick={closeModal}>Cancel</button>
         </div>
         </div>
         </div>
+
       </form>
     </>
   );

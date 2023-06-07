@@ -39,13 +39,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     groupId: DataTypes.INTEGER,
-    
+
     name: {
       type: DataTypes.STRING,
       validate: {
         checkLength(value) {
           if(value.length < 5) {
-            throw new Error("Name must be at least 5 characters")
+            throw new Error("*Name must be at least 5 characters")
           }
         }
       }
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkType(value) {
           if(!(value === "In person" || value === "Online")) {
-            throw new Error("Type must be Online or In person")
+            throw new Error("*Type must be Online or In person")
           }
         }
       }
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkInteger(value) {
           if(!(Number.isInteger(value))) {
-            throw new Error("Capacity must be an integer")
+            throw new Error("*Capacity must be an integer")
           }
         }
       }
@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: true,
         checkPrice(value) {
           if(typeof value !== 'number') {
-            throw new Error("Price is invalid")
+            throw new Error("*Price is invalid")
           }
         }
       }
@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkDescription(value) {
           if(value.length < 30) {
-            throw new Error("Description needs to have a minimum of 30 characters")
+            throw new Error("*Description needs to have a minimum of 30 characters")
           }
         }
       }
@@ -103,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
           let date = Date.now()
           let startingDate = Date.parse(value)
           if(startingDate < date) {
-            throw new Error("Start date must be in the future")
+            throw new Error("*Start date must be in the future")
           }
         }
       }
@@ -116,7 +116,7 @@ module.exports = (sequelize, DataTypes) => {
           let startDate = Date.parse(this.startDate)
           let endingDate = Date.parse(value)
           if(endingDate < startDate) {
-            throw new Error("End date is less than start date")
+            throw new Error("*End date is less than start date")
           }
         }
       }

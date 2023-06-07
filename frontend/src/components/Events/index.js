@@ -46,7 +46,7 @@ useEffect(() => {
                 <div key={event.id} className='eventListContainer'>
                     <NavLink className='eventListLink' to={`/events/${event.id}`} onClick={() => setEventD(true)}>
                         <ul className='eventList' key={event.id}>
-                            <span><img src={event.eventImg} alt='random pic' width="100" height="100" /></span>
+                            <span><img className='eventimageImage' src={event.eventImg} alt='random pic' width="100" height="100" /></span>
                             <div className='eventDate'>{event.startDate.slice(0,10)} {event.startTime}
                                 <div className='eventName'>{event.name}</div>
                                 <div className='eventLocation'>{event.Group.city}, {event.Group.state}</div>

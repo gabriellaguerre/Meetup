@@ -215,7 +215,7 @@ let boolVal
                 onChange={(e) => setUrl(e.target.value)}
                 onClick={()=> {setHasFilledEdit(true)}} />
              <div className='errorImageUrl'>
-                {errors.url && (<p>{errors.url}</p>)}
+                {(errors.url || errors.groupImg) && (<p>{errors.url || errors.groupImg}</p>)}
             </div>
 
             {oneLocation?.length === 0 || name?.length === 0 || about?.length === 0 || type?.length === 0 || privatePublic?.length === 0 || url?.length === 0 ? (

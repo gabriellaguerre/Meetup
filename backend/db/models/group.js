@@ -41,12 +41,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkLength(value) {
           if (value.length > 60) {
-            throw new Error('Name must be 60 characters or less')
+            throw new Error('*Name must be 60 characters or less')
           }
         },
         checkEmptyString(value) {
           if(value.length === 0) {
-            throw new Error('Name cannot be empty')
+            throw new Error('*Name cannot be empty')
           }
         }
       }
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkLength(value) {
           if (value.length < 50) {
-            throw new Error('About must be 50 characters or more')
+            throw new Error('*About must be 50 characters or more')
           }
         }
       }
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: [['Online', 'In Person']],
-          msg: "Type must be 'Online' or 'In Person'"
+          msg: "*Type must be 'Online' or 'In Person'"
         }
       }
     },
@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkType(value) {
           if (typeof value !== 'boolean') {
-            throw new Error('Private must be a boolean')
+            throw new Error('*Private must be a boolean')
           }
         }
       }
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkCity(value) {
           if(value.length === 0) {
-            throw new Error('City is required')
+            throw new Error('*City is required')
           }
         }
       }
@@ -98,13 +98,20 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkCity(value) {
           if(value.length === 0) {
-            throw new Error('State is required')
+            throw new Error('*State is required')
           }
         }
       }
     },
     groupImg: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        checkLength(value) {
+          if(value.length > 255) {
+            throw new Error('*Image address is too long')
+          }
+        }
+      }
     },
 
   }, {
