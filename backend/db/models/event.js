@@ -132,6 +132,13 @@ module.exports = (sequelize, DataTypes) => {
 
     eventImg: {
       type: DataTypes.STRING,
+      validate: {
+        checkLength(value) {
+          if(value.length > 255) {
+            throw new Error('*Image address is too long')
+          }
+        }
+      }
     },
 
   }, {
