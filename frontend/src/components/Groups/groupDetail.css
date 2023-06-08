@@ -157,6 +157,10 @@
     margin-left: 20px;
 }
 
+.smalleventImg {
+    border-radius: 8px;
+}
+
 /***************** PAST EVENTS *****************************/
 
 .pastEventsContainer {

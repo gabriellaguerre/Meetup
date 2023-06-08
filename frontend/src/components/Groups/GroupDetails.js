@@ -196,7 +196,7 @@ function GroupDetail() {
                         <NavLink className='links'  to={`/events/${event.id}`}>
                         <div className='upcomingEventsListContainer'>
 
-                            <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
+                            <span><img className='smalleventImg' src={event?.eventImg} alt='' height='100px' width='100px' /></span>
 
                             <span>
                                 <div className='eventName'>{event?.name}</div>
@@ -220,7 +220,7 @@ function GroupDetail() {
                     {(Date.parse(event?.startDate) < Date.now()) ? (
                         <NavLink to={`/events/${event.id}`}>
                         <div className='pastEventsListContainer'>
-                            <span><img src={event?.eventImg} alt='' height='100px' width='100px' /></span>
+                            <span><img className='smalleventImg' src={event?.eventImg} alt='' height='100px' width='100px' /></span>
                             <span>
                                 <div className='eventName'>{event?.name}</div>
                                 <div className='eventLocation'>{group?.city}, {group?.state} </div>
