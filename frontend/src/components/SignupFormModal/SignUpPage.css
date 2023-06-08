@@ -11,7 +11,6 @@
     border-radius: 50px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    flex-direction: column;
     gap: 10px;
     padding: 25px;
   }
@@ -263,4 +262,24 @@
 .errors {
     color: red;
     text-align: center;
+}
+
+
+@media (max-width: 1100px) {
+  .modalContainer2 {
+    position: absolute;
+    right: 450px;
+    left: 200px;
+    top: 30px;
+    display: grid;
+    grid-template-rows: repeat(14, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    width: 400px;
+    height: 450px;
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    gap: 10px;
+    padding: 25px;
+  }
 }
