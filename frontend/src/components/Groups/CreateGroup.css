@@ -306,3 +306,15 @@
     color: red;
     border: 1px solid black;
 }
+
+/*********** SCREEN 1000PX AND LESS ******************************/
+
+@media (max-width: 1000px) {
+.groupGridContainer {
+    display: block;
+    border: 1px black solid;
+    text-align: center;
+    margin-left: 10px;
+
+  }
+}
