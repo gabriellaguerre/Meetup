@@ -84,3 +84,14 @@
     height: 120px;
     border-radius: 10px;
 }
+
+/*********** SCREEN 1000PX AND LESS ******************************/
+
+@media (max-width: 1000px) {
+    .groupList {
+        display: flex;
+        /* border: 1px black solid; */
+        margin-left: -50px;
+
+      }
+    }
