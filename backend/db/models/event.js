@@ -12,8 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId'
       })
       Event.belongsTo(models.Group, {
-        foreignKey: 'groupId',
-        onDelete: 'CASCADE'
+        foreignKey: 'groupId'
       })
       Event.belongsTo(models.Venue, {
         foreignKey: 'venueId'
