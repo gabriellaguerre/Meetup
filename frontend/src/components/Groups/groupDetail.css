@@ -33,9 +33,9 @@
     padding: 5px;
 }
 
-.public {
+span.public {
     font-size: 15px;
-    padding: 5px;
+    margin-left: -1px;
 }
 
 .organizer {
@@ -136,8 +136,6 @@
     margin-bottom: 10px;
     margin-right: 10px;
     word-wrap: break-word;
-
-
 }
 
 /***************** UPCOMING EVENTS *****************************/
@@ -230,4 +228,16 @@
     border-radius: 20px;
     width: 200px;
     height: 200px;
+}
+
+.GDdot {
+    font-size: 30px;
+    padding-left: 5px;
+    position: relative;
+    bottom: 3px;
+}
+
+.eventStartDateTime {
+    margin-left: 10px;
+    font-size: 15px;
 }

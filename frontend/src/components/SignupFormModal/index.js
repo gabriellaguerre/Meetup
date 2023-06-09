@@ -1,13 +1,13 @@
 import React, { useState} from 'react'
 import { useDispatch } from 'react-redux'
-import {useHistory} from 'react-router-dom'
+//import {useHistory} from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 import * as sessionActions from '../../store/session'
 import './SignUpPage.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch()
-  const history = useHistory()
+  //const history = useHistory()
 
 
   const [firstName, setFirstName] = useState('')
@@ -16,7 +16,7 @@ function SignupFormModal() {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useState({})
 
   const {closeModal} = useModal()
 
@@ -27,6 +27,7 @@ function SignupFormModal() {
 
     if (password === confirmPassword) {
       setErrors({});
+
       dispatch(sessionActions.signUpUser({
           email,
           username,
@@ -35,12 +36,14 @@ function SignupFormModal() {
           password,
         })
       )
+      // const credential = email;
+      // return (dispatch(sessionActions.login({credential, password})))
       .then(closeModal)
-       .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
 
           if (data && data.errors) {
+      console.log(data.errors)
             setErrors(data.errors);
           }
         });
@@ -169,7 +172,7 @@ function SignupFormModal() {
 
 
         <div className='footer1'>
-        {(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length === 0 || password.length === 0) ? (
+        {(firstName.length === 0 || lastName.length === 0 || email.length === 0 || username.length < 4 || password.length === 0 || password !== confirmPassword) ? (
           <button id='isDisabled2' disabled={true}>Sign Up</button>
           ) : (
             <button disabled={false}>Sign Up</button>

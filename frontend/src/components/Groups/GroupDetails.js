@@ -199,6 +199,7 @@ function GroupDetail() {
                             <span><img className='smalleventImg' src={event?.eventImg} alt='' height='100px' width='100px' /></span>
 
                             <span>
+                                <div className='eventStartDateTime'>{event?.startDate.slice(0,10)} {event?.startTime}</div>
                                 <div className='eventName'>{event?.name}</div>
                                 <div className='eventLocation'>{group?.city}, {group?.state} </div>
                                 <div className='eventDescription'>{event?.description}</div>
@@ -218,10 +219,11 @@ function GroupDetail() {
             {group?.Events?.map(event => (
                 <ul key={event.id}>
                     {(Date.parse(event?.startDate) < Date.now()) ? (
-                        <NavLink to={`/events/${event.id}`}>
+                        <NavLink className='links' to={`/events/${event.id}`}>
                         <div className='pastEventsListContainer'>
                             <span><img className='smalleventImg' src={event?.eventImg} alt='' height='100px' width='100px' /></span>
                             <span>
+                                <div className='eventStartDateTime'>{event?.startDate.slice(0,10)}<span className='GDdot'>.</span> {event?.startTime}</div>
                                 <div className='eventName'>{event?.name}</div>
                                 <div className='eventLocation'>{group?.city}, {group?.state} </div>
                                 <div className='eventDescription'>{event?.description}</div>

@@ -171,7 +171,12 @@ function EventDetail() {
                         <div className='startDate'>{date} <span className='dotEventDet'>.</span> {event?.startTime}</div>
                         <div className='endDate'>{stopDate} <span className='dotEventDet'>.</span> {event?.endTime}</div>
                         <div className='money'><img className='mainMoney'src={moneyIcon} alt='Money' height='20' width='20' /></div>
-                        <div className='free'>$ {event?.price}</div>
+                        {event?.price === 0 ? (
+                            <div className='free'>FREE</div>
+                        ) : (
+                            <div className='free'>$ {event?.price}</div>
+                        )}
+
                         <div className='pin'><img className='mainPin' src={pinIcon} alt='pin' height='20' width='20' /></div>
                         {event?.type ? (
                             <div className='inPerson'>{event?.type}</div>
@@ -182,7 +187,7 @@ function EventDetail() {
                         {theUser && (
                             <>
                                 <div id='deleteEventButton'><button className='buttonDelete'onClick={openMenu}>Delete Event</button></div>
-                                {/* <div className='updateButton'><button>Update</button></div> */}
+                                <div className='updateButton'><button>Update</button></div>
                                 <div className={divClassName} ref={ulRef}>
                                     <EventDeleteModal eventId={event.id} groupId={event.groupId} />
                                 </div>
