@@ -69,15 +69,13 @@
     font-size: 12px;
 }
 
-.dot {
+span.dot {
+    position: relative;
     font-size: 30px;
     padding-right: 5px;
-    text-align: center;
+    bottom: 2px;
 }
-/* .errors {
-    display: block;
-    text-align: left;
-} */
+
 
 .imageImage {
     width: 120px;

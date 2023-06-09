@@ -21,7 +21,7 @@ function Groups() {
     }, [dispatch])
 
     const groupList = useSelector(state => Object.values(state.group))
-    //const eventList = useSelector(state => Object.values(state.event))
+    const eventList = useSelector(state => Object.values(state.event))
 
     const [groupD, setGroupD] = useState(false)
     // const [events, setEvent] = useState([])

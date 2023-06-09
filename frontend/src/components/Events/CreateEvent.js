@@ -208,7 +208,7 @@ useEffect(()=> {
 
             <p id='priceQuestion'>What is the price for your event? </p>
             <input id='priceAnswer'
-                placeholder='$'
+                placeholder='$0'
                 type='number'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
