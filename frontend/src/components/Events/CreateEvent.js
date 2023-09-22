@@ -32,19 +32,10 @@ useEffect(()=> {
     const [endDate, setEndDate] = useState('')
     const [eventImg, setEventImg] = useState('')
     const [validationErrors, setValidationErrors] = useState({})
-    const [disable, setDisable] = useState(true)
+    // const [disable, setDisable] = useState(true)
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-    // const [nameBackground, setNameBackground] = useState('blueFields')
-    // const [descriptionBackground, setDescriptionBackground] = useState('blueFields')
-    // const [typeBackground, setTypeBackground] = useState('blueFields')
-    // const [pPBackground, setPPBackground] = useState('blueFields')
-    // const [priceBackground, setPriceBackground] = useState('blueFields')
-    // const [startDateBackground, setStartDateBackground] = useState('blueFields')
-    // const [startTimeBackground, setStartTimeBackground] = useState('blueFields')
-    // const [endDateBackground, setEndDateBackground] = useState('blueFields')
-    // const [endTimeBackground, setEndTimeBackground] = useState('blueFields')
-    // const [urlBackground, setUrlBackground] = useState('blueFields')
+
 
      useEffect(() => {
          let errors = {}
@@ -56,47 +47,45 @@ useEffect(()=> {
 
             if(description.length === 0 && hasFilled) {
                 errors.description = "*Description is required"
-              //  setDescriptionBackground('blueFields')
+
             }
 
             if(type.length === 0 && hasFilled) {
                 errors.type = "*Choose between In Person or Online"
-               // setTypeBackground('blueFields')
+
             }
 
             if(privatePublic.length === 0 && hasFilled) {
                 errors.privatePublic = "*Choose between Private or Public"
-                //setPPBackground('blueFields')
+
             }
 
             if(price.length === 0 && hasFilled) {
                 errors.price = "*Price is required"
-                //setPriceBackground('blueFields')
+
             }
 
             if(hasFilled && (startDate.length === 0 || startTime.length === 0)) {
                 errors.startDate = "*Starting Date and Starting Time are required"
-                // setStartDateBackground('blueFields')
-                // setStartTimeBackground('blueFields')
+
             }
 
             if(hasFilled && (endDate.length === 0 || endTime.length === 0)) {
                 errors.endDate = "*Ending Date and Ending Time are required"
-                // setEndDateBackground('blueFields')
-                // setEndTimeBackground('blueFields')
+
             }
 
             if(eventImg.length === 0 && hasFilled) {
                 errors.eventImg = "*Please add an image url for your event"
-               // setUrlBackground('blueFields')
+
             }
 
 
         if(errors) {
             setValidationErrors(errors)
-            setDisable(true)
+
         } else {
-            setDisable(false)
+
             setValidationErrors({})
         }
 
@@ -112,7 +101,7 @@ useEffect(()=> {
         e.preventDefault();
 
         setValidationErrors({})
-        setDisable(false)
+        // setDisable(false)
 
 
         const form = {

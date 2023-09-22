@@ -34,6 +34,9 @@
     justify-self: center;
     align-self: center;
 }
+.item-aPic, .group, .event {
+    border-radius: 20px;
+}
 
 .item-b {
     grid-column: 2/3;
@@ -81,9 +84,10 @@
 }
 
 .item-f button {
-    background-color: blue;
+    background-color: rgba(0, 0, 255);
     color: white;
     height: 40px;
+    border-radius: 15px;
 }
 
 #blue {
