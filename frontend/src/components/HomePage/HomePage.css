@@ -1,3 +1,8 @@
+body {
+    background-color: rgb(243, 243, 243);
+}
+
+
 .homePageBox {
     display: grid;
     background-color: white;
@@ -13,6 +18,7 @@
 
     column-gap: 10px;
     row-gap: 10px;
+    background-color: rgb(243, 243, 243);
 }
 
 .item-a {
@@ -34,7 +40,7 @@
     justify-self: center;
     align-self: center;
 }
-.item-aPic, .group, .event {
+.item-aPic, .group, .event, .newGroup {
     border-radius: 20px;
 }
 
@@ -88,6 +94,7 @@
     color: white;
     height: 40px;
     border-radius: 15px;
+    margin: 10px;
 }
 
 #blue {
