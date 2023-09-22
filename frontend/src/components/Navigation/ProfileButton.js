@@ -53,7 +53,7 @@ function ProfileButton({ user }) {
 //console.log(ulClassName, "IN PROFILE BUTTON LINE 51")
   return (
     <>
-      <button onClick={openMenu}>
+      <button id='navicon'onClick={openMenu}>
         <i className="fa-solid fa-user" />
       </button>
 {/* setShowMenu was false, just trying out the true */}

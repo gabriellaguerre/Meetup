@@ -2,6 +2,10 @@
     display: none;
 }
 
+/* .profileButton {
+   cursor: pointer;
+} */
+
 .profile-dropdown {
     display: grid;
     position: absolute;
@@ -13,6 +17,13 @@
     border: 1px solid black;
     right: 70px;
     border-radius: 20px;
+}
+
+#navicon {
+    background-color: blue;
+    border-radius: 5px;
+    color: rgb(215, 215, 247);
+    cursor: pointer;
 }
 
 @media (min-width: 681px) and (max-width: 1000px) {
@@ -206,6 +217,7 @@
     justify-self: center;
     align-self: center;
     margin-left: 70px;
+    cursor: pointer;
 }
 
 .noUser {
