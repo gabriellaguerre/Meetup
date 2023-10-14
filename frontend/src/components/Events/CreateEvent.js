@@ -50,6 +50,11 @@ useEffect(()=> {
 
             }
 
+            if(description.length < 50 && hasFilled) {
+                errors.description = "*Description must be 50 characters or more"
+
+            }
+
             if(type.length === 0 && hasFilled) {
                 errors.type = "*Choose between In Person or Online"
 
@@ -79,6 +84,7 @@ useEffect(()=> {
                 errors.eventImg = "*Please add an image url for your event"
 
             }
+
 
 
         if(errors) {
@@ -262,7 +268,7 @@ useEffect(()=> {
 
             <p id='descriptionQuestion'>Please describe your event</p>
             <textarea id='descriptonAnswer'
-                placeholder='Please include at least 30 characters'
+                placeholder='Please include at least 50 characters'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />

@@ -132,7 +132,8 @@
 }
 
 #loginButton button{
-   background-color: rgb(153, 153, 250);
+   background-color: rgb(243, 237, 237);
+   border: none;
    height: 25px;
    border-radius: 5px;
    cursor: pointer;
@@ -153,7 +154,8 @@
 }
 
 #signinButton button{
-    background-color: rgb(0, 255, 242);
+    background-color: rgb(243, 237, 237);
+    border: none;
     height: 25px;
    border-radius: 5px;
    cursor: pointer;
@@ -161,7 +163,7 @@
  }
 
  #signinButton button:hover {
-    background-color: rgb(4, 160, 152);
+    background-color:rgb(58, 17, 236);
     color: white;
  }
 
@@ -169,21 +171,7 @@
     grid-row: 8/9;
 }
 
-#demoButton {
-    justify-self: center;
-}
 
-.demoButton {
-    background-color: rgba(132, 194, 132, 0.973);
-    height: 25px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.demoButton:hover {
-    background-color: rgba(32, 177, 32, 0.973);
-    color: white;
-}
 
 /*************************************************/
 

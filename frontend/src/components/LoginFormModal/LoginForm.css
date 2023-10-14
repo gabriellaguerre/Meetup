@@ -1,5 +1,5 @@
 .modalBackground {
-    width: 200px;
+    width: 350px;
     height: 200px;
     background-color: rgb(85, 81, 81);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -12,7 +12,7 @@
   }
 
   .modalContainer {
-    width: 300px;
+    width: 350px;
     height: 300px;
     border-radius: 50px;
     background-color: white;
@@ -54,12 +54,12 @@
     height: 25px;
   }
 
-  .modalContainer .footer {
+  /* .modalContainer .footer {
     flex: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
 
   .modalContainer .footer button {
     width: 150px;
@@ -72,26 +72,65 @@
     font-size: 20px;
     cursor: pointer;
   }
-  .modalContainer .footer button#isDisabled {
-    width: 150px;
-    height: 45px;
+  .modalContainer button#isDisabled {
+    width: 70%;
+    height: 30px;
     margin: 10px;
     border: none;
-    background-color: gray;
-    color: white;
+    background-color: white;
+    color: gray;
+    border: 2px solid gray;
     border-radius: 8px;
-    font-size: 20px;
+    position: relative;
+    left: 40px;
+    /* font-size: 10px; */
   }
 
-  #cancelButton {
-    background-color: crimson;
+ #logInButton {
+    background-color: red;
+    margin: 10px;
+    width: 70%;
+    height: 30px;
+    cursor: pointer;
+    color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    position: relative;
+    left: 40px;
   }
+
 .errors {
     color: red;
     text-align: center;
 }
 
-.logInButtonDisabled {
-  background-color: gray;
 
+
+/* #demoButton {
+  justify-self: center;
+} */
+
+.demoButton {
+  background-color: white;
+  border: none;
+  height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+  /* margin: 10px; */
+  position: relative;
+  left: 110px;
 }
+
+.demoButton:hover {
+  font-weight: bold;
+}
+
+#demoButton #logInBut{
+  justify-content: center;
+}
+
+/* .logIn {
+
+} */
