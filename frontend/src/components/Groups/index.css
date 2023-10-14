@@ -25,12 +25,12 @@
     height: 150px;
     width: 600px;
     align-items: center;
-    /* border-top: 1px solid gray;
-    border-bottom: 1px solid gray; */
+    /* border-top: 1px solid gray; */
+    border-bottom: 1px solid red;
     border: 1px solid gray;
     border-radius: 20px;
     word-wrap: break-word;
-    box-shadow: 10px 10px rgb(93, 93, 243);
+    /* box-shadow: 10px 10px rgb(93, 93, 243); */
     background-color: rgb(226, 225, 225);
 }
 
@@ -51,6 +51,8 @@
 .groupListContainer {
     display: block;
     margin-left: 100px;
+    border-bottom: 1px solid blue;
+    width: 48%;
 
 }
 

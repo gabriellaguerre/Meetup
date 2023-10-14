@@ -164,7 +164,7 @@ function GroupDetail() {
                                 <button id='groupCreateEvent' onClick={() => createEvent(group)}>Create Event</button>
                                 <button id='groupUpdateGroup' onClick={() => EditGroup(group)}>Update Group</button>
                                 <button id='groupDelete' onClick={openMenu}>Delete Group</button>
-                                <button id='groupBack' onClick={() => history.push('/groups')}>Back</button>
+                                {/* <button id='groupBack' onClick={() => history.push('/groups')}>Back</button> */}
                                 <div className={divClassName} ref={ulRef}>
                                     <DeleteModal groupId={group?.id} />
                                 </div>
