@@ -57,7 +57,13 @@ useEffect(() => {
     }
 
     if (about.length === 0 && hasFilled) {
-        validationErrors.about = "*An event description is required"
+        validationErrors.about = "*A group description is required"
+      //  setAboutBackground('blueFields')
+
+    }
+
+    if (about.length > 0 && about.length < 50 && hasFilled) {
+        validationErrors.about = "*This description should be at least 50 characters"
       //  setAboutBackground('blueFields')
 
     }

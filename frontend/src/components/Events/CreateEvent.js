@@ -27,8 +27,8 @@ useEffect(()=> {
     const [privatePublic, setPrivatePublic] = useState('')
     const [price, setPrice] = useState('')
     const [startDate, setStartDate] = useState('')
-    const [startTime, setStartTime] = useState('')
-    const [endTime, setEndTime] = useState('')
+    // const [startTime, setStartTime] = useState('')
+    // const [endTime, setEndTime] = useState('')
     const [endDate, setEndDate] = useState('')
     const [eventImg, setEventImg] = useState('')
     const [validationErrors, setValidationErrors] = useState({})
@@ -39,6 +39,7 @@ useEffect(()=> {
 
      useEffect(() => {
          let errors = {}
+
 
             if (name.length === 0 && hasFilled) {
                 errors.name = "*Name is required"
@@ -70,14 +71,22 @@ useEffect(()=> {
 
             }
 
-            if(hasFilled && (startDate.length === 0 || startTime.length === 0)) {
-                errors.startDate = "*Starting Date and Starting Time are required"
+            if(hasFilled && (startDate.length === 0)) {
+                errors.startDate = "*Starting Date and Starting Time are required."
 
             }
 
-            if(hasFilled && (endDate.length === 0 || endTime.length === 0)) {
+            if((hasFilled && startDate.length > 0) && !(startDate.includes(',') && startDate.includes('/'))) {
+                errors.startDate = "*Use format MM/DD/YYYY, HH:mm AM"
+            }
+
+            if(hasFilled && (endDate.length === 0)) {
                 errors.endDate = "*Ending Date and Ending Time are required"
 
+            }
+
+            if((hasFilled && endDate.length > 0) && !(endDate.includes(',') && endDate.includes('/'))) {
+                errors.endDate = "*Use format MM/DD/YYYY, HH:mm AM"
             }
 
             if(eventImg.length === 0 && hasFilled) {
@@ -96,7 +105,7 @@ useEffect(()=> {
         }
 
 
-     }, [hasFilled, name, description, type, privatePublic, price, startDate, startTime, endDate, endTime, eventImg])
+     }, [hasFilled, name, description, type, privatePublic, price, startDate, endDate, eventImg])
 
      if (user === null) {
         return history.push('/')
@@ -108,22 +117,11 @@ useEffect(()=> {
 
         setValidationErrors({})
         // setDisable(false)
+        let startSplitting = startDate.split(',')
+        let endSplitting = endDate.split(',')
 
-
-        const form = {
-            venueId: 1,
-            name,
-            description,
-            type,
-            privatePublic,
-            price,
-            startDate,
-            startTime,
-            endDate,
-            endTime,
-            eventImg
-        }
-        const turnPrice = +price
+        console.log(startSplitting, 'StartSplitting')
+        console.log(endSplitting, 'End Splitting')
 
         const form2 = {
             venueId: 1,
@@ -131,11 +129,11 @@ useEffect(()=> {
             description,
             type,
             privatePublic,
-            price: turnPrice,
-            startDate,
-            startTime,
-            endDate,
-            endTime,
+            price: +price,
+            startDate: startSplitting[0],
+            startTime: startSplitting[1].toLowerCase(),
+            endDate: endSplitting[0],
+            endTime: endSplitting[1].toLowerCase(),
             eventImg
         }
 
@@ -154,7 +152,7 @@ useEffect(()=> {
     }
 
     if (goToPage) {
-        console.log(event, "IN HISTORY PUSH CODE LINE 140")
+        console.log(event, "IN HISTORY.PUSH CODE goToPage")
         history.push(`/events/${event[event.length - 1].id}`)
     }
 
@@ -214,45 +212,52 @@ useEffect(()=> {
 
 
             <p id='startQuestion'>When does your event start?</p>
+            {/* <p id='useFormat'>Use format MM/DD/YYYY, HH:mm AM</p> */}
             <div id='eventStartContainer'>
             <input id='startAnswer1'
-                placeholder='MM/DD/YYYY HHmm AM'
-                type='date'
+                placeholder='MM/DD/YYYY, HHmm AM'
+                // type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />
-            <input id='startAnswer2'
+            {/* <input id='startAnswer2'
                    placeholder='Event Start Time'
-                   type='time'
+                //    type='time'
                    value={startTime}
                    onChange={(e) => setStartTime(e.target.value)}
                    onClick={()=> {setHasFilled(true)}}
-            />
+            /> */}
             </div>
             <div className='errorStartTime'>
             {validationErrors.startDate && (<p>{validationErrors.startDate}</p>)}
+            </div>
+            <div className='errorStartTime'>
+            {validationErrors.startTime && (<p>{validationErrors.startTime}</p>)}
             </div>
 
             <p id='eventEnd'>When does your event end?</p>
             <div id='eventEndContainer'>
             <input id='endAnswer1'  width='100px'
-                placeholder='MM/DD/YYYY HHmm PM'
-                type='date'
+                placeholder='MM/DD/YYYY, HH:mm PM'
+                // type='date'
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />
 
-            <input  id='endAnswer2'
+            {/* <input  id='endAnswer2'
                    placeholder='Event End Time'
-                   type='time'
+                //    type='time'
                    value={endTime}
                    onChange={(e) => setEndTime(e.target.value)}
                    onClick={()=> {setHasFilled(true)}}
-            />
+            /> */}
             </div>
 
             <div className='errorEndTime'>
             {validationErrors.endDate && (<p>{validationErrors.endDate}</p>)}
+            </div>
+            <div className='errorEndTime'>
+            {validationErrors.endTime && (<p>{validationErrors.endTime}</p>)}
             </div>
 
             <p id='imageQuestion'>Please add an image url for your event below</p>
@@ -277,7 +282,7 @@ useEffect(()=> {
             </div>
 
             {(name.length === 0 || description.length === 0 || type.length === 0 || privatePublic.length === 0 || price.length === 0 ||
-             startDate.length === 0 || startTime.length === 0 || endDate.length === 0 || endTime.length === 0 || eventImg.length === 0)  ? (
+             startDate.length === 0 || endDate.length === 0 || eventImg.length === 0)  ? (
                 <button id='eventNoCreate'disabled={true} onClick={handleSubmit}>Create Event</button>
                 ) : (
                 <button id='eventCreate'disabled={false} onClick={handleSubmit}>Create Event</button>

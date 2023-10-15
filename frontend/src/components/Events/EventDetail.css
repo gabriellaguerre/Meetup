@@ -193,7 +193,12 @@
 .free {
     align-self: center;
     justify-self: start;
-    margin-left: 10px;
+    /* margin-left: 10px; */
+}
+
+.price {
+    position: relative;
+    top: 25%;
 }
 
 .wrapperClock .pin {
@@ -208,6 +213,11 @@
 .wrapperClock .inPerson {
     grid-column: 2/3;
     grid-row: 4/5;
+}
+
+.inPerson {
+    position: relative;
+    top: 25%;
 }
 
 .wrapperClock .deleteEventButton {
