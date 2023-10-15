@@ -93,8 +93,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         checkDescription(value) {
-          if(value.length < 30) {
-            throw new Error("*Description needs to have a minimum of 30 characters")
+          if(value.length < 50) {
+            throw new Error("*Description needs to have a minimum of 50 characters")
           }
         }
       }
@@ -120,7 +120,7 @@ module.exports = (sequelize, DataTypes) => {
           let startDate = Date.parse(this.startDate)
           let endingDate = Date.parse(value)
           if(endingDate < startDate) {
-            throw new Error("*End date is less than start date")
+            throw new Error("*End date cannot be before the start date")
           }
         }
       }
@@ -129,10 +129,30 @@ module.exports = (sequelize, DataTypes) => {
 
     startTime: {
       type: DataTypes.TIME,
+      validate: {
+        checkTime(value) {
+          let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
+          let updateValue = value.replace(/\s/g, "");
+          let newValue = updateValue.toLowerCase();
+          if(!re.test(newValue)) {
+            throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
+          }
+        }
+      }
     },
 
     endTime: {
       type: DataTypes.TIME,
+      validate: {
+        checkTime(value) {
+          let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
+          let updateValue = value.replace(/\s/g, "");
+          let newValue = updateValue.toLowerCase();
+          if(!re.test(newValue)) {
+            throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
+          }
+        }
+      }
     },
 
     eventImg: {

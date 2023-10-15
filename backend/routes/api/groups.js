@@ -575,8 +575,6 @@ router.get('/:groupId/events', async (req, res) => {
 router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req, res) => {
    const groupId = +req.params.groupId
 
-   console.log(groupId, "IN BACKEND CREATE EVENT")
-
    const user = req.user.id
 
    const { venueId, name, type, capacity, price, description, startDate, endDate, startTime, endTime, eventImg } = req.body

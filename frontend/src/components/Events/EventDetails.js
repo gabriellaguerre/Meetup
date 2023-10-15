@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { NavLink, Link, useParams, useHistory } from 'react-router-dom'
+import { NavLink, Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as sessionEvent from '../../store/event'
 import * as groupActions from '../../store/group'
@@ -153,7 +153,7 @@ function EventDetail() {
 
                 <div id='insideImage2'><img className='insideImage2' src={group?.groupImg} height='100' width='100' alt='event2' /></div>
                 <div className='groupName'>{group?.name}</div>
-                {group?.private ? (
+                {event?.private ? (
                             <div className='public'>Private</div>
                         ) : (
                             <div className='public'>Public</div>
@@ -174,7 +174,7 @@ function EventDetail() {
                         {event?.price === 0 ? (
                             <div className='free'>FREE</div>
                         ) : (
-                            <div className='free'>$ {event?.price}</div>
+                            <div className='price'>$ {event?.price}</div>
                         )}
 
                         <div className='pin'><img className='mainPin' src={pinIcon} alt='pin' height='20' width='20' /></div>
@@ -187,7 +187,7 @@ function EventDetail() {
                         {theUser && (
                             <>
                                 <div id='deleteEventButton'><button className='buttonDelete'onClick={openMenu}>Delete Event</button></div>
-                                <div className='updateButton'><button>Update</button></div>
+                                {/* <div className='updateButton'><button>Update</button></div> */}
                                 <div className={divClassName} ref={ulRef}>
                                     <EventDeleteModal eventId={event.id} groupId={event.groupId} />
                                 </div>
