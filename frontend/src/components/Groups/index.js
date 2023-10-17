@@ -28,7 +28,7 @@ function Groups() {
     // const [groupId, setGroupId] = useState()
 
 
-  //  console.log(groupList, "GROUP LIST IN GROUPS")
+
 
     let orderGroup = []
     for(let i = 0; i < groupList.length; i++) {
@@ -36,7 +36,7 @@ function Groups() {
         orderGroup.unshift(group)
     }
 
-  //  console.log(orderGroup, "UNSHIFTED GROUP LIST")
+
 
     // useEffect(() => {
     //     dispatch(eventActions.fetchEvents())
@@ -65,10 +65,10 @@ function Groups() {
     //     let arr = []
     //    const counter = async (groupId) =>{
     //       let count = await dispatch(eventActions.findEvents(groupId))
-    //       console.log(count, "IN COUNTER")
+
     //       arr.push(count)
     //    }
-    // console.log(arr)
+  
 
 
     if (groupD === true) {

@@ -44,8 +44,7 @@ router.post('/', validateSignup, async (req, res, next) => {
 
   const { firstName, lastName, email, username, password } = req.body;
 
- // console.log(req.body, "IN USER ROUTE LINE 46")
-
+ 
   if(username.includes('@') || username.includes('.com')) {
     const err = new Error("*Username cannot be an email")
     err.status = 403;

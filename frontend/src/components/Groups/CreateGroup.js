@@ -35,10 +35,10 @@ function CreateGroup() {
 
 ////////////////////////////////////ORIGINAL////////////////////////////////////////////////
     // useEffect(() => {
-    //     console.log(disable, "DISABLE LINE 37")
+    //
     //     if (oneLocation.length > 0 && name.length > 0 && about.length > 0  && type.length > 0 && privatePublic.length > 0 && url.length > 0) {
     //         setDisable(false)
-    //         console.log(disable, "USE EFFECT LINE 39")
+    //
     //     }
 
     // }, [disable, oneLocation, name, about, type, privatePublic, url])
@@ -91,12 +91,10 @@ useEffect(() => {
         //setDisable(true)
        // setWhichButton('groupNoCreate')
         setErrors(validationErrors)
-      //  console.log(whichButton, "LINE 83")
 
     } else {
         setErrors({})
      //   setWhichButton('groupCreate')
-       // console.log(whichButton, "LINE 88")
         //setDisable(false)
     }
 
@@ -107,11 +105,9 @@ useEffect(() => {
         return history.push('/groups')
     }
 
-    //console.log(disable, "LINE 94")
-
 
     const handleSubmit = (e) => {
-//console.log(disable, "IN HANDLE SUBMIT LINE 97")
+
         e.preventDefault()
         //setDisable(false)
         setErrors({})
@@ -148,7 +144,7 @@ useEffect(() => {
                 const data = await res.json()
                 if (data && data.errors) {
                     setErrors(data.errors)
-                  //  console.log(data.errors, "LINE 144")
+                 
                     //setDisable(true)
                 }
             })

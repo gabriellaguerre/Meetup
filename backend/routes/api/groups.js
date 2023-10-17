@@ -53,7 +53,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
 /*************GET All Groups*******************/
 router.get('/', async (req, res) => {
    let Groups = []
-//console.log('IN GROUPS HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+
    const group = await Group.findAll({
       include: [
          {
@@ -651,8 +651,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             data.countUpcoming = countUpcoming,
             data.countPast = countPast,
 
-         console.log(data.countUpcoming, "OOOOOOOOOOOOOOOOOOOOO")
-
+        
          res.status(200).json(data)
 
       } else {

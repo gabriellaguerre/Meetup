@@ -16,8 +16,7 @@ useEffect(() => {
     }, [dispatch])
 
     const eventList = useSelector(state => Object.values(state.event))
-  //  console.log(eventList)
-
+  
     const [eventD, setEventD] = useState(false)
 
     let orderList = []

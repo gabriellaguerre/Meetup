@@ -32,13 +32,9 @@ function EventDetail() {
     const user = useSelector(state => state.session.user)
 
     const groupId = event?.groupId
-   // console.log(groupId, "GROUP ID IN EVENT DETAILS")
+
 
     const group = useSelector(state => state.group[groupId])
- //   console.log(group, "GROUP IN EVENT DETAILS")
-
-  // console.log(event, "EVENT IN EVENT DETAILS LINE 33")
-
 
     const [theUser, setTheUser] = useState(false)
     const [typeButton, setTypeButton] = useState('')
@@ -103,7 +99,7 @@ function EventDetail() {
     }
 
     const closeMenu = (e) => {
-        //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+
         // if (!ulRef.current.contains(e.target) ) {
         setShowMenu(false)
         // }
@@ -115,7 +111,6 @@ function EventDetail() {
 
 
         // const closeMenu = (e) => {
-        //     console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
         //     if (!ulRef.current.contains(e.target) ) {
         //         setShowMenu(false)
         //     }

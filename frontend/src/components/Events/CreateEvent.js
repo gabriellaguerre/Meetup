@@ -120,8 +120,6 @@ useEffect(()=> {
         let startSplitting = startDate.split(',')
         let endSplitting = endDate.split(',')
 
-        console.log(startSplitting, 'StartSplitting')
-        console.log(endSplitting, 'End Splitting')
 
         const form2 = {
             venueId: 1,
@@ -152,7 +150,7 @@ useEffect(()=> {
     }
 
     if (goToPage) {
-        console.log(event, "IN HISTORY.PUSH CODE goToPage")
+    
         history.push(`/events/${event[event.length - 1].id}`)
     }
 
