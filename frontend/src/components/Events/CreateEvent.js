@@ -119,8 +119,7 @@ useEffect(()=> {
         // setDisable(false)
         // let startSplitting = startDate.split(',')
         // let endSplitting = endDate.split(',')
-        console.log(startDate, startTime, 'SSSSSSSSSSSSSSSSSS')
-        console.log(endDate, endTime, 'EEEEEEEEEEEEEEEEEEEEEE')
+   
 
         const form2 = {
             venueId: 1,
