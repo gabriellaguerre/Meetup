@@ -9,14 +9,12 @@ import { useModal } from '../../context/Modal'
 import './eventDeleteModal.css'
 
 function EventDeleteModal({eventId, groupId}) {
-//console.log(eventId, groupId, "IN EVENT DELETE MODAL LINE 11")
 
     const group = useSelector(state => state.group[groupId])
     const dispatch = useDispatch();
     const history = useHistory();
     const { closeModal } = useModal();
 
-console.log(group, "GROUP LINE 17")
 
     const removeEvent = (eventId) => {
         dispatch(sessionEvent.eventRemover(eventId))

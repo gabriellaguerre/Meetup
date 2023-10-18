@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         checkLength(value) {
           if (value.length < 50) {
-            throw new Error('*About must be 50 characters or more')
+            throw new Error('*Your description must be 50 characters or more')
           }
         }
       }
@@ -87,8 +87,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         checkCity(value) {
-          if(value.length === 0) {
-            throw new Error('*City is required')
+          console.log(value, 'CCCCCCCCCCCCCCCCCCC')
+          if(value.length === 0 || value === null) {
+            throw new Error('*City is required: Enter as City, State')
           }
         }
       }
@@ -97,9 +98,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        checkCity(value) {
-          if(value.length === 0) {
-            throw new Error('*State is required')
+        checkState(value) {
+          console.log(value, 'SSSSSSSSSSSSSSSSSSSSSSSS')
+          if(value.length === 0 || value === undefined) {
+            throw new Error('*State is required: Enter as City, State')
           }
         }
       }

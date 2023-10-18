@@ -16,7 +16,6 @@ useEffect(() => {
     }, [dispatch])
 
     const eventList = useSelector(state => Object.values(state.event))
-  //  console.log(eventList)
 
     const [eventD, setEventD] = useState(false)
 
@@ -34,6 +33,25 @@ useEffect(() => {
         history.push('/events/:eventId')
 
     }
+    // let newDate = new Date(event?.startDate)
+    // const date = newDate.toString().slice(0, 15)
+
+    function convertDate(date) {
+        let newDate = new Date(date)
+        return newDate.toString().slice(0,15)
+    }
+
+    function convertTime(time) {
+        const [hours, minutes] = time.split(':');
+        const hoursNum = parseInt(hours, 10);
+        const minutesNum = parseInt(minutes, 10);
+        const period = hoursNum < 12 ? "AM" : "PM";
+        return `${formatHours(hoursNum)}:${minutesNum.toString().padStart(2, '0')} ${period}`;
+    }
+
+    function formatHours(hours) {
+        return (hours % 12 || 12).toString();
+      }
 
 
     return (
@@ -47,7 +65,7 @@ useEffect(() => {
                     <NavLink className='eventListLink' to={`/events/${event.id}`} onClick={() => setEventD(true)}>
                         <ul className='eventList' key={event.id}>
                             <span><img className='eventimageImage' src={event.eventImg} alt='random pic' width="100" height="100" /></span>
-                            <div className='eventDate'>{event.startDate.slice(0,10)} {event.startTime}
+                            <div className='eventDate'>{convertDate(event.startDate)} -- {convertTime(event.startTime)}
                                 <div className='eventName'>{event.name}</div>
                                 <div className='eventLocation'>{event.Group?.city}, {event.Group?.state}</div>
                                 <div className='eventDescription'>{event.description}</div>

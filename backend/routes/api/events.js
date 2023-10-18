@@ -88,12 +88,12 @@ router.get('/', validateQuery, async (req, res) => {
         offset
     })
 
-//console.log(events, "EVENTS IN EVENT ROUTE")
+
 
     for (let i = 0; i < events.length; i++) {
         let event = events[i]
         let eventOne = event.toJSON()
-   //     console.log(eventOne, "oooooooooooooooooooooooooooooooooooooooooooooooo")
+
 
         let attending = await Attendee.count("userId", {
             where: {
@@ -138,13 +138,13 @@ router.get('/', validateQuery, async (req, res) => {
         // eventOne.countPast = countPast
 
         activities.push(result)
-    //    console.log(activities, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+
     }
-    //console.log(result, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+
  //   result.Events = activities,
         // result.page = page,
         // result.size = limit
-  //  console.log(events, "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+
     return res.json(events)
 })
 
@@ -313,8 +313,6 @@ router.put('/:eventId', requireAuth, handleValidationErrors, async (req, res) =>
 router.delete('/:eventId', requireAuth, async (req, res) => {
 
     const eventId = req.params.eventId
-
-    console.log(eventId, "EVENT ID IN BACKEND")
 
     const event = await Event.findByPk(eventId)
 

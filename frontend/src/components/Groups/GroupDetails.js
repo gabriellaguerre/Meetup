@@ -43,7 +43,6 @@ function GroupDetail() {
             setTheUser(false)
 
         }
-//console.log(user, theUser, "USER IN GROUP DETAIL LINE 45")
     }, [user, group])
 
 
@@ -59,7 +58,6 @@ function GroupDetail() {
         Date.parse(event?.startDate) < Date.now()
     )
 
-//console.log(countPast, "LINE 62")
 
     // useEffect(() => {
     //     setNumEvents(upcoming.length / 2)
@@ -84,7 +82,7 @@ function GroupDetail() {
     }
 
     const closeMenu = (e) => {
-        //console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+
         // if (!ulRef.current.contains(e.target) ) {
         setShowMenu(false)
 
@@ -97,7 +95,7 @@ function GroupDetail() {
 
 
         // const closeMenu = (e) => {
-        //     console.log(ulRef.current.contains(e.target), "IN CLOSE MENU")
+      
         //     if (!ulRef.current.contains(e.target) ) {
         //         setShowMenu(false)
         //     }

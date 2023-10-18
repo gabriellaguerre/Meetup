@@ -42,7 +42,6 @@ function SignupFormModal() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            console.log(data.errors, "LINE 45 IN SIGNUP")
             setErrors(data.errors);
           }
         })

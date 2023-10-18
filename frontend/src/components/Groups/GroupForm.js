@@ -19,8 +19,7 @@
 
 //     const id = group.groupId
 
-//     console.log(group, id, "GROUP")
-//     console.log(group.oneLocation, "GROUP LOCATION")
+
 
 //     const [oneLocation, setOneLocation] = useState(group.oneLocation)
 //     const [name, setName] = useState(group.name)
@@ -64,7 +63,7 @@
 //         e.preventDefault()
 //         setDisable(false)
 
-//         console.log("IN HANDLE UPDATE FXN")
+//
 //         const form = {
 //             oneLocation,
 //             name,
@@ -73,7 +72,7 @@
 //             privatePublic,
 //             url
 //         }
-//         console.log(form, "FORM IN HANDLE UPDATE LINE 108")
+//
 //         const newLocation = oneLocation.split(',')
 //         let boolVal = JSON.parse(privatePublic)
 
@@ -86,7 +85,7 @@
 //             private: boolVal,
 //             previewImage: url
 //         }
-//         console.log(form2, "FORM 2 IN HANDLE UPDATE")
+//
 
 //         return dispatch(sessionGroup.editingGroup(form2, id))
 //             .then(() => history.push('/groups'))
@@ -102,7 +101,7 @@
 
 
 //     const handleSubmit = (e) => {
-//         console.log("IN HANDLE SUBMIT")
+//
 
 //         e.preventDefault()
 //         setDisable(false)
@@ -128,14 +127,14 @@
 //             private: boolVal,
 //             previewImage: url
 //         }
-//         console.log(form2, "FORM 2 IN HANDLESUBMIT")
+
 
 //         return dispatch(sessionGroup.creatingGroup(form2))
 //             .then(history.push('/groups'))
-//             //        .then(console.log(theGroup, "THE GROUP"))
-//             //     }
+//
+//             //
 //             //    .then((data)=> {
-//             //     console.log(data)
+//           
 //             //    })
 //             // .then(() => history.push(`/groups`))
 //             .catch(async (res) => {
