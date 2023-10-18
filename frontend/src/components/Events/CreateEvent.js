@@ -27,8 +27,8 @@ useEffect(()=> {
     const [privatePublic, setPrivatePublic] = useState('')
     const [price, setPrice] = useState('')
     const [startDate, setStartDate] = useState('')
-    // const [startTime, setStartTime] = useState('')
-    // const [endTime, setEndTime] = useState('')
+    const [startTime, setStartTime] = useState('')
+    const [endTime, setEndTime] = useState('')
     const [endDate, setEndDate] = useState('')
     const [eventImg, setEventImg] = useState('')
     const [validationErrors, setValidationErrors] = useState({})
@@ -38,71 +38,71 @@ useEffect(()=> {
 
 
      useEffect(() => {
-         let errors = {}
+        //  let errors = {}
 
 
-            if (name.length === 0 && hasFilled) {
-                errors.name = "*Name is required"
-                //setNameBackground('blueFields')
-            }
+        //     if (name.length === 0 && hasFilled) {
+        //         errors.name = "*Name is required"
+        //         //setNameBackground('blueFields')
+        //     }
 
-            if(description.length === 0 && hasFilled) {
-                errors.description = "*Description is required"
+        //     if(description.length === 0 && hasFilled) {
+        //         errors.description = "*Description is required"
 
-            }
+        //     }
 
-            if(description.length < 50 && hasFilled) {
-                errors.description = "*Description must be 50 characters or more"
+        //     if(description.length < 50 && hasFilled) {
+        //         errors.description = "*Description must be 50 characters or more"
 
-            }
+        //     }
 
-            if(type.length === 0 && hasFilled) {
-                errors.type = "*Choose between In Person or Online"
+        //     if(type.length === 0 && hasFilled) {
+        //         errors.type = "*Choose between In Person or Online"
 
-            }
+        //     }
 
-            if(privatePublic.length === 0 && hasFilled) {
-                errors.privatePublic = "*Choose between Private or Public"
+        //     if(privatePublic.length === 0 && hasFilled) {
+        //         errors.privatePublic = "*Choose between Private or Public"
 
-            }
+        //     }
 
-            if(price.length === 0 && hasFilled) {
-                errors.price = "*Price is required"
+        //     if(price.length === 0 && hasFilled) {
+        //         errors.price = "*Price is required"
 
-            }
+        //     }
 
-            if(hasFilled && (startDate.length === 0)) {
-                errors.startDate = "*Starting Date and Starting Time are required."
+        //     if(hasFilled && (startDate.length === 0)) {
+        //         errors.startDate = "*Starting Date and Starting Time are required."
 
-            }
+        //     }
 
-            if((hasFilled && startDate.length > 0) && !(startDate.includes(',') && startDate.includes('/'))) {
-                errors.startDate = "*Use format MM/DD/YYYY, HH:mm AM"
-            }
+        //     if((hasFilled && startDate.length > 0) && !(startDate.includes(',') && startDate.includes('/'))) {
+        //         errors.startDate = "*Use format MM/DD/YYYY, HH:mm AM"
+        //     }
 
-            if(hasFilled && (endDate.length === 0)) {
-                errors.endDate = "*Ending Date and Ending Time are required"
+        //     if(hasFilled && (endDate.length === 0)) {
+        //         errors.endDate = "*Ending Date and Ending Time are required"
 
-            }
+        //     }
 
-            if((hasFilled && endDate.length > 0) && !(endDate.includes(',') && endDate.includes('/'))) {
-                errors.endDate = "*Use format MM/DD/YYYY, HH:mm AM"
-            }
+        //     if((hasFilled && endDate.length > 0) && !(endDate.includes(',') && endDate.includes('/'))) {
+        //         errors.endDate = "*Use format MM/DD/YYYY, HH:mm AM"
+        //     }
 
-            if(eventImg.length === 0 && hasFilled) {
-                errors.eventImg = "*Please add an image url for your event"
+        //     if(eventImg.length === 0 && hasFilled) {
+        //         errors.eventImg = "*Please add an image url for your event"
 
-            }
+        //     }
 
 
 
-        if(errors) {
-            setValidationErrors(errors)
+        // if(errors) {
+        //     setValidationErrors(errors)
 
-        } else {
+        // } else {
 
-            setValidationErrors({})
-        }
+        //     setValidationErrors({})
+        // }
 
 
      }, [hasFilled, name, description, type, privatePublic, price, startDate, endDate, eventImg])
@@ -117,9 +117,10 @@ useEffect(()=> {
 
         setValidationErrors({})
         // setDisable(false)
-        let startSplitting = startDate.split(',')
-        let endSplitting = endDate.split(',')
-
+        // let startSplitting = startDate.split(',')
+        // let endSplitting = endDate.split(',')
+        console.log(startDate, startTime, 'SSSSSSSSSSSSSSSSSS')
+        console.log(endDate, endTime, 'EEEEEEEEEEEEEEEEEEEEEE')
 
         const form2 = {
             venueId: 1,
@@ -128,10 +129,10 @@ useEffect(()=> {
             type,
             privatePublic,
             price: +price,
-            startDate: startSplitting[0],
-            startTime: startSplitting[1].toLowerCase(),
-            endDate: endSplitting[0],
-            endTime: endSplitting[1].toLowerCase(),
+            startDate,
+            startTime,
+            endDate,
+            endTime,
             eventImg
         }
 
@@ -146,11 +147,10 @@ useEffect(()=> {
                  //   setDisable(true)
                 }
                })
-
     }
 
     if (goToPage) {
-    
+
         history.push(`/events/${event[event.length - 1].id}`)
     }
 
@@ -214,20 +214,20 @@ useEffect(()=> {
             <div id='eventStartContainer'>
             <input id='startAnswer1'
                 placeholder='MM/DD/YYYY, HHmm AM'
-                // type='date'
+                type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />
-            {/* <input id='startAnswer2'
-                   placeholder='Event Start Time'
-                //    type='time'
-                   value={startTime}
-                   onChange={(e) => setStartTime(e.target.value)}
-                   onClick={()=> {setHasFilled(true)}}
-            /> */}
-            </div>
             <div className='errorStartTime'>
             {validationErrors.startDate && (<p>{validationErrors.startDate}</p>)}
+            </div>
+
+            <input id='startAnswer2'
+                   placeholder='Event Start Time'
+                   type='time'
+                   value={startTime}
+                   onChange={(e) => setStartTime(e.target.value)}
+                   onClick={()=> {setHasFilled(true)}}/>
             </div>
             <div className='errorStartTime'>
             {validationErrors.startTime && (<p>{validationErrors.startTime}</p>)}
@@ -237,22 +237,20 @@ useEffect(()=> {
             <div id='eventEndContainer'>
             <input id='endAnswer1'  width='100px'
                 placeholder='MM/DD/YYYY, HH:mm PM'
-                // type='date'
+                type='date'
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 onClick={()=> {setHasFilled(true)}} />
-
-            {/* <input  id='endAnswer2'
-                   placeholder='Event End Time'
-                //    type='time'
-                   value={endTime}
-                   onChange={(e) => setEndTime(e.target.value)}
-                   onClick={()=> {setHasFilled(true)}}
-            /> */}
-            </div>
-
             <div className='errorEndTime'>
             {validationErrors.endDate && (<p>{validationErrors.endDate}</p>)}
+            </div>
+
+            <input  id='endAnswer2'
+                   placeholder='Event End Time'
+                   type='time'
+                   value={endTime}
+                   onChange={(e) => setEndTime(e.target.value)}
+                   onClick={()=> {setHasFilled(true)}} />
             </div>
             <div className='errorEndTime'>
             {validationErrors.endTime && (<p>{validationErrors.endTime}</p>)}

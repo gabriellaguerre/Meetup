@@ -103,7 +103,6 @@ const eventReducer = (state = {}, action) => {
     switch (action.type) {
         case GET_EVENTS:
             newState = {}
-
             action.data.map((Event) => newState[Event.id] = Event)
             return newState
         case FIND_EVENT_GROUP:
@@ -111,10 +110,10 @@ const eventReducer = (state = {}, action) => {
             return newState[action.data];
         case CREATE_EVENT:
             newState = {...state, [action.event.id]: action.event}
-          
             return newState
         case UPDATE_EVENT:
-            newState = {...state, [action.event.id]: action.event}
+            newState = {...state, [action.event.id]: action.event};
+            return newState
         case REMOVE_EVENT:
             newState = {...state}
             delete newState[action.eventId]

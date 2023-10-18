@@ -20,85 +20,14 @@ function CreateGroup() {
     const [type, setType] = useState('')
     const [privatePublic, setPrivatePublic] = useState('')
     const [url, setUrl] = useState('')
-   // const [groupImg, setGroupImg] = useState('')
     const [errors, setErrors] = useState({})
     const [goToPage, setGoToPage] = useState(false)
     const [hasFilled, setHasFilled] = useState(false)
-  //  const [whichButton, setWhichButton] = useState('groupNoCreate')
-    // const [locationBackground, setLocationBackground] = useState('blueFields')
-    // const [nameGroupBackground, setNameGroupBackground] = useState('blueFields')
-    // const [aboutBackground, setAboutBackground] = useState('blueFields')
-    // const [groupTypeBackground, setGroupTypeBackground] = useState('blueFields')
-    // const [privatePBackground, setPrivatePBackground] = useState('blueFields')
-    // const [imageUrlBackground, setImageUrlBackground] = useState('blueFields')
 
 
-////////////////////////////////////ORIGINAL////////////////////////////////////////////////
-    // useEffect(() => {
-    //
-    //     if (oneLocation.length > 0 && name.length > 0 && about.length > 0  && type.length > 0 && privatePublic.length > 0 && url.length > 0) {
-    //         setDisable(false)
-    //
-    //     }
-
-    // }, [disable, oneLocation, name, about, type, privatePublic, url])
-//////////////////////////////////MODIFFIED VERSION////////////////////////////////////////
 useEffect(() => {
-    let validationErrors = {}
 
-    if (oneLocation.length === 0 && hasFilled) {
-        validationErrors.oneLocation = "*City and State are required. Use a comma (,) to separate them."
-      //  setLocationBackground('blueFields')
-    }
-
-    if (name.length === 0 && hasFilled) {
-        validationErrors.name = "*Name is required"
-      //  setNameGroupBackground('blueFields')
-    }
-
-    if (about.length === 0 && hasFilled) {
-        validationErrors.about = "*A group description is required"
-      //  setAboutBackground('blueFields')
-
-    }
-
-    if (about.length > 0 && about.length < 50 && hasFilled) {
-        validationErrors.about = "*This description should be at least 50 characters"
-      //  setAboutBackground('blueFields')
-
-    }
-
-    if (type.length === 0 && hasFilled) {
-        validationErrors.type = "*Choose between Online or In Person"
-       // setGroupTypeBackground('blueFields')
-    }
-
-    if (privatePublic.length === 0 && hasFilled) {
-        validationErrors.privatePublic = "*Choose between Private or Public"
-       // setPrivatePBackground('blueFields')
-    }
-
-    if(url.length === 0 && hasFilled) {
-        validationErrors.url = "*Image is required"
-        //setWhichButton('groupCreate')
-    }
-
-    // if(url.length > 255 && hasFilled) {
-    //     validationErrors.url = "*Not a valid image address"
-    // }
-
-    if(validationErrors) {
-        //setDisable(true)
-       // setWhichButton('groupNoCreate')
-        setErrors(validationErrors)
-
-    } else {
-        setErrors({})
-     //   setWhichButton('groupCreate')
-        //setDisable(false)
-    }
-
-}, [hasFilled, oneLocation, name, about, type, privatePublic, url])
+}, [hasFilled, oneLocation, name, about, type, privatePublic, url, errors])
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
     if (user === null) {
@@ -107,49 +36,42 @@ useEffect(() => {
 
 
     const handleSubmit = (e) => {
-
+        let validationErrors = {}
         e.preventDefault()
-        //setDisable(false)
-        setErrors({})
-        setHasFilled(false)
 
-        const form = {
-            oneLocation,
-            name,
-            about,
-            type,
-            privatePublic,
-            url
-        }
         const newLocation = oneLocation.split(',')
         let boolVal = JSON.parse(privatePublic)
 
-        const form2 = {
-            city: newLocation[0],
-            state: newLocation[1],
-            name,
-            about,
-            type,
-            private: boolVal,
-            groupImg: url
-        }
-
-
-
-        return dispatch(sessionGroup.creatingGroup(form2))
+        if (!newLocation[1]) {
+            validationErrors.state = '*State is required: Enter as City, State'
+            setErrors(validationErrors)
+        } else {
+            const form2 = {
+                city: newLocation[0],
+                state: newLocation[1],
+                name,
+                about,
+                type,
+                private: boolVal,
+                groupImg: url
+            }
+            return dispatch(sessionGroup.creatingGroup(form2))
             .then(dispatch(sessionGroup.fetchGroups()))
             .then(() => setGoToPage(true))
 
             .catch(async (res) => {
                 const data = await res.json()
+
                 if (data && data.errors) {
                     setErrors(data.errors)
-                 
+
                     //setDisable(true)
                 }
             })
-    }
 
+        }
+
+    }
 
 
     if (goToPage) {
@@ -171,7 +93,10 @@ useEffect(() => {
                 onChange={(e) => setOneLocation(e.target.value)}
                 onClick={()=> {setHasFilled(true)}}/>
             <div className='errorLocation'>
-                {errors.oneLocation && (<p>{errors.oneLocation}</p>)}
+                {errors.city && (<p>{errors.city}</p>)}
+            </div>
+            <div className='errorLocation'>
+                {errors.state && (<p>{errors.state}</p>)}
             </div>
 
             <h3 id='groupName'>What will your group's name be?</h3>
@@ -240,7 +165,6 @@ useEffect(() => {
             ) : (
                 <button id='groupCreate' type='submit' disabled={false}>Create Group</button>
             )}
-            {/* <button id={whichButton} type='submit' disabled={oneLocation.length === 0 || name.length === 0 || about.length === 0 || type.length === 0 || privatePublic.length === 0 || url.length === 0}>Create Group</button> */}
             <button id='groupCancel' onClick={() => history.push('/groups')}>Cancel</button>
 
          </div>

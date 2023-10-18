@@ -27,7 +27,7 @@ router.post('/', requireAuth, handleValidationErrors, async (req, res) => {
       state,
       groupImg
    })
-
+   
    await Membership.create({
       userId: userId,
       groupId: newGroup.id,
@@ -651,7 +651,7 @@ router.post('/:groupId/events', requireAuth, handleValidationErrors, async (req,
             data.countUpcoming = countUpcoming,
             data.countPast = countPast,
 
-        
+
          res.status(200).json(data)
 
       } else {

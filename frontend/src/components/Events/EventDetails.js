@@ -85,6 +85,17 @@ function EventDetail() {
     let endingDate = new Date(event?.endDate)
     const stopDate = endingDate.toString().slice(0, 15)
 
+    function convertTime(time) {
+        const [hours, minutes] = time.split(':');
+        const hoursNum = parseInt(hours, 10);
+        const minutesNum = parseInt(minutes, 10);
+        const period = hoursNum < 12 ? "AM" : "PM";
+        return `${formatHours(hoursNum)}:${minutesNum.toString().padStart(2, '0')} ${period}`;
+    }
+
+    function formatHours(hours) {
+        return (hours % 12 || 12).toString();
+      }
 
     ////////////////////////////////////////////////////////
     const [showMenu, setShowMenu] = useState(false)
@@ -94,8 +105,6 @@ function EventDetail() {
         setShowMenu(true)
 
         if (showMenu) return;
-
-
     }
 
     const closeMenu = (e) => {
@@ -163,8 +172,8 @@ function EventDetail() {
                         <div className='clockImg'><img className='mainClockImg' src={clockIcon} alt='clock'  /></div>
                         <div className='start'>Start</div>
                         <div className='end'>End</div>
-                        <div className='startDate'>{date} <span className='dotEventDet'>.</span> {event?.startTime}</div>
-                        <div className='endDate'>{stopDate} <span className='dotEventDet'>.</span> {event?.endTime}</div>
+                        <div className='startDate'>{date} <span className='dotEventDet'>.</span> {convertTime(event?.startTime)}</div>
+                        <div className='endDate'>{stopDate} <span className='dotEventDet'>.</span> {convertTime(event?.endTime)}</div>
                         <div className='money'><img className='mainMoney'src={moneyIcon} alt='Money' height='20' width='20' /></div>
                         {event?.price === 0 ? (
                             <div className='free'>FREE</div>

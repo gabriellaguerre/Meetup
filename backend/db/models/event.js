@@ -129,30 +129,30 @@ module.exports = (sequelize, DataTypes) => {
 
     startTime: {
       type: DataTypes.TIME,
-      validate: {
-        checkTime(value) {
-          let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
-          let updateValue = value.replace(/\s/g, "");
-          let newValue = updateValue.toLowerCase();
-          if(!re.test(newValue)) {
-            throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
-          }
-        }
-      }
+      // validate: {
+      //   checkTime(value) {
+      //     let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
+      //     let updateValue = value.replace(/\s/g, "");
+      //     let newValue = updateValue.toLowerCase();
+      //     if(!re.test(newValue)) {
+      //       throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
+      //     }
+      //   }
+      // }
     },
 
     endTime: {
       type: DataTypes.TIME,
-      validate: {
-        checkTime(value) {
-          let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
-          let updateValue = value.replace(/\s/g, "");
-          let newValue = updateValue.toLowerCase();
-          if(!re.test(newValue)) {
-            throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
-          }
-        }
-      }
+      // validate: {
+      //   checkTime(value) {
+      //     let re = /^(0[1-9]|1[0-2]):[0-5][0-9]([ap]m)?$/;
+      //     let updateValue = value.replace(/\s/g, "");
+      //     let newValue = updateValue.toLowerCase();
+      //     if(!re.test(newValue)) {
+      //       throw new Error("*Use format MM/DD/YYYY, HH:mm AM/PM")
+      //     }
+      //   }
+      // }
     },
 
     eventImg: {
