@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         checkCity(value) {
-          console.log(value, 'CCCCCCCCCCCCCCCCCCC')
+
           if(value.length === 0 || value === null) {
             throw new Error('*City is required: Enter as City, State')
           }
@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         checkState(value) {
-          console.log(value, 'SSSSSSSSSSSSSSSSSSSSSSSS')
+        
           if(value.length === 0 || value === undefined) {
             throw new Error('*State is required: Enter as City, State')
           }
