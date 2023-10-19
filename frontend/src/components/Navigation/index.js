@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ProfileButton from './ProfileButton'
 //import HomePage from '../HomePage'
@@ -66,6 +66,8 @@ function Navigation({ isLoaded }) {
         <ul className='homepageContainer'>
             <div id='get2gether' >
                 <NavLink className='homePage' exact to='/'>get2get(hür)</NavLink>
+                <span id='git'><a style={{textDecoration: "none", color:'black'}} href="https://github.com/gabriellaguerre" target="_blank" rel="noreferrer"><i className="fa-brands fa-github"></i>GitHub</a></span>
+                <span id='linkedin'><a style={{textDecoration: "none", color:'black'}} href="https://www.linkedin.com/in/gabriel-laguerre/" target="_blank" rel="noreferrer"><i class="fa-brands fa-linkedin"></i>LinkedIn</a></span>
             </div>
             {isLoaded && (
                 <>
