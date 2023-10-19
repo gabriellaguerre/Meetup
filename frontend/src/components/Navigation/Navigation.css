@@ -211,3 +211,7 @@
 .noUser {
     display: none;
 }
+
+#git, #linkedin{
+    margin-left: 20px;
+}
