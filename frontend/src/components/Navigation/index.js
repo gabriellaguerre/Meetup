@@ -11,7 +11,7 @@ import './Navigation.css'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user)
-
+    // console.log(isLoaded, 'HHHHHHHHHHHHH')
     // const [groups, setGroups] = useState(false)
     // const [signUp, setSignUp] = useState(false)
 

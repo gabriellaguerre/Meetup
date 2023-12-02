@@ -16,15 +16,16 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false)
   const ulRef = useRef()
 
+//  console.log(user, showMenu, 'UUUUUUUUUUUUUU')
 
-
-  const openMenu = () => {
-    if (showMenu) setShowMenu(false);
-    setShowMenu(true)
-  }
+  // const openMenu = () => {
+  //   console.log(showMenu, 'showMenu')
+  //   if (showMenu) setShowMenu(false);
+  //   setShowMenu(true)
+  // }
 
   useEffect(() => {
-    if (!showMenu) return
+     if (!showMenu) return
 
     const closeMenu = (e) => {
       if (!ulRef.current?.contains(e.target)) {
@@ -33,8 +34,9 @@ function ProfileButton({ user }) {
     }
 
     document.addEventListener('click', closeMenu)
-
+    console.log(showMenu, 'USE EFFECT SHOWMENU')
     return () => document.removeEventListener('click', closeMenu)
+
   }, [showMenu])
 
   // const closeMenu = () => setShowMenu(false)
@@ -46,10 +48,11 @@ function ProfileButton({ user }) {
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : "hidden")
+  // console.log(ulClassName, 'UL Classname') onClick={openMenu}
 
   return (
     <>
-      <button id='navicon'onClick={openMenu}>
+      <button id='navicon' onClick={()=>setShowMenu(!showMenu)}>
         <i className="fa-solid fa-user" />
       </button>
 
@@ -57,7 +60,7 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <div id='viewGroups' ><NavLink onClick={()=>setShowMenu(false)} className='viewGroups' to='/groups' >View Groups</NavLink></div>
-            <div id='viewEvents'><NavLink onClick={()=>setShowMenu(false)}className='viewEvents' to='/events'>View Events</NavLink></div>
+            <div id='viewEvents'><NavLink onClick={()=>setShowMenu(false)} className='viewEvents' to='/events'>View Events</NavLink></div>
             <div id='hello'>Hello, {user.firstName}</div>
             <div id='username'>username:{user.username}</div>
             <div id='name'>name: {user.firstName} {user.lastName}</div>
