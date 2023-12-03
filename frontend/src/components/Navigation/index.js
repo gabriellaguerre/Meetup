@@ -11,7 +11,7 @@ import './Navigation.css'
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user)
-
+    // console.log(isLoaded, 'HHHHHHHHHHHHH')
     // const [groups, setGroups] = useState(false)
     // const [signUp, setSignUp] = useState(false)
 
@@ -67,7 +67,7 @@ function Navigation({ isLoaded }) {
             <div id='get2gether' >
                 <NavLink className='homePage' exact to='/'>get2get(hür)</NavLink>
                 <span id='git'><a style={{textDecoration: "none", color:'black'}} href="https://github.com/gabriellaguerre" target="_blank" rel="noreferrer"><i className="fa-brands fa-github"></i>GitHub</a></span>
-                <span id='linkedin'><a style={{textDecoration: "none", color:'black'}} href="https://www.linkedin.com/in/gabriel-laguerre/" target="_blank" rel="noreferrer"><i class="fa-brands fa-linkedin"></i>LinkedIn</a></span>
+                <span id='linkedin'><a style={{textDecoration: "none", color:'black'}} href="https://www.linkedin.com/in/gabriel-laguerre/" target="_blank" rel="noreferrer"><i className="fa-brands fa-linkedin"></i>LinkedIn</a></span>
             </div>
             {isLoaded && (
                 <>
